@@ -96,7 +96,7 @@ const Profile = () => {
     result[0];
 
   return (
-    <div className="grid place-items-center py-20 md:px-5 lg:px-5">
+    <div className="grid place-items-center py-20 md:px-5 lg:px-5 min-h-[83.5vh]">
       <div className="profile-card w-[97%] md:w-2/3 lg:w-1/3 text-center shadow-lg rounded-lg bg-base-100 p-7">
         <div className="avatar w-40 h-40 rounded-full border-8 text-7xl font-semibold overflow-hidden mt-[-5rem] z-10 grid place-items-center mx-auto ring ring-primary ring-offset-base-100 ring-offset-2">
           {auth?.currentUser?.photoURL ? (

@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import auth from "../Firebase/firebase.init";
 import { useAuthState } from "react-firebase-hooks/auth";
+import Task from "../Task/Task";
 
 const List = () => {
   const [myTasks, setMyTasks] = useState([]);
@@ -15,7 +16,7 @@ const List = () => {
   useEffect(() => {
     const getOrders = async () => {
       const email = user?.email;
-      const url = `https://todo-web-app2.herokuapp.com/my-tasks?email=${email}`;
+      const url = `http://localhost:5000/my-tasks?email=${email}`;
       try {
         const { data } = await axios.get(url, {
           headers: {
@@ -45,7 +46,7 @@ const List = () => {
     }).then((result) => {
       if (result.value) {
         Swal.fire("Deleted!", "Your task has been deleted.", "success");
-        fetch(`https://todo-web-app2.herokuapp.com/tasks/${id}`, {
+        fetch(`http://localhost:5000/tasks/${id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())
@@ -69,32 +70,64 @@ const List = () => {
     }).then((result) => {
       if (result.value) {
         Swal.fire("Completed!", "Your task has been completed.", "success");
-        fetch(`https://todo-web-app2.herokuapp.com/tasks/${id}`, {
+        fetch(`http://localhost:5000/tasks/${id}`, {
           method: "PATCH",
         })
           .then((res) => res.json())
           .then((data) => {
             if (data.success) {
-              myTasks(myTasks.map((task) => (task._id === id ? data : task)));
+              myTasks(myTasks?.map((task) => (task._id === id ? data : task)));
             }
           });
       }
     });
   };
 
-  if (myTasks.length === 0) {
-    return (
-      <div>
-        <div className="alert alert-warning text-center" role="alert">
-          You don't have any items in your inventory.
-        </div>
-      </div>
-    );
-  }
+  // const handleUpdateInfo = (id) => {
+  //   Swal.fire({
+  //     text: "Are you sure you want to update this?",
+  //     icon: "warning",
+  //     showCancelButton: true,
+  //     confirmButtonColor: "#3085d6",
+  //     cancelButtonColor: "#d33",
+  //     confirmButtonText: "Yes, Update it!",
+  //   }).then((result) => {
+  //     if (result.value) {
+  //       Swal.fire("Updated!", "Your task has been updated.", "success");
+  //       fetch(`http://localhost:5000/tasks/${id}`, {
+  //         method: "PATCH",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+  //         },
+  //       body: JSON.stringify({
+  //         title: task.title,
+  //         description: task.description,
+  //       }),
+  //       })
+  //         .then((res) => res.json())
+  //         .then((data) => {
+  //           if (data.success) {
+  //             myTasks(myTasks?.map((task) => (task._id === id ? data : task)));
+  //           }
+  //         });
+  //     }
+  //   });
+  // };
+
+  // if (myTasks.length === 0) {
+  //   return (
+  //     <div>
+  //       <div className="alert alert-warning text-center" role="alert">
+  //         You don't have any items in your inventory.
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="overflow-x-auto container mx-auto h-screen">
-      {myTasks.length > 0 ? (
+      {myTasks?.length > 0 ? (
         <table className="table w-full">
           <thead>
             <tr>
@@ -102,11 +135,12 @@ const List = () => {
               <th>Title</th>
               <th>Description</th>
               <th>Complete</th>
+              <th>Edit</th>
               <th>Delete</th>
             </tr>
           </thead>
           <tbody>
-            {myTasks.map((task, index) => (
+            {myTasks?.map((task, index) => (
               <tr key={task._id}>
                 <th
                   style={{
@@ -136,6 +170,14 @@ const List = () => {
                     disabled={task?.completed && true}
                   >
                     {task?.completed ? "Completed" : "Complete"}
+                  </button>
+                </td>
+                <td>
+                  <button
+                    onClick={() => handleCompleteInfo(task._id)}
+                    className="btn btn-sm btn-neutral"
+                  >
+                    Edit
                   </button>
                 </td>
                 <td>
