@@ -13,7 +13,7 @@ const CompletedToDo = () => {
     refetch,
   } = useQuery("completed", () =>
     fetch(
-      `http://localhost:5000/myToDoS/completed?email=${auth?.currentUser?.email}`,
+      `https://k-task-todo.herokuapp.com/myToDoS/completed?email=${auth?.currentUser?.email}`,
       {
         headers: {
           authorization: `Bearer ${localStorage.getItem("accessToken")}`,
