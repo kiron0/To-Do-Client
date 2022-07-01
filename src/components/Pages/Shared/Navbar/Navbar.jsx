@@ -36,6 +36,11 @@ const Navbar = ({ handleThemeChange, theme }) => {
         </NavLink>
       </li>
       <li className="py-1 lg:py-0">
+        <NavLink className="uppercase" to="/task">
+          Add Task
+        </NavLink>
+      </li>
+      <li className="py-1 lg:py-0">
         <NavLink className="uppercase" to="/completed">
           Completed
         </NavLink>
@@ -43,11 +48,6 @@ const Navbar = ({ handleThemeChange, theme }) => {
       <li className="py-1 lg:py-0">
         <NavLink className="uppercase" to="/calendar">
           Calendar
-        </NavLink>
-      </li>
-      <li className="py-1 lg:py-0">
-        <NavLink className="uppercase" to="/contact">
-          Contact
         </NavLink>
       </li>
       {user && (
