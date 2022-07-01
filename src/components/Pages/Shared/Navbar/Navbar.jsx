@@ -36,8 +36,8 @@ const Navbar = ({ handleThemeChange, theme }) => {
         </NavLink>
       </li>
       <li className="py-1 lg:py-0">
-        <NavLink className="uppercase" to="/task">
-          Add Task
+        <NavLink className="uppercase" to="/toDoS">
+          Add ToDo
         </NavLink>
       </li>
       <li className="py-1 lg:py-0">
@@ -50,18 +50,11 @@ const Navbar = ({ handleThemeChange, theme }) => {
           Calendar
         </NavLink>
       </li>
-      {user && (
-        <li className="py-1 lg:py-0">
-          <Link className="uppercase bg-secondary text-white" to="/dashboard">
-            Dashboard
-          </Link>
-        </li>
-      )}
     </>
   );
 
   return (
-    <div className="fixed top-0 w-full z-50">
+    <div className="fixed top-0 w-full z-50 bg-base-100">
       <div
         className={`drawer-content flex flex-col backdrop-blur-[18px] bg-base-100  ${
           scrollY < 300 && "lg:bg-transparent"
@@ -170,9 +163,6 @@ const Navbar = ({ handleThemeChange, theme }) => {
                         Profile
                         <span className="badge">New</span>
                       </Link>
-                    </li>
-                    <li>
-                      <Link to="/dashboard">Dashboard</Link>
                     </li>
                     <li>
                       <button onClick={handleLogOut}>Logout</button>

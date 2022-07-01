@@ -5,10 +5,11 @@ import { Routes, Route } from "react-router-dom";
 import RequireAuth from "./components/Pages/Login/RequireAuth/RequireAuth";
 import Profile from "./components/Pages/Profile/Profile";
 import Navbar from "./components/Pages/Shared/Navbar/Navbar";
-import Home from "./components/Pages/Home/Home";
+import Home from "./components/Pages/Home/Home/Home";
 import Login from "./components/Pages/Login/Login/Login";
 import ManageTask from "./components/Pages/ManageTask/ManageTask";
-import CompletedTask from "./components/Pages/CompletedTask/CompletedTask";
+import CompletedToDo from "./components/Pages/CompletedToDo/CompletedToDo";
+import Calendar from "./components/Pages/Calendar/Calendar";
 
 function App() {
   const [theme, setTheme] = useState(false);
@@ -25,7 +26,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route
-          path="/task"
+          path="/toDoS"
           element={
             <RequireAuth>
               <ManageTask />
@@ -36,10 +37,11 @@ function App() {
           path="/completed"
           element={
             <RequireAuth>
-              <CompletedTask />
+              <CompletedToDo />
             </RequireAuth>
           }
         />
+        <Route path="/calendar" element={<Calendar />} />
         <Route
           path="/profile"
           element={

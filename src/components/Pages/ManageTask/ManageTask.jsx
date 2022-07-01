@@ -2,18 +2,20 @@ import React, { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { toast } from "react-hot-toast";
 import { useQuery } from "react-query";
+import useTitle from "../../../hooks/useTitle";
 import Loader from "../../Pages/Shared/Loader/Loader";
 import auth from "../Login/Firebase/firebase.init";
 import TaskList from "./TaskList";
 const ManageTask = () => {
-  const [modalTask, setModalTask] = useState({});
+  useTitle("Manage To Do");
+  const [modalToDo, setModalToDo] = useState({});
   const [user] = useAuthState(auth);
   const {
-    data: taskData,
+    data: toDosData,
     isLoading,
     refetch,
-  } = useQuery("tasks", () =>
-    fetch(`http://localhost:5000/my-tasks?email=${auth?.currentUser?.email}`, {
+  } = useQuery("todos", () =>
+    fetch(`http://localhost:5000/myToDoS?email=${auth?.currentUser?.email}`, {
       headers: {
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
@@ -22,53 +24,58 @@ const ManageTask = () => {
 
   const handleTaskSubmit = (e) => {
     e.preventDefault();
-    const task = {
+    const createToDo = {
       email: user?.email,
       title: e.target.title.value,
       description: e.target.description.value,
+      createdAt:
+        new Date().toDateString() + " " + new Date().toLocaleTimeString(),
+      addedBy: {
+        name: auth?.currentUser?.displayName,
+        uid: auth?.currentUser?.uid,
+        email: auth?.currentUser?.email,
+      },
     };
-    fetch("http://localhost:5000/tasks", {
+    fetch(`http://localhost:5000/createToDo?uid=${auth?.currentUser?.uid}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
-      body: JSON.stringify(task),
+      body: JSON.stringify(createToDo),
     })
       .then((res) => res.json())
       .then((result) => {
-        if (result.insertedId) {
+        if (result.success) {
+          toast.success(result.message);
           refetch();
-          toast.success("Task Added Successfully");
-          e.target.title.value = "";
-          e.target.description.value = "";
+          e.target.reset();
         }
-        setModalTask(null);
       });
   };
 
   const [titleField, setTitleField] = useState("");
   const [descriptionField, setDescriptionField] = useState("");
 
-  const handleUpdateStock = async (event) => {
-    event.preventDefault();
+  const handleUpdateStock = async (e) => {
+    e.preventDefault();
 
-    await fetch(`http://localhost:5000/tasks/updateTask/${modalTask._id}`, {
+    await fetch(`http://localhost:5000/todos/updateToDoS/${modalToDo._id}`, {
       method: "PATCH",
       headers: {
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         "content-type": "application/json",
       },
       body: JSON.stringify({
-        title: titleField || modalTask?.title,
-        description: descriptionField || modalTask?.description,
+        title: titleField || modalToDo?.title,
+        description: descriptionField || modalToDo?.description,
       }),
     })
       .then((res) => res.json())
       .then((result) => {
         if (result.modifiedCount) {
-          toast.success(`Task updated successfully`);
-          setModalTask(null);
+          toast.success(`ToDoS updated successfully`);
+          setModalToDo(null);
           refetch();
         }
       });
@@ -79,33 +86,35 @@ const ManageTask = () => {
   }
 
   return (
-    <>
-      <div className="py-12 mt-16 lg:mt-24">
+    <section className="bg-base-100 h-screen">
+      <div className="py-12 mt-16 lg:pt-24 bg-base-100">
         <div className="card-actions justify-center bg-base-100">
-          <label
-            htmlFor="task-modal"
-            className="btn btn-md btn-primary text-white uppercase"
-          >
-            Add Task
-          </label>
-        </div>
-
-        <input type="checkbox" id="task-modal" className="modal-toggle" />
-        <div className="modal modal-bottom sm:modal-middle">
-          <div className="modal-box text-center">
+          {toDosData?.length > 0 && (
             <label
               htmlFor="task-modal"
-              className="btn btn-sm btn-primary btn-circle absolute right-2 top-2"
+              className="btn btn-md btn-primary text-white uppercase"
             >
-              ✕
+              Add ToDoS
             </label>
-            <h3 className="font-bold text-2xl text-primary mb-6">
-              Input Your Task Details
-            </h3>
-            <form
-              onSubmit={handleTaskSubmit}
-              className="grid grid-cols-1 gap-3 justify-items-center mt-2"
-            >
+          )}
+        </div>
+        <form
+          onSubmit={handleTaskSubmit}
+          className="grid grid-cols-1 gap-3 justify-items-center mt-2"
+        >
+          <input type="checkbox" id="task-modal" className="modal-toggle" />
+          <div className="modal modal-bottom sm:modal-middle">
+            <div className="modal-box text-center">
+              <label
+                htmlFor="task-modal"
+                className="btn btn-sm btn-primary btn-circle absolute right-2 top-2"
+              >
+                ✕
+              </label>
+              <h3 className="font-bold text-2xl text-primary mb-6">
+                Input Your Task Details
+              </h3>
+
               <input
                 type="text"
                 name="title"
@@ -123,19 +132,19 @@ const ManageTask = () => {
               />
               <input
                 type="submit"
-                value="Submit"
-                className="btn btn-primary text-white"
+                value="Add ToDo"
+                className="btn btn-primary lg:mt-3 text-white"
               />
-            </form>
+            </div>
           </div>
-        </div>
+        </form>
       </div>
 
       <div className="container w-full mx-auto">
         <div className="overflow-x-auto">
           {isLoading ? (
             <Loader />
-          ) : taskData?.length > 0 ? (
+          ) : toDosData?.length > 0 ? (
             <>
               <table className="table w-full">
                 <thead>
@@ -149,13 +158,13 @@ const ManageTask = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {taskData.map((product, ind) => (
+                  {toDosData.map((task, ind) => (
                     <TaskList
-                      key={product._id}
-                      {...product}
+                      key={task._id}
+                      {...task}
                       serialize={ind}
                       refetch={refetch}
-                      setModalProduct={setModalTask}
+                      setModalProduct={setModalToDo}
                     />
                   ))}
                 </tbody>
@@ -186,7 +195,7 @@ const ManageTask = () => {
             </tr>
           )}
         </div>
-        {modalTask && (
+        {modalToDo && (
           <>
             <input type="checkbox" id="my-modal-3" className="modal-toggle" />
             <div className="modal">
@@ -197,7 +206,7 @@ const ManageTask = () => {
                 >
                   ✕
                 </label>
-                <h3 className="text-lg font-bold">{modalTask?.productName}</h3>
+                <h3 className="text-lg font-bold">{modalToDo?.productName}</h3>
                 <p>Update Your Task Details From Here</p>
                 <form onSubmit={handleUpdateStock} action="" className="my-2">
                   <div className="my-4">
@@ -206,7 +215,7 @@ const ManageTask = () => {
                       type="text"
                       placeholder="Put Your Product Name"
                       className="input input-bordered w-full my-3"
-                      value={titleField || modalTask?.title}
+                      value={titleField || modalToDo?.title}
                       onChange={(event) => setTitleField(event.target.value)}
                     />
                   </div>
@@ -214,7 +223,7 @@ const ManageTask = () => {
                     <label htmlFor="stock">Update Description</label>
                     <textarea
                       type="text"
-                      value={descriptionField || modalTask?.description}
+                      value={descriptionField || modalToDo?.description}
                       className="input input-bordered w-full my-3"
                       placeholder="Description"
                       style={{ resize: "none", height: "8rem" }}
@@ -232,7 +241,7 @@ const ManageTask = () => {
           </>
         )}
       </div>
-    </>
+    </section>
   );
 };
 

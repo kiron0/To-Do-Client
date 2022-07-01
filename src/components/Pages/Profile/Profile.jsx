@@ -3,10 +3,12 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { FaFacebook, FaLinkedin } from "react-icons/fa";
 import { useQuery } from "react-query";
+import useTitle from "../../../hooks/useTitle";
 import Loading from "../../Pages/Shared/Loading/Loading";
 import auth from "../Login/Firebase/firebase.init";
 
 const Profile = () => {
+  useTitle("Profile");
   const [isShow, setIsShow] = useState(false);
   const upload_api_key = `e1a6a4f77bc884f9b46b0d06d86c05e5`;
   const [isFile, setIsFile] = useState(false);
@@ -96,7 +98,7 @@ const Profile = () => {
     result[0];
 
   return (
-    <div className="grid place-items-center py-48 md:px-5 lg:px-5 min-h-[80vh]">
+    <div className="grid place-items-center py-36 lg:py-48 md:px-5 lg:px-5 min-h-[80vh]">
       <div className="profile-card w-[97%] md:w-2/3 lg:w-1/3 text-center shadow-lg rounded-lg bg-base-100 p-7">
         <div className="avatar w-40 h-40 rounded-full border-8 text-7xl font-semibold overflow-hidden mt-[-5rem] z-10 grid place-items-center mx-auto ring ring-primary ring-offset-base-100 ring-offset-2">
           {auth?.currentUser?.photoURL ? (

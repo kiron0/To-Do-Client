@@ -1,6 +1,8 @@
 import React from "react";
+import toast from "react-hot-toast";
 import { FiDelete } from "react-icons/fi";
 import Swal from "sweetalert2";
+import auth from "../Login/Firebase/firebase.init";
 
 const TaskList = ({
   title,
@@ -9,7 +11,6 @@ const TaskList = ({
   _id,
   completed,
   refetch,
-  email,
   setModalProduct,
 }) => {
   /* Handle Product Delete */
@@ -23,13 +24,19 @@ const TaskList = ({
       confirmButtonText: "Yes, Delete it!",
     }).then((result) => {
       if (result.value) {
-        Swal.fire("Deleted!", "Your task has been deleted.", "success");
-        fetch(`http://localhost:5000/tasks/${id}`, {
-          method: "DELETE",
-        })
+        fetch(
+          `http://localhost:5000/todos?todoId=${id}&&uid=${auth?.currentUser?.uid}`,
+          {
+            method: "DELETE",
+            headers: {
+              authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+          }
+        )
           .then((res) => res.json())
-          .then((data) => {
-            if (data.deletedCount) {
+          .then((result) => {
+            if (result.success) {
+              toast.success(result.message);
               refetch();
             }
           });
@@ -37,28 +44,23 @@ const TaskList = ({
     });
   };
 
-  const handleCompleteInfo = (id) => {
-    Swal.fire({
-      text: "Are you sure you want to complete this?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, Complete it!",
-    }).then((result) => {
-      if (result.value) {
-        Swal.fire("Completed!", "Your task has been completed.", "success");
-        fetch(`http://localhost:5000/tasks/${id}`, {
-          method: "PATCH",
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            if (data.success) {
-              refetch();
-            }
-          });
+  const handleCompleteInfo = async (id) => {
+    await fetch(
+      `http://localhost:5000/todos?todoId=${id}&&uid=${auth?.currentUser?.uid}`,
+      {
+        method: "PATCH",
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
       }
-    });
+    )
+      .then((res) => res.json())
+      .then((result) => {
+        if (result.success) {
+          toast.success(result.message);
+          refetch();
+        }
+      });
   };
 
   return (
