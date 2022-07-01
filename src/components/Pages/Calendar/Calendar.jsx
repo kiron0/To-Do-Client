@@ -7,16 +7,15 @@ import useTitle from "../../../hooks/useTitle";
 const css = `
   .my-selected { 
     font-weight: bold; 
-    border: 2px solid currentColor;
+    border: 1px solid currentColor;
   }
   .my-selected:hover { 
     border-color: black;
     color: black;
   }
   .my-today { 
-    border: 2px solid currentColor;
+    border: 1px solid currentColor;
     font-weight: bold;
-    font-size: 140%; 
     color: red;
   }
 `;

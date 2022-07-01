@@ -1,9 +1,9 @@
 import React from "react";
 import toast from "react-hot-toast";
 import { FiDelete, FiEdit3 } from "react-icons/fi";
-import { BiMessageSquareDetail } from "react-icons/bi";
 import Swal from "sweetalert2";
 import auth from "../Login/Firebase/firebase.init";
+import { FaRegEye } from "react-icons/fa";
 
 const TaskToDo = ({
   title,
@@ -107,7 +107,7 @@ const TaskToDo = ({
             setModalProduct({ _id, title, description, addedBy, createdAt })
           }
         >
-          <BiMessageSquareDetail />
+          <FaRegEye />
         </label>
       </td>
       <td>
@@ -124,9 +124,9 @@ const TaskToDo = ({
       <td>
         <button
           onClick={() => handleDelete(_id)}
-          className="text-red-500 cursor-pointer"
+          className="btn btn-sm btn-error text-white"
         >
-          <FiDelete className="text-2xl"></FiDelete>
+          <FiDelete />
         </button>
       </td>
     </tr>

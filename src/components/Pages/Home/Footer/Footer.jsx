@@ -57,7 +57,8 @@ const Footer = () => {
         </div>
         <div>
           <p className="lg:text-lg">
-            Copyright © 2022 - All right reserved by K Task To Do
+            Copyright &copy; {new Date().getFullYear()} - All right reserved by
+            K Task To Do
           </p>
         </div>
       </footer>
