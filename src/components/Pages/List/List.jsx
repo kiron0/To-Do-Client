@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
+import { FiDelete } from "react-icons/fi";
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import auth from "../Firebase/firebase.init";
 import { useAuthState } from "react-firebase-hooks/auth";
-import Task from "../Task/Task";
+import auth from "../Login/Firebase/firebase.init";
 
-const List = () => {
+const List = ({ setModalProduct }) => {
   const [myTasks, setMyTasks] = useState([]);
   const navigate = useNavigate();
   const [user] = useAuthState(auth);
@@ -83,48 +83,6 @@ const List = () => {
     });
   };
 
-  // const handleUpdateInfo = (id) => {
-  //   Swal.fire({
-  //     text: "Are you sure you want to update this?",
-  //     icon: "warning",
-  //     showCancelButton: true,
-  //     confirmButtonColor: "#3085d6",
-  //     cancelButtonColor: "#d33",
-  //     confirmButtonText: "Yes, Update it!",
-  //   }).then((result) => {
-  //     if (result.value) {
-  //       Swal.fire("Updated!", "Your task has been updated.", "success");
-  //       fetch(`http://localhost:5000/tasks/${id}`, {
-  //         method: "PATCH",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-  //         },
-  //       body: JSON.stringify({
-  //         title: task.title,
-  //         description: task.description,
-  //       }),
-  //       })
-  //         .then((res) => res.json())
-  //         .then((data) => {
-  //           if (data.success) {
-  //             myTasks(myTasks?.map((task) => (task._id === id ? data : task)));
-  //           }
-  //         });
-  //     }
-  //   });
-  // };
-
-  // if (myTasks.length === 0) {
-  //   return (
-  //     <div>
-  //       <div className="alert alert-warning text-center" role="alert">
-  //         You don't have any items in your inventory.
-  //       </div>
-  //     </div>
-  //   );
-  // }
-
   return (
     <div className="overflow-x-auto container mx-auto h-screen">
       {myTasks?.length > 0 ? (
@@ -166,27 +124,35 @@ const List = () => {
                 <td>
                   <button
                     onClick={() => handleCompleteInfo(task._id)}
-                    className="btn btn-sm btn-error"
+                    className="btn btn-sm btn-success"
                     disabled={task?.completed && true}
                   >
                     {task?.completed ? "Completed" : "Complete"}
                   </button>
                 </td>
                 <td>
-                  <button
-                    onClick={() => handleCompleteInfo(task._id)}
-                    className="btn btn-sm btn-neutral"
+                  <label
+                    type="button"
+                    htmlFor="my-modal-3"
+                    className="btn btn-sm btn-neutral text-white modal-button"
+                    disabled={task?.completed && true}
+                    onClick={() =>
+                      setModalProduct(
+                        task._id,
+                        task.title,
+                        task.description,
+                        task.completed
+                      )
+                    }
                   >
                     Edit
-                  </button>
+                  </label>
                 </td>
                 <td>
-                  <button
+                  <FiDelete
                     onClick={() => handleDelete(task._id)}
-                    className="btn btn-sm btn-warning"
-                  >
-                    Delete
-                  </button>
+                    className="text-red-600 text-2xl cursor-pointer"
+                  ></FiDelete>
                 </td>
               </tr>
             ))}
@@ -199,7 +165,7 @@ const List = () => {
               <div>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  class="stroke-current flex-shrink-0 h-6 w-6"
+                  className="stroke-current flex-shrink-0 h-6 w-6"
                   fill="none"
                   viewBox="0 0 24 24"
                 >

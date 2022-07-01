@@ -3,8 +3,8 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { FaFacebook, FaLinkedin } from "react-icons/fa";
 import { useQuery } from "react-query";
-import auth from "../Firebase/firebase.init";
-import Loading from "../Loading/Loading";
+import Loading from "../../Pages/Shared/Loading/Loading";
+import auth from "../Login/Firebase/firebase.init";
 
 const Profile = () => {
   const [isShow, setIsShow] = useState(false);
@@ -96,16 +96,16 @@ const Profile = () => {
     result[0];
 
   return (
-    <div className="grid place-items-center py-20 md:px-5 lg:px-5 min-h-[83.5vh]">
+    <div className="grid place-items-center py-48 md:px-5 lg:px-5 min-h-[80vh]">
       <div className="profile-card w-[97%] md:w-2/3 lg:w-1/3 text-center shadow-lg rounded-lg bg-base-100 p-7">
         <div className="avatar w-40 h-40 rounded-full border-8 text-7xl font-semibold overflow-hidden mt-[-5rem] z-10 grid place-items-center mx-auto ring ring-primary ring-offset-base-100 ring-offset-2">
           {auth?.currentUser?.photoURL ? (
             <img
               src={auth?.currentUser?.photoURL}
-              alt={auth?.currentUser?.displayName}
+              alt={auth?.currentUser?.displayName.slice(0, 1)}
             />
           ) : (
-            <img src={image} alt={auth?.currentUser?.displayName} />
+            <img src={image} alt={auth?.currentUser?.displayName.slice(0, 1)} />
           )}
         </div>
         <div className="info my-2">
@@ -117,7 +117,8 @@ const Profile = () => {
                   Admin
                 </span>
               ) : (
-                <span className="badge text-white">User</span>
+                <></>
+                // <span className="badge text-white">User</span>
               )}
             </small>
           </h3>

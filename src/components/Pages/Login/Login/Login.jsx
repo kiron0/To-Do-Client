@@ -3,9 +3,9 @@ import { useSignInWithGoogle } from "react-firebase-hooks/auth";
 import { useNavigate, useLocation } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { toast } from "react-hot-toast";
-import Loading from "../../Loading/Loading";
-import auth from "../../Firebase/firebase.init";
-import useToken from "../../../hooks/useToken";
+import Loading from "../../Shared/Loading/Loading";
+import useToken from "../../../../hooks/useToken";
+import auth from "../Firebase/firebase.init";
 
 const Login = () => {
   const [signInWithGoogle, gUser, gLoading] = useSignInWithGoogle(auth);
@@ -32,7 +32,7 @@ const Login = () => {
   }
 
   return (
-    <div className="bg-base-100 h-screen">
+    <div className="bg-base-100 lg:h-screen py-36">
       <div className="flex h-96 justify-center items-center px-4 lg:px-12">
         <div className="card w-full max-w-md bg-base-100">
           <div className="card-body">
