@@ -1,6 +1,7 @@
 import React from "react";
 import todo from "../../../Assets/todo.jpg";
 import { NavLink } from "react-router-dom";
+import { MdAddCircleOutline } from "react-icons/md";
 import Footer from "../Footer/Footer";
 import useTitle from "../../../../hooks/useTitle";
 
@@ -20,7 +21,7 @@ const Home = () => {
               <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">
                 K Task To Do
               </h1>
-              <p className="mb-8 leading-relaxed">
+              <p className="mb-8">
                 To Do List App is a kind of app that generally used to maintain
                 our day-to-day tasks or list everything that we have to do, with
                 the most important tasks at the top of the list, and the least
@@ -28,8 +29,9 @@ const Home = () => {
                 daily schedules.
               </p>
               <div className="flex justify-center">
-                <NavLink to="/task" className="btn btn-primary text-white">
-                  Add Your First ToDo
+                <NavLink to="/toDoS" className="btn btn-primary text-white">
+                  <MdAddCircleOutline className="mr-1 text-xl" /> Add Your First
+                  ToDo
                 </NavLink>
               </div>
             </div>

@@ -7,12 +7,22 @@ import Profile from "./components/Pages/Profile/Profile";
 import Navbar from "./components/Pages/Shared/Navbar/Navbar";
 import Home from "./components/Pages/Home/Home/Home";
 import Login from "./components/Pages/Login/Login/Login";
-import ManageTask from "./components/Pages/ManageTask/ManageTask";
+import ManageToDo from "./components/Pages/ManageToDo/ManageToDo";
 import CompletedToDo from "./components/Pages/CompletedToDo/CompletedToDo";
 import Calendar from "./components/Pages/Calendar/Calendar";
 
 function App() {
   const [theme, setTheme] = useState(false);
+
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  }, []);
+
   useEffect(() => {
     setTheme(JSON.parse(window.localStorage.getItem("theme")));
   }, []);
@@ -21,15 +31,21 @@ function App() {
     window.localStorage.setItem("theme", !theme);
   };
   return (
-    <div data-theme={theme && "night"} className="bg-base-100">
-      <Navbar handleThemeChange={handleThemeChange} theme={theme} />
+    <div data-theme={theme && "night"} className="App bg-base-100">
+      {loading ? (
+        <div id="preloader">
+          <div id="loader"></div>
+        </div>
+      ) : (
+        <Navbar handleThemeChange={handleThemeChange} theme={theme} />
+      )}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route
           path="/toDoS"
           element={
             <RequireAuth>
-              <ManageTask />
+              <ManageToDo />
             </RequireAuth>
           }
         />

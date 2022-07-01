@@ -3,10 +3,11 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { toast } from "react-hot-toast";
 import { useQuery } from "react-query";
 import useTitle from "../../../hooks/useTitle";
-import Loader from "../../Pages/Shared/Loader/Loader";
+import Loader from "../Shared/Loader/Loader";
 import auth from "../Login/Firebase/firebase.init";
-import TaskList from "./TaskList";
-const ManageTask = () => {
+import TaskToDo from "./ToDoList";
+import { MdAddCircleOutline } from "react-icons/md";
+const ManageToDo = () => {
   useTitle("Manage To Do");
   const [modalToDo, setModalToDo] = useState({});
   const [user] = useAuthState(auth);
@@ -22,7 +23,7 @@ const ManageTask = () => {
     }).then((res) => res.json())
   );
 
-  const handleTaskSubmit = (e) => {
+  const handleToCreateToDoS = (e) => {
     e.preventDefault();
     const createToDo = {
       email: user?.email,
@@ -54,10 +55,17 @@ const ManageTask = () => {
       });
   };
 
+  // submit form with enter key
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleToCreateToDoS(e);
+    }
+  };
+
   const [titleField, setTitleField] = useState("");
   const [descriptionField, setDescriptionField] = useState("");
 
-  const handleUpdateStock = async (e) => {
+  const handleUpdateToDoS = async (e) => {
     e.preventDefault();
 
     await fetch(`http://localhost:5000/todos/updateToDoS/${modalToDo._id}`, {
@@ -88,38 +96,39 @@ const ManageTask = () => {
   return (
     <section className="bg-base-100 h-screen">
       <div className="py-12 mt-16 lg:pt-24 bg-base-100">
-        <div className="card-actions justify-center bg-base-100">
+        <div className="card-actions justify-center">
           {toDosData?.length > 0 && (
             <label
-              htmlFor="task-modal"
+              htmlFor="toDosModal"
               className="btn btn-md btn-primary text-white uppercase"
             >
-              Add ToDoS
+              <MdAddCircleOutline className="mr-1 text-lg" /> Add ToDoS
             </label>
           )}
         </div>
         <form
-          onSubmit={handleTaskSubmit}
+          onSubmit={handleToCreateToDoS}
+          onKeyPress={handleKeyPress}
           className="grid grid-cols-1 gap-3 justify-items-center mt-2"
         >
-          <input type="checkbox" id="task-modal" className="modal-toggle" />
+          <input type="checkbox" id="toDosModal" className="modal-toggle" />
           <div className="modal modal-bottom sm:modal-middle">
             <div className="modal-box text-center">
               <label
-                htmlFor="task-modal"
-                className="btn btn-sm btn-primary btn-circle absolute right-2 top-2"
+                htmlFor="toDosModal"
+                className="btn btn-sm btn-circle absolute right-2 top-2 text-white"
               >
                 ✕
               </label>
-              <h3 className="font-bold text-2xl text-primary mb-6">
-                Input Your Task Details
+              <h3 className="font-semibold text-xl mb-6">
+                Input Your To Do Details
               </h3>
 
               <input
                 type="text"
                 name="title"
-                className="input input-bordered w-full max-w-sm mb-4"
-                placeholder="Task Title"
+                className="input input-bordered w-full max-w-sm mb-5"
+                placeholder="Title"
                 required
               />
               <textarea
@@ -133,7 +142,7 @@ const ManageTask = () => {
               <input
                 type="submit"
                 value="Add ToDo"
-                className="btn btn-primary lg:mt-3 text-white"
+                className="btn btn-md mt-3 text-white"
               />
             </div>
           </div>
@@ -150,16 +159,16 @@ const ManageTask = () => {
                 <thead>
                   <tr>
                     <th>No</th>
+                    <th>Complete</th>
                     <th>Title</th>
                     <th>Description</th>
-                    <th>Complete</th>
                     <th>Update</th>
                     <th>Delete</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {toDosData.map((task, ind) => (
-                    <TaskList
+                  {toDosData?.map((task, ind) => (
+                    <TaskToDo
                       key={task._id}
                       {...task}
                       serialize={ind}
@@ -171,46 +180,58 @@ const ManageTask = () => {
               </table>
             </>
           ) : (
-            <tr className="flex items-center justify-center mx-auto rounded">
-              <td>
-                <div className="alert alert-warning shadow-lg" role="alert">
-                  <div>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="stroke-current flex-shrink-0 h-6 w-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-                      />
-                    </svg>
-                    <span>You don't have any task in your list</span>
+            <div>
+              <div className="flex justify-center items-center mx-auto pb-7">
+                <label
+                  htmlFor="toDosModal"
+                  className="btn btn-md btn-primary text-white uppercase"
+                >
+                  <MdAddCircleOutline className="mr-1 text-lg" /> Add New ToDoS
+                </label>
+              </div>
+              <tr className="flex items-center justify-center mx-auto rounded">
+                <td>
+                  <div className="alert alert-warning shadow-lg" role="alert">
+                    <div>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="stroke-current flex-shrink-0 h-6 w-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                        />
+                      </svg>
+                      <span>You don't have any task in your list</span>
+                    </div>
                   </div>
-                </div>
-              </td>
-            </tr>
+                </td>
+              </tr>
+            </div>
           )}
         </div>
         {modalToDo && (
           <>
             <input type="checkbox" id="my-modal-3" className="modal-toggle" />
-            <div className="modal">
+            <div className="modal modal-bottom sm:modal-middle">
               <div className="modal-box relative">
                 <label
                   htmlFor="my-modal-3"
-                  className="btn btn-sm btn-circle absolute right-2 top-2"
+                  className="btn btn-sm btn-circle absolute right-2 top-2 text-white"
                 >
                   ✕
                 </label>
                 <h3 className="text-lg font-bold">{modalToDo?.productName}</h3>
-                <p>Update Your Task Details From Here</p>
-                <form onSubmit={handleUpdateStock} action="" className="my-2">
+                <p className="font-semibold">
+                  Update Your To Do Details From Here
+                </p>
+                <form onSubmit={handleUpdateToDoS} action="" className="my-2">
                   <div className="my-4">
-                    <label htmlFor="stock">Update Title</label>
+                    <label htmlFor="stock">Title</label>
                     <input
                       type="text"
                       placeholder="Put Your Product Name"
@@ -220,7 +241,7 @@ const ManageTask = () => {
                     />
                   </div>
                   <div className="my-4">
-                    <label htmlFor="stock">Update Description</label>
+                    <label htmlFor="stock">Description</label>
                     <textarea
                       type="text"
                       value={descriptionField || modalToDo?.description}
@@ -245,4 +266,4 @@ const ManageTask = () => {
   );
 };
 
-export default ManageTask;
+export default ManageToDo;

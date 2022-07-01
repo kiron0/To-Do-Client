@@ -6,8 +6,10 @@ import { toast } from "react-hot-toast";
 import Loading from "../../Shared/Loading/Loading";
 import useToken from "../../../../hooks/useToken";
 import auth from "../Firebase/firebase.init";
+import useTitle from "../../../../hooks/useTitle";
 
 const Login = () => {
+  useTitle("Login");
   const [signInWithGoogle, gUser, gLoading] = useSignInWithGoogle(auth);
   const [token] = useToken(gUser);
   const navigate = useNavigate();
@@ -36,7 +38,7 @@ const Login = () => {
       <div className="flex h-96 justify-center items-center px-4 lg:px-12">
         <div className="card w-full max-w-md bg-base-100">
           <div className="card-body">
-            <h2 className="text-center text-4xl font-bold pb-10">Login</h2>
+            <h2 className="text-center text-4xl font-bold pb-6">Login</h2>
             <button
               onClick={() => signInWithGoogle()}
               className="btn btn-outline border-primary flex items-center content-center rounded-full hover:btn-primary"

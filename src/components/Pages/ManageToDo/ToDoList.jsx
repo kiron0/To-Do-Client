@@ -4,7 +4,7 @@ import { FiDelete } from "react-icons/fi";
 import Swal from "sweetalert2";
 import auth from "../Login/Firebase/firebase.init";
 
-const TaskList = ({
+const TaskToDo = ({
   title,
   description,
   serialize,
@@ -72,6 +72,15 @@ const TaskList = ({
       >
         {serialize + 1}
       </th>
+      <td>
+        <input
+          type="checkbox"
+          onClick={() => handleCompleteInfo(_id)}
+          className="checkbox"
+          disabled={completed && true}
+          checked={completed}
+        ></input>
+      </td>
       <td
         style={{
           textDecoration: `${completed && "line-through"}`,
@@ -87,19 +96,10 @@ const TaskList = ({
         {description}
       </td>
       <td>
-        <button
-          onClick={() => handleCompleteInfo(_id)}
-          className="btn btn-sm btn-success text-white"
-          disabled={completed && true}
-        >
-          {completed ? "Completed" : "Complete"}
-        </button>
-      </td>
-      <td>
         <label
           type="button"
           htmlFor="my-modal-3"
-          className="btn btn-sm btn-neutral text-white modal-button"
+          className="btn btn-sm btn-success text-white modal-button"
           disabled={completed && true}
           onClick={() => setModalProduct({ _id, title, description })}
         >
@@ -118,4 +118,4 @@ const TaskList = ({
   );
 };
 
-export default TaskList;
+export default TaskToDo;

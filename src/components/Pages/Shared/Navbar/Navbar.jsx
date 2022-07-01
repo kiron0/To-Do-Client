@@ -82,13 +82,13 @@ const Navbar = ({ handleThemeChange, theme }) => {
               className="btn btn-ghost normal-case text-xl flex gap-2 items-center"
               to="/"
             >
-              <FcTodoList className="hidden md:block lg:text-4xl" />{" "}
+              <FcTodoList className="hidden md:block lg:text-3xl" />{" "}
               {!user ? (
-                <span className="ml-[-17px] md:ml-0 lg:ml-0 text-xl md:text-xl lg:text-3xl">
+                <span className="ml-[-17px] md:ml-0 lg:ml-0 text-xl md:text-xl lg:text-2xl">
                   K Task To Do
                 </span>
               ) : (
-                <span className="ml-[-17px] md:ml-0 lg:ml-0 lg:text-3xl">
+                <span className="ml-[-17px] md:ml-0 lg:ml-0 lg:text-2xl">
                   K Task To Do
                 </span>
               )}
