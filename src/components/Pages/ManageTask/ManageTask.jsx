@@ -6,18 +6,19 @@ import Loader from "../../Pages/Shared/Loader/Loader";
 import auth from "../Login/Firebase/firebase.init";
 import TaskList from "./TaskList";
 const ManageTask = () => {
-  const [modalProduct, setModalProduct] = useState({});
+  const [modalTask, setModalTask] = useState({});
   const [user] = useAuthState(auth);
-  const email = user?.email;
-  const { data, isLoading, refetch } = useQuery(["tasks"], () =>
-    fetch(`http://localhost:5000/my-tasks?email=${email}`, {
+  const {
+    data: taskData,
+    isLoading,
+    refetch,
+  } = useQuery("tasks", () =>
+    fetch(`http://localhost:5000/my-tasks?email=${auth?.currentUser?.email}`, {
       headers: {
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
     }).then((res) => res.json())
   );
-
-  const taskData = data;
 
   const handleTaskSubmit = (e) => {
     e.preventDefault();
@@ -35,47 +36,47 @@ const ManageTask = () => {
       body: JSON.stringify(task),
     })
       .then((res) => res.json())
-      .then((data) => {
-        if (data.insertedId) {
+      .then((result) => {
+        if (result.insertedId) {
           refetch();
           toast.success("Task Added Successfully");
           e.target.title.value = "";
           e.target.description.value = "";
         }
-        setModalProduct(null);
+        setModalTask(null);
       });
   };
 
-  /* Handle Update Stock Product */
-  const [productNameField, setProductNameField] = useState("");
-  const [availableQtyField, setAvailableQtyField] = useState("");
+  const [titleField, setTitleField] = useState("");
+  const [descriptionField, setDescriptionField] = useState("");
 
   const handleUpdateStock = async (event) => {
     event.preventDefault();
 
-    await fetch(
-      `http://localhost:5000/products/update-stock/${modalProduct._id}`,
-      {
-        method: "PATCH",
-        headers: {
-          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          "content-type": "application/json",
-        },
-        body: JSON.stringify({
-          productName: productNameField || modalProduct?.productName,
-          availableQty: Number(availableQtyField || modalProduct?.availableQty),
-        }),
-      }
-    )
+    await fetch(`http://localhost:5000/tasks/updateTask/${modalTask._id}`, {
+      method: "PATCH",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        title: titleField || modalTask?.title,
+        description: descriptionField || modalTask?.description,
+      }),
+    })
       .then((res) => res.json())
       .then((result) => {
         if (result.modifiedCount) {
-          refetch();
           toast.success(`Task updated successfully`);
-          setModalProduct(null);
+          setModalTask(null);
+          refetch();
         }
       });
   };
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <>
@@ -134,7 +135,7 @@ const ManageTask = () => {
         <div className="overflow-x-auto">
           {isLoading ? (
             <Loader />
-          ) : taskData.length > 0 ? (
+          ) : taskData?.length > 0 ? (
             <>
               <table className="table w-full">
                 <thead>
@@ -154,7 +155,7 @@ const ManageTask = () => {
                       {...product}
                       serialize={ind}
                       refetch={refetch}
-                      setModalProduct={setModalProduct}
+                      setModalProduct={setModalTask}
                     />
                   ))}
                 </tbody>
@@ -185,7 +186,7 @@ const ManageTask = () => {
             </tr>
           )}
         </div>
-        {modalProduct && (
+        {modalTask && (
           <>
             <input type="checkbox" id="my-modal-3" className="modal-toggle" />
             <div className="modal">
@@ -196,9 +197,7 @@ const ManageTask = () => {
                 >
                   ✕
                 </label>
-                <h3 className="text-lg font-bold">
-                  {modalProduct?.productName}
-                </h3>
+                <h3 className="text-lg font-bold">{modalTask?.productName}</h3>
                 <p>Update Your Task Details From Here</p>
                 <form onSubmit={handleUpdateStock} action="" className="my-2">
                   <div className="my-4">
@@ -207,23 +206,20 @@ const ManageTask = () => {
                       type="text"
                       placeholder="Put Your Product Name"
                       className="input input-bordered w-full my-3"
-                      id="stock"
-                      value={productNameField || modalProduct?.title}
-                      onChange={(event) =>
-                        setProductNameField(event.target.value)
-                      }
+                      value={titleField || modalTask?.title}
+                      onChange={(event) => setTitleField(event.target.value)}
                     />
                   </div>
                   <div className="my-4">
                     <label htmlFor="stock">Update Description</label>
                     <textarea
                       type="text"
-                      value={availableQtyField || modalProduct?.description}
-                      className="input input-bordered w-full max-w-sm my-3"
+                      value={descriptionField || modalTask?.description}
+                      className="input input-bordered w-full my-3"
                       placeholder="Description"
                       style={{ resize: "none", height: "8rem" }}
                       onChange={(event) =>
-                        setAvailableQtyField(event.target.value)
+                        setDescriptionField(event.target.value)
                       }
                     />
                   </div>

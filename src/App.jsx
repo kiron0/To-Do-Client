@@ -8,6 +8,7 @@ import Navbar from "./components/Pages/Shared/Navbar/Navbar";
 import Home from "./components/Pages/Home/Home";
 import Login from "./components/Pages/Login/Login/Login";
 import ManageTask from "./components/Pages/ManageTask/ManageTask";
+import CompletedTask from "./components/Pages/CompletedTask/CompletedTask";
 
 function App() {
   const [theme, setTheme] = useState(false);
@@ -28,6 +29,14 @@ function App() {
           element={
             <RequireAuth>
               <ManageTask />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/completed"
+          element={
+            <RequireAuth>
+              <CompletedTask />
             </RequireAuth>
           }
         />

@@ -87,7 +87,7 @@ const TaskList = ({
       <td>
         <button
           onClick={() => handleCompleteInfo(_id)}
-          className="btn btn-sm btn-success"
+          className="btn btn-sm btn-success text-white"
           disabled={completed && true}
         >
           {completed ? "Completed" : "Complete"}
