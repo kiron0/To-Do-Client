@@ -1,6 +1,7 @@
 import React from "react";
 import toast from "react-hot-toast";
-import { FiDelete } from "react-icons/fi";
+import { FiDelete, FiEdit3 } from "react-icons/fi";
+import { BiMessageSquareDetail } from "react-icons/bi";
 import Swal from "sweetalert2";
 import auth from "../Login/Firebase/firebase.init";
 
@@ -12,6 +13,8 @@ const TaskToDo = ({
   completed,
   refetch,
   setModalProduct,
+  addedBy,
+  createdAt,
 }) => {
   /* Handle Product Delete */
   const handleDelete = (id) => {
@@ -57,7 +60,7 @@ const TaskToDo = ({
       .then((res) => res.json())
       .then((result) => {
         if (result.success) {
-          toast.success(result.message);
+          toast.success(`${title} ${result.message}`);
           refetch();
         }
       });
@@ -86,24 +89,36 @@ const TaskToDo = ({
           textDecoration: `${completed && "line-through"}`,
         }}
       >
-        {title}
+        {title?.slice(0, 20)}
       </td>
       <td
         style={{
           textDecoration: `${completed && "line-through"}`,
         }}
       >
-        {description}
+        {description?.slice(0, 25)}
       </td>
       <td>
         <label
           type="button"
-          htmlFor="my-modal-3"
+          htmlFor="detailsModal"
+          className="btn btn-sm btn-neutral text-white modal-button"
+          onClick={() =>
+            setModalProduct({ _id, title, description, addedBy, createdAt })
+          }
+        >
+          <BiMessageSquareDetail />
+        </label>
+      </td>
+      <td>
+        <label
+          type="button"
+          htmlFor="updateModal"
           className="btn btn-sm btn-success text-white modal-button"
           disabled={completed && true}
           onClick={() => setModalProduct({ _id, title, description })}
         >
-          Update
+          <FiEdit3 />
         </label>
       </td>
       <td>

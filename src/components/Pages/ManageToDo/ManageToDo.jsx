@@ -162,6 +162,7 @@ const ManageToDo = () => {
                     <th>Complete</th>
                     <th>Title</th>
                     <th>Description</th>
+                    <th>Full Details</th>
                     <th>Update</th>
                     <th>Delete</th>
                   </tr>
@@ -216,16 +217,15 @@ const ManageToDo = () => {
         </div>
         {modalToDo && (
           <>
-            <input type="checkbox" id="my-modal-3" className="modal-toggle" />
+            <input type="checkbox" id="updateModal" className="modal-toggle" />
             <div className="modal modal-bottom sm:modal-middle">
               <div className="modal-box relative">
                 <label
-                  htmlFor="my-modal-3"
+                  htmlFor="updateModal"
                   className="btn btn-sm btn-circle absolute right-2 top-2 text-white"
                 >
                   ✕
                 </label>
-                <h3 className="text-lg font-bold">{modalToDo?.productName}</h3>
                 <p className="font-semibold">
                   Update Your To Do Details From Here
                 </p>
@@ -257,6 +257,39 @@ const ManageToDo = () => {
                     <button className="btn text-white">Update Task</button>
                   </div>
                 </form>
+              </div>
+            </div>
+          </>
+        )}
+        {modalToDo && (
+          <>
+            <input type="checkbox" id="detailsModal" className="modal-toggle" />
+            <div className="modal modal-bottom sm:modal-middle">
+              <div className="modal-box relative overflow-x-hidden">
+                <label
+                  htmlFor="detailsModal"
+                  className="btn btn-sm btn-circle absolute right-2 top-2 text-white"
+                >
+                  ✕
+                </label>
+                <div className="my-4">
+                  <p className="text-2xl text-center">{modalToDo?.title}</p>
+                </div>
+                <div className="my-4 p-4">
+                  <p className="text-center">{modalToDo?.description}</p>
+                </div>
+                <div className="card-actions justify-end">
+                  Added By -{" "}
+                  <div className="badge badge-outline badge-success">
+                    {modalToDo?.addedBy?.name}
+                  </div>
+                </div>
+                <div className="card-actions justify-end mt-2">
+                  Added On -{" "}
+                  <div className="badge badge-outline badge-neutral">
+                    {modalToDo?.createdAt}
+                  </div>
+                </div>
               </div>
             </div>
           </>
