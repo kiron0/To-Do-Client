@@ -16,14 +16,11 @@ const ManageToDo = () => {
     isLoading,
     refetch,
   } = useQuery("todos", () =>
-    fetch(
-      `https://k-task-todo.herokuapp.com/myToDoS?email=${auth?.currentUser?.email}`,
-      {
-        headers: {
-          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-      }
-    ).then((res) => res.json())
+    fetch(`http://localhost:5000/myToDoS?email=${auth?.currentUser?.email}`, {
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    }).then((res) => res.json())
   );
 
   const handleToCreateToDoS = (e) => {
@@ -40,17 +37,14 @@ const ManageToDo = () => {
         email: auth?.currentUser?.email,
       },
     };
-    fetch(
-      `https://k-task-todo.herokuapp.com/createToDo?uid=${auth?.currentUser?.uid}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-        body: JSON.stringify(createToDo),
-      }
-    )
+    fetch(`http://localhost:5000/createToDo?uid=${auth?.currentUser?.uid}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+      body: JSON.stringify(createToDo),
+    })
       .then((res) => res.json())
       .then((result) => {
         if (result.success) {
@@ -74,20 +68,17 @@ const ManageToDo = () => {
   const handleUpdateToDoS = async (e) => {
     e.preventDefault();
 
-    await fetch(
-      `https://k-task-todo.herokuapp.com/todos/updateToDoS/${modalToDo._id}`,
-      {
-        method: "PATCH",
-        headers: {
-          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          "content-type": "application/json",
-        },
-        body: JSON.stringify({
-          title: titleField || modalToDo?.title,
-          description: descriptionField || modalToDo?.description,
-        }),
-      }
-    )
+    await fetch(`http://localhost:5000/todos/updateToDoS/${modalToDo._id}`, {
+      method: "PATCH",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        title: titleField || modalToDo?.title,
+        description: descriptionField || modalToDo?.description,
+      }),
+    })
       .then((res) => res.json())
       .then((result) => {
         if (result.modifiedCount) {
@@ -216,7 +207,7 @@ const ManageToDo = () => {
                           d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
                         />
                       </svg>
-                      <span>You don't have any task in your list</span>
+                      <span>You don't have any todoS in your list</span>
                     </div>
                   </div>
                 </td>

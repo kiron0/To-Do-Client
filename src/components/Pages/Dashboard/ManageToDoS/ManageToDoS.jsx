@@ -1,30 +1,24 @@
 import React from "react";
 import { useQuery } from "react-query";
-import Loader from "../Shared/Loader/Loader";
-import auth from "../Login/Firebase/firebase.init";
-import ToDoRow from "./ToDoRow";
-import useTitle from "../../../hooks/useTitle";
+import Loader from "../../Shared/Loader/Loader";
+import ToDoSRow from "./ToDoSRow";
 
-const CompletedToDo = () => {
-  useTitle("Completed To Do");
+const ManageToDoS = () => {
   const {
-    data: completedData,
+    data: toDosData,
     isLoading,
     refetch,
-  } = useQuery("completed", () =>
-    fetch(
-      `http://localhost:5000/myToDoS/completed?email=${auth?.currentUser?.email}`,
-      {
-        headers: {
-          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-      }
-    ).then((res) => res.json())
+  } = useQuery("todos", () =>
+    fetch(`http://localhost:5000/toDoS`, {
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    }).then((res) => res.json())
   );
 
   return (
-    <div className="px-0 lg:px-52 py-12 mt-8 lg:pt-32 bg-base-100 h-screen">
-      <div className="title my-2 mb-6 px-4">
+    <div className="lg:px-4 py-7 bg-base-100">
+      <div className="title mb-4 px-4">
         <h3 className="text-2xl font-semibold">Completed ToDoS</h3>
         <span>
           You can see all the completed tasks which you're completed already.
@@ -33,10 +27,10 @@ const CompletedToDo = () => {
       <div>
         {isLoading ? (
           <Loader />
-        ) : completedData?.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mx-auto px-4">
-            {completedData?.map((task) => (
-              <ToDoRow key={task._id} task={task} refetch={refetch} />
+        ) : toDosData?.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mx-auto lg:px-4">
+            {toDosData?.map((todo) => (
+              <ToDoSRow key={todo._id} todo={todo} refetch={refetch} />
             ))}
           </div>
         ) : (
@@ -68,4 +62,4 @@ const CompletedToDo = () => {
   );
 };
 
-export default CompletedToDo;
+export default ManageToDoS;

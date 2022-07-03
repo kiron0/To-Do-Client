@@ -10,6 +10,11 @@ import Login from "./components/Pages/Login/Login/Login";
 import ManageToDo from "./components/Pages/ManageToDo/ManageToDo";
 import CompletedToDo from "./components/Pages/CompletedToDo/CompletedToDo";
 import Calendar from "./components/Pages/Calendar/Calendar";
+import Dashboard from "./components/Pages/Dashboard/Dashboard/Dashboard";
+import Welcome from "./components/Pages/Dashboard/Welcome/Welcome";
+import ManageToDoS from "./components/Pages/Dashboard/ManageToDoS/ManageToDoS";
+import ManageUsers from "./components/Pages/Dashboard/ManageUsers/ManageUsers";
+import RequireAdmin from "./components/Pages/Login/RequireAdmin/RequireAdmin";
 
 function App() {
   const [theme, setTheme] = useState(false);
@@ -66,6 +71,18 @@ function App() {
             </RequireAuth>
           }
         />
+        <Route
+          path="dashboard"
+          element={
+            <RequireAdmin>
+              <Dashboard handleThemeChange={handleThemeChange} theme={theme} />
+            </RequireAdmin>
+          }
+        >
+          <Route index element={<Welcome />} />
+          <Route path="manageToDoS" element={<ManageToDoS />} />
+          <Route path="manageUsers" element={<ManageUsers />} />
+        </Route>
         <Route path="/login" element={<Login />} />
       </Routes>
       <Toaster />

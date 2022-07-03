@@ -8,11 +8,13 @@ import { toast } from "react-hot-toast";
 import { BiLogInCircle } from "react-icons/bi";
 import useProfileImage from "../../../../hooks/useProfileImage";
 import auth from "../../Login/Firebase/firebase.init";
+import useAdmin from "../../../../hooks/useAdmin";
 
 const Navbar = ({ handleThemeChange, theme }) => {
   const [user] = useAuthState(auth);
   const [image] = useProfileImage(user);
   const { pathname } = useLocation();
+  const [admin] = useAdmin(user);
   const [scrollY, setScrollY] = useState();
 
   useEffect(() => {
@@ -23,7 +25,7 @@ const Navbar = ({ handleThemeChange, theme }) => {
     signOut(auth);
     localStorage.removeItem("accessToken");
     toast.success(`Thank you, ${user.displayName} to stay with us!`, {
-      position: "bottom-center",
+      position: "bottom-left",
       autoClose: 5000,
     });
   };
@@ -50,6 +52,13 @@ const Navbar = ({ handleThemeChange, theme }) => {
           Calendar
         </NavLink>
       </li>
+      {admin && (
+        <li className="py-1 lg:py-0 bg-primary rounded-lg text-white">
+          <NavLink className="uppercase" to="/dashboard">
+            Dashboard
+          </NavLink>
+        </li>
+      )}
     </>
   );
 
@@ -82,13 +91,13 @@ const Navbar = ({ handleThemeChange, theme }) => {
               className="btn btn-ghost normal-case text-xl flex gap-2 items-center"
               to="/"
             >
-              <FcTodoList className="hidden md:block lg:text-3xl" />{" "}
+              <FcTodoList className="hidden md:block md:text-2xl lg:text-3xl" />{" "}
               {!user ? (
-                <span className="ml-[-17px] md:ml-0 lg:ml-0 text-xl md:text-xl lg:text-2xl">
+                <span className="ml-[-17px] md:ml-0 lg:ml-0 text-2xl lg:text-2xl">
                   K Task To Do
                 </span>
               ) : (
-                <span className="ml-[-17px] md:ml-0 lg:ml-0 lg:text-2xl">
+                <span className="ml-[-17px] md:ml-0 lg:ml-0 text-2xl lg:text-2xl">
                   K Task To Do
                 </span>
               )}
@@ -161,9 +170,16 @@ const Navbar = ({ handleThemeChange, theme }) => {
                     <li>
                       <Link className="justify-between" to="/profile">
                         Profile
-                        <span className="badge">New</span>
                       </Link>
                     </li>
+                    {admin && (
+                      <li>
+                        <Link className="justify-between" to="/dashboard">
+                          Dashboard
+                          <span className="badge">New</span>
+                        </Link>
+                      </li>
+                    )}
                     <li>
                       <button onClick={handleLogOut}>Logout</button>
                     </li>
