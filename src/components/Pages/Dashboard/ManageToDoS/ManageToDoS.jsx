@@ -1,9 +1,11 @@
 import React from "react";
 import { useQuery } from "react-query";
+import useTitle from "../../../../hooks/useTitle";
 import Loader from "../../Shared/Loader/Loader";
 import ToDoSRow from "./ToDoSRow";
 
 const ManageToDoS = () => {
+  useTitle("Manage All ToDoS");
   const {
     data: toDosData,
     isLoading,

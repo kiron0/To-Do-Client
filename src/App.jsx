@@ -15,6 +15,7 @@ import Welcome from "./components/Pages/Dashboard/Welcome/Welcome";
 import ManageToDoS from "./components/Pages/Dashboard/ManageToDoS/ManageToDoS";
 import ManageUsers from "./components/Pages/Dashboard/ManageUsers/ManageUsers";
 import RequireAdmin from "./components/Pages/Login/RequireAdmin/RequireAdmin";
+import NotFound from "./components/Pages/Shared/NotFound/NotFound";
 
 function App() {
   const [theme, setTheme] = useState(false);
@@ -84,6 +85,7 @@ function App() {
           <Route path="manageUsers" element={<ManageUsers />} />
         </Route>
         <Route path="/login" element={<Login />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <Toaster />
     </div>
