@@ -100,6 +100,11 @@ const Dashboard = ({ handleThemeChange, theme }) => {
               className="mt-5 p-2 shadow-xl menu menu-compact dropdown-content bg-base-300 rounded-box w-52"
             >
               <li>
+                <Link to="/profile" className="text-black py-2">
+                  Profile
+                </Link>
+              </li>
+              <li>
                 <button onClick={handleLogOut}>
                   {" "}
                   <FiLogOut />
@@ -121,8 +126,11 @@ const Dashboard = ({ handleThemeChange, theme }) => {
             >
               <FcTodoList className="text-3xl" /> K Task ToDo
             </Link>
-            <div className="badge badge-outline hover:badge cursor-pointer flex justify-center items-center gap-1 p-4 hover:p-4">
-              <FiLogOut onClick={handleLogOut} />
+            <div
+              onClick={handleLogOut}
+              className="badge badge-outline hover:badge cursor-pointer flex justify-center items-center gap-1 p-4 hover:p-4"
+            >
+              <FiLogOut />
               LogOut
             </div>
           </div>

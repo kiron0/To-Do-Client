@@ -4,7 +4,7 @@ import { toast } from "react-hot-toast";
 import Swal from "sweetalert2";
 
 const UserRow = ({ user, index, refetch }) => {
-  const { _id, email, role, uid } = user;
+  const { _id, email, role, uid, image } = user;
 
   /* Handle Delete User */
   const handleUserDelete = () => {
@@ -108,6 +108,23 @@ const UserRow = ({ user, index, refetch }) => {
   return (
     <tr>
       <th>{index + 1}</th>
+      <td>
+        {image ? (
+          <img
+            src={image}
+            alt=""
+            width={60}
+            className="rounded shadow-sm bg-base-300 border p-1"
+          />
+        ) : (
+          <img
+            src="https://placeimg.com/80/80/people"
+            alt=""
+            width={60}
+            className="rounded shadow-sm bg-base-300 border p-1"
+          />
+        )}
+      </td>
       <td>{uid ? uid : "Not Available"}</td>
       <td>{email}</td>
       <td>

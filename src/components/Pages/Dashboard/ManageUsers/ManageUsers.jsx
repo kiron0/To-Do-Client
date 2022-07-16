@@ -22,7 +22,7 @@ const ManageUsers = () => {
     return <Loading></Loading>;
   }
   return (
-    <div className="lg:px-10 py-10 bg-base-100 h-screen rounded-md">
+    <div className="lg:px-10 py-8 bg-base-100 h-screen rounded-md">
       <div className="title my-2 mb-10">
         <h3 className="text-2xl font-semibold">Manage Users</h3>
         <span>You can manage all the users whom are already registered</span>
@@ -32,6 +32,7 @@ const ManageUsers = () => {
           <thead className="bg-base-300">
             <tr>
               <th>No</th>
+              <th>Image</th>
               <th>Uid</th>
               <th>Email</th>
               <th>Make Admin</th>

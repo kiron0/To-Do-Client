@@ -39,7 +39,7 @@ const Navbar = ({ handleThemeChange, theme }) => {
       </li>
       <li className="py-1 lg:py-0">
         <NavLink className="uppercase" to="/toDoS">
-          Add ToDo
+          To-Do
         </NavLink>
       </li>
       <li className="py-1 lg:py-0">

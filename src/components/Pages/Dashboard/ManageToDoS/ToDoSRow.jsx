@@ -38,7 +38,7 @@ const ToDoSRow = ({ todo, refetch }) => {
     <div className="card w-100 bg-base-100 shadow-xl">
       <label
         onClick={() => handleDelete(todo._id)}
-        className="btn btn-sm btn-circle btn-error absolute right-2 top-2 text-white"
+        className="btn btn-sm absolute right-2 top-2 text-white"
       >
         <FiDelete className="text-lg mr-[3px]" />
       </label>

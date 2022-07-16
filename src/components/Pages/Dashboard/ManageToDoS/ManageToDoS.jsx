@@ -18,17 +18,15 @@ const ManageToDoS = () => {
 
   return (
     <div className="lg:px-4 py-7 bg-base-100">
-      <div className="title mb-4 px-4">
-        <h3 className="text-2xl font-semibold">Completed ToDoS</h3>
-        <span>
-          You can see all the completed tasks which you're completed already.
-        </span>
+      <div className="title mb-4 px-4 lg:py-4">
+        <h3 className="text-2xl font-semibold">Manage All The ToDoS</h3>
+        <span>You can see all the toDoS which are added by the users.</span>
       </div>
       <div>
         {isLoading ? (
           <Loader />
         ) : toDosData?.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mx-auto lg:px-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mx-auto lg:px-4 lg:mt-10">
             {toDosData?.map((todo) => (
               <ToDoSRow key={todo._id} todo={todo} refetch={refetch} />
             ))}
