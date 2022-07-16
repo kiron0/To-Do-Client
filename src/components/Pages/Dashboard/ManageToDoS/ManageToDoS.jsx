@@ -9,7 +9,7 @@ const ManageToDoS = () => {
     isLoading,
     refetch,
   } = useQuery("todos", () =>
-    fetch(`http://localhost:5000/toDoS`, {
+    fetch(`https://k-task-todo.herokuapp.com/toDoS`, {
       headers: {
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },

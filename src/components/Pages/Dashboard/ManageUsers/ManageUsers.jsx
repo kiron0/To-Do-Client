@@ -11,7 +11,7 @@ const ManageUsers = () => {
     isLoading,
     refetch,
   } = useQuery("users", () =>
-    fetch("http://localhost:5000/users/all", {
+    fetch("https://k-task-todo.herokuapp.com/users/all", {
       headers: {
         "content-type": "application/json",
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,

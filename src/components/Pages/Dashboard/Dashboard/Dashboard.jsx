@@ -140,10 +140,10 @@ const Dashboard = ({ handleThemeChange, theme }) => {
           {admin && (
             <>
               <li className="py-2">
-                <NavLink to="/dashboard/manageToDoS">Manage ToDoS</NavLink>
+                <NavLink to="/dashboard/manageToDoS">Manage All ToDoS</NavLink>
               </li>
               <li className="py-2">
-                <NavLink to="/dashboard/manageUsers">Manage Users</NavLink>
+                <NavLink to="/dashboard/manageUsers">Manage All Users</NavLink>
               </li>
             </>
           )}

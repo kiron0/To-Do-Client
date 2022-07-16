@@ -14,7 +14,7 @@ const ToDoSRow = ({ todo, refetch }) => {
       confirmButtonText: "Yes, Delete it!",
     }).then((result) => {
       if (result.value) {
-        fetch(`http://localhost:5000/todoS/${id}`, {
+        fetch(`https://k-task-todo.herokuapp.com/todoS/${id}`, {
           method: "DELETE",
           headers: {
             authorization: `Bearer ${localStorage.getItem("accessToken")}`,

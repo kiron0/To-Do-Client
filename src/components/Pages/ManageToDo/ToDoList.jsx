@@ -28,7 +28,7 @@ const TaskToDo = ({
     }).then((result) => {
       if (result.value) {
         fetch(
-          `http://localhost:5000/todos?todoId=${id}&&uid=${auth?.currentUser?.uid}`,
+          `https://k-task-todo.herokuapp.com/todos?todoId=${id}&&uid=${auth?.currentUser?.uid}`,
           {
             method: "DELETE",
             headers: {
@@ -49,7 +49,7 @@ const TaskToDo = ({
 
   const handleCompleteInfo = async (id) => {
     await fetch(
-      `http://localhost:5000/todos?todoId=${id}&&uid=${auth?.currentUser?.uid}`,
+      `https://k-task-todo.herokuapp.com/todos?todoId=${id}&&uid=${auth?.currentUser?.uid}`,
       {
         method: "PATCH",
         headers: {

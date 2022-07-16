@@ -12,13 +12,16 @@ const useToken = (user) => {
       image: auth?.currentUser?.photoURL,
     };
     if (email) {
-      fetch(`http://localhost:5000/user?email=${email}&&uid=${uid}`, {
-        method: "PUT",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(currentUser),
-      })
+      fetch(
+        `https://k-task-todo.herokuapp.com/user?email=${email}&&uid=${uid}`,
+        {
+          method: "PUT",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(currentUser),
+        }
+      )
         .then((res) => res.json())
         .then((data) => {
           const accessToken = data.token;
