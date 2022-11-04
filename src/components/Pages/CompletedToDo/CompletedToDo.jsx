@@ -4,6 +4,7 @@ import Loader from "../Shared/Loader/Loader";
 import auth from "../Login/Firebase/firebase.init";
 import ToDoRow from "./ToDoRow";
 import useTitle from "../../../hooks/useTitle";
+import { BASE_API } from "../../../config";
 
 const CompletedToDo = () => {
   useTitle("Completed To Do");
@@ -13,7 +14,7 @@ const CompletedToDo = () => {
     refetch,
   } = useQuery("completed", () =>
     fetch(
-      `https://k-task-todo.herokuapp.com/myToDoS/completed?email=${auth?.currentUser?.email}`,
+      `${BASE_API}/myToDoS/completed?email=${auth?.currentUser?.email}`,
       {
         headers: {
           authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -23,7 +24,7 @@ const CompletedToDo = () => {
   );
 
   return (
-    <div className="px-0 lg:px-52 py-12 mt-8 lg:pt-32 bg-base-100 h-screen">
+    <div className="px-0 lg:px-52 py-2 md:pt-10 bg-base-100 h-screen">
       <div className="title my-2 mb-6 px-4">
         <h3 className="text-2xl font-semibold">Completed ToDoS</h3>
         <span>

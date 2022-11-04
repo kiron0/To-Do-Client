@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { NavLink, Link, useLocation } from "react-router-dom";
 import { FcTodoList } from "react-icons/fc";
-import { CgMenuGridO } from "react-icons/cg";
+import { CgMenuLeft } from "react-icons/cg";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { signOut } from "firebase/auth";
 import { toast } from "react-hot-toast";
@@ -9,23 +9,34 @@ import { BiLogInCircle } from "react-icons/bi";
 import useProfileImage from "../../../../hooks/useProfileImage";
 import auth from "../../Login/Firebase/firebase.init";
 import useAdmin from "../../../../hooks/useAdmin";
+import { InitializeContext } from "../../../../App";
 
-const Navbar = ({ handleThemeChange, theme }) => {
+const Navbar = () => {
+  const { handleThemeChange, theme } = useContext(InitializeContext);
   const [user] = useAuthState(auth);
   const [image] = useProfileImage(user);
   const { pathname } = useLocation();
   const [admin] = useAdmin(user);
   const [scrollY, setScrollY] = useState();
 
+  const handleScroll = () => {
+    const position = window.pageYOffset;
+    setScrollY(position);
+  };
+
   useEffect(() => {
-    setScrollY(window.scrollY);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, [scrollY]);
 
   const handleLogOut = () => {
     signOut(auth);
     localStorage.removeItem("accessToken");
     toast.success(`Thank you, ${user.displayName} to stay with us!`, {
-      position: "bottom-left",
+      position: "top-right",
       autoClose: 5000,
     });
   };
@@ -47,11 +58,6 @@ const Navbar = ({ handleThemeChange, theme }) => {
           Completed
         </NavLink>
       </li>
-      <li className="py-1 lg:py-0">
-        <NavLink className="uppercase" to="/calendar">
-          Calendar
-        </NavLink>
-      </li>
       {admin && (
         <li className="py-1 lg:py-0 bg-primary rounded-lg text-white">
           <NavLink className="uppercase" to="/dashboard">
@@ -63,10 +69,10 @@ const Navbar = ({ handleThemeChange, theme }) => {
   );
 
   return (
-    <div className="fixed top-0 w-full z-50 bg-base-100">
+    <div className="sticky top-0 w-full z-50 bg-base-100">
       <div
         className={`drawer-content flex flex-col backdrop-blur-[18px] bg-base-100  ${
-          scrollY < 300 && "lg:bg-transparent"
+          scrollY > 60 && "bg-transparent shadow-md"
         }`}
         style={
           pathname.includes("dashboard")
@@ -78,7 +84,7 @@ const Navbar = ({ handleThemeChange, theme }) => {
           <div className="navbar-start">
             <div className="dropdown">
               <label tabIndex="0" className="btn btn-ghost lg:hidden">
-                <CgMenuGridO className="text-3xl" />
+                <CgMenuLeft className="text-3xl" />
               </label>
               <ul
                 tabIndex="0"
@@ -91,7 +97,7 @@ const Navbar = ({ handleThemeChange, theme }) => {
               className="btn btn-ghost normal-case text-xl flex gap-2 items-center"
               to="/"
             >
-              <FcTodoList className="hidden md:block md:text-2xl lg:text-3xl" />{" "}
+              <FcTodoList className="hidden lg:block md:text-2xl lg:text-3xl" />{" "}
               {!user ? (
                 <span className="ml-[-17px] md:ml-0 lg:ml-0 text-2xl lg:text-2xl">
                   K Task To Do

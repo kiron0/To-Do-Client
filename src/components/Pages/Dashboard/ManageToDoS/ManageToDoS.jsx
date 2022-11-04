@@ -1,5 +1,6 @@
 import React from "react";
 import { useQuery } from "react-query";
+import { BASE_API } from "../../../../config";
 import useTitle from "../../../../hooks/useTitle";
 import Loader from "../../Shared/Loader/Loader";
 import ToDoSRow from "./ToDoSRow";
@@ -11,7 +12,7 @@ const ManageToDoS = () => {
     isLoading,
     refetch,
   } = useQuery("todos", () =>
-    fetch(`https://k-task-todo.herokuapp.com/toDoS`, {
+    fetch(`${BASE_API}/toDoS`, {
       headers: {
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },

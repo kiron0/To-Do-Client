@@ -1,5 +1,6 @@
 import React from "react";
 import { useQuery } from "react-query";
+import { BASE_API } from "../../../../config";
 import useTitle from "../../../../hooks/useTitle";
 import Loading from "../../Shared/Loading/Loading";
 import UserRow from "./UserRow";
@@ -11,7 +12,7 @@ const ManageUsers = () => {
     isLoading,
     refetch,
   } = useQuery("users", () =>
-    fetch("https://k-task-todo.herokuapp.com/users/all", {
+    fetch(`${BASE_API}/users/all`, {
       headers: {
         "content-type": "application/json",
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,

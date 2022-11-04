@@ -4,6 +4,7 @@ import { FiDelete, FiEdit3 } from "react-icons/fi";
 import Swal from "sweetalert2";
 import auth from "../Login/Firebase/firebase.init";
 import { FaRegEye } from "react-icons/fa";
+import { BASE_API } from "../../../config";
 
 const TaskToDo = ({
   title,
@@ -28,7 +29,7 @@ const TaskToDo = ({
     }).then((result) => {
       if (result.value) {
         fetch(
-          `https://k-task-todo.herokuapp.com/todos?todoId=${id}&&uid=${auth?.currentUser?.uid}`,
+          `${BASE_API}/todos?todoId=${id}&&uid=${auth?.currentUser?.uid}`,
           {
             method: "DELETE",
             headers: {
@@ -49,7 +50,7 @@ const TaskToDo = ({
 
   const handleCompleteInfo = async (id) => {
     await fetch(
-      `https://k-task-todo.herokuapp.com/todos?todoId=${id}&&uid=${auth?.currentUser?.uid}`,
+      `${BASE_API}/todos?todoId=${id}&&uid=${auth?.currentUser?.uid}`,
       {
         method: "PATCH",
         headers: {

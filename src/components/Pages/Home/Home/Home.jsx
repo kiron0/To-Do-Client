@@ -9,9 +9,9 @@ const Home = () => {
   useTitle("Home");
   return (
     <>
-      <div className="bg-base-100 py-0 lg:py-12">
+      <div className="bg-base-100">
         <section className="body-font bg-base-100">
-          <div className="container mx-auto flex px-5 py-24 lg:py-24 items-center justify-center flex-col">
+          <div className="container mx-auto flex px-5 py-6 md:py-20 items-center justify-center flex-col">
             <img
               className="lg:w-2/6 md:w-4/6 w-full mb-10 object-cover object-center rounded-2xl"
               alt="todo"

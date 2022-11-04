@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { FaFacebook, FaLinkedin } from "react-icons/fa";
 import { useQuery } from "react-query";
+import { BASE_API } from "../../../config";
 import useTitle from "../../../hooks/useTitle";
 import Loading from "../../Pages/Shared/Loading/Loading";
 import auth from "../Login/Firebase/firebase.init";
@@ -34,7 +35,7 @@ const Profile = () => {
       createdAt: new Date().toDateString(),
     };
     await fetch(
-      `https://k-task-todo.herokuapp.com/users?uid=${auth?.currentUser?.uid}`,
+      `${BASE_API}/users?uid=${auth?.currentUser?.uid}`,
       {
         method: "PATCH",
         headers: {
@@ -61,7 +62,7 @@ const Profile = () => {
     refetch,
   } = useQuery(["profileData", auth?.currentUser?.uid], () =>
     fetch(
-      `https://k-task-todo.herokuapp.com/users?uid=${auth?.currentUser?.uid}`,
+      `${BASE_API}/users?uid=${auth?.currentUser?.uid}`,
       {
         headers: {
           authorization: `Bearer ${localStorage.getItem("accessToken")}`,

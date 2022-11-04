@@ -7,6 +7,7 @@ import Loader from "../Shared/Loader/Loader";
 import auth from "../Login/Firebase/firebase.init";
 import TaskToDo from "./ToDoList";
 import { MdAddCircleOutline } from "react-icons/md";
+import { BASE_API } from "../../../config";
 const ManageToDo = () => {
   useTitle("Manage To Do");
   const [modalToDo, setModalToDo] = useState({});
@@ -17,7 +18,7 @@ const ManageToDo = () => {
     refetch,
   } = useQuery("todos", () =>
     fetch(
-      `https://k-task-todo.herokuapp.com/myToDoS?email=${auth?.currentUser?.email}`,
+      `${BASE_API}/myToDoS?email=${auth?.currentUser?.email}`,
       {
         headers: {
           authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -41,7 +42,7 @@ const ManageToDo = () => {
       },
     };
     fetch(
-      `https://k-task-todo.herokuapp.com/createToDo?uid=${auth?.currentUser?.uid}`,
+      `${BASE_API}/createToDo?uid=${auth?.currentUser?.uid}`,
       {
         method: "POST",
         headers: {
@@ -61,13 +62,6 @@ const ManageToDo = () => {
       });
   };
 
-  // submit form with enter key
-  const handleKeyPress = (e) => {
-    if (e.key === "Enter") {
-      handleToCreateToDoS(e);
-    }
-  };
-
   const [titleField, setTitleField] = useState("");
   const [descriptionField, setDescriptionField] = useState("");
 
@@ -75,7 +69,7 @@ const ManageToDo = () => {
     e.preventDefault();
 
     await fetch(
-      `https://k-task-todo.herokuapp.com/todos/updateToDoS/${modalToDo._id}`,
+      `${BASE_API}/todos/updateToDoS/${modalToDo._id}`,
       {
         method: "PATCH",
         headers: {
@@ -104,7 +98,7 @@ const ManageToDo = () => {
 
   return (
     <section className="bg-base-100 h-screen">
-      <div className="py-12 mt-16 lg:pt-24 bg-base-100">
+      <div className="py-12 mt-12 lg:pt-12 bg-base-100">
         <div className="card-actions justify-center">
           {toDosData?.length > 0 && (
             <label
@@ -117,7 +111,6 @@ const ManageToDo = () => {
         </div>
         <form
           onSubmit={handleToCreateToDoS}
-          onKeyPress={handleKeyPress}
           className="grid grid-cols-1 gap-3 justify-items-center mt-2"
         >
           <input type="checkbox" id="toDosModal" className="modal-toggle" />

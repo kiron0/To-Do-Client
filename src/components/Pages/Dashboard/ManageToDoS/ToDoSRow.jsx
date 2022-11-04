@@ -2,6 +2,7 @@ import React from "react";
 import toast from "react-hot-toast";
 import { FiDelete } from "react-icons/fi";
 import Swal from "sweetalert2";
+import { BASE_API } from "../../../../config";
 
 const ToDoSRow = ({ todo, refetch }) => {
   const handleDelete = (id) => {
@@ -14,7 +15,7 @@ const ToDoSRow = ({ todo, refetch }) => {
       confirmButtonText: "Yes, Delete it!",
     }).then((result) => {
       if (result.value) {
-        fetch(`https://k-task-todo.herokuapp.com/todoS/${id}`, {
+        fetch(`${BASE_API}/todoS/${id}`, {
           method: "DELETE",
           headers: {
             authorization: `Bearer ${localStorage.getItem("accessToken")}`,

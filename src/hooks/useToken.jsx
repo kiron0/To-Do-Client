@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import auth from "../components/Pages/Login/Firebase/firebase.init";
+import { BASE_API } from "../config";
 
 const useToken = (user) => {
   const [token, setToken] = useState("");
@@ -13,7 +14,7 @@ const useToken = (user) => {
     };
     if (email) {
       fetch(
-        `https://k-task-todo.herokuapp.com/user?email=${email}&&uid=${uid}`,
+        `${BASE_API}/user?email=${email}&&uid=${uid}`,
         {
           method: "PUT",
           headers: {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { toast } from "react-hot-toast";
 import { BsGrid } from "react-icons/bs";
 import { FiLogOut } from "react-icons/fi";
@@ -11,8 +11,10 @@ import useProfileImage from "../../../../hooks/useProfileImage";
 import auth from "../../Login/Firebase/firebase.init";
 import useTitle from "../../../../hooks/useTitle";
 import { FcTodoList } from "react-icons/fc";
+import { InitializeContext } from "../../../../App";
 
-const Dashboard = ({ handleThemeChange, theme }) => {
+const Dashboard = () => {
+  const { handleThemeChange, theme } = useContext(InitializeContext);
   useTitle("Dashboard");
   const [user] = useAuthState(auth);
   const [admin, adminLoading] = useAdmin(user);
