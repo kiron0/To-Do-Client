@@ -5,8 +5,10 @@ import auth from "../Login/Firebase/firebase.init";
 import ToDoRow from "./ToDoRow";
 import useTitle from "../../../hooks/useTitle";
 import { BASE_API } from "../../../config";
+import useScrollToTop from "../../../hooks/useScrollToTop";
 
 const CompletedToDo = () => {
+  useScrollToTop();
   useTitle("Completed To Do");
   const {
     data: completedData,

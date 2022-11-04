@@ -7,8 +7,10 @@ import Loading from "../../Shared/Loading/Loading";
 import useToken from "../../../../hooks/useToken";
 import auth from "../Firebase/firebase.init";
 import useTitle from "../../../../hooks/useTitle";
+import useScrollToTop from "../../../../hooks/useScrollToTop";
 
 const Login = () => {
+  useScrollToTop();
   useTitle("Login");
   const [signInWithGoogle, gUser, gLoading] = useSignInWithGoogle(auth);
   const [token] = useToken(gUser);

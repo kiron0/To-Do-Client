@@ -12,8 +12,10 @@ import auth from "../../Login/Firebase/firebase.init";
 import useTitle from "../../../../hooks/useTitle";
 import { FcTodoList } from "react-icons/fc";
 import { InitializeContext } from "../../../../App";
+import useScrollToTop from "../../../../hooks/useScrollToTop";
 
 const Dashboard = () => {
+  useScrollToTop();
   const { handleThemeChange, theme } = useContext(InitializeContext);
   useTitle("Dashboard");
   const [user] = useAuthState(auth);

@@ -10,8 +10,10 @@ import useProfileImage from "../../../../hooks/useProfileImage";
 import auth from "../../Login/Firebase/firebase.init";
 import useAdmin from "../../../../hooks/useAdmin";
 import { InitializeContext } from "../../../../App";
+import useScrollToTop from "../../../../hooks/useScrollToTop";
 
 const Navbar = () => {
+  useScrollToTop();
   const { handleThemeChange, theme } = useContext(InitializeContext);
   const [user] = useAuthState(auth);
   const [image] = useProfileImage(user);
@@ -71,8 +73,8 @@ const Navbar = () => {
   return (
     <div className="sticky top-0 w-full z-50 bg-base-100">
       <div
-        className={`drawer-content flex flex-col backdrop-blur-[18px] bg-base-100  ${
-          scrollY > 60 && "bg-transparent shadow-md"
+        className={`drawer-content flex flex-col backdrop-blur-[18px] bg-base-100 duration-500 ${
+          scrollY > 60 && "glass shadow-xl"
         }`}
         style={
           pathname.includes("dashboard")
@@ -88,7 +90,7 @@ const Navbar = () => {
               </label>
               <ul
                 tabIndex="0"
-                className="menu menu-compact dropdown-content mt-3 p-2 shadow-xl bg-base-100 rounded-box w-52"
+                className="menu menu-compact dropdown-content mt-4 p-2 shadow-xl bg-base-100 rounded-box w-[23.5rem] flex flex-wrap justify-center items-center"
               >
                 {NavbarMenus}
               </ul>

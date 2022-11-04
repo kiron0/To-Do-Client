@@ -1,7 +1,9 @@
 import React from "react";
+import useScrollToTop from "../../../../hooks/useScrollToTop";
 import auth from "../../Login/Firebase/firebase.init";
 
 const Welcome = () => {
+  useScrollToTop();
   return (
     <div className="flex justify-center items-center h-[80vh] hero-content flex-col">
       <div className="lg:flex lg:mx-auto">

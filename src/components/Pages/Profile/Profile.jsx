@@ -7,8 +7,16 @@ import { BASE_API } from "../../../config";
 import useTitle from "../../../hooks/useTitle";
 import Loading from "../../Pages/Shared/Loading/Loading";
 import auth from "../Login/Firebase/firebase.init";
+import {
+  browserName,
+  fullBrowserVersion,
+  osName,
+  osVersion,
+} from "react-device-detect";
+import useScrollToTop from "../../../hooks/useScrollToTop";
 
 const Profile = () => {
+  useScrollToTop();
   useTitle("Profile");
   const [isShow, setIsShow] = useState(false);
   const {
@@ -34,17 +42,14 @@ const Profile = () => {
       linkedin: data?.linkedin,
       createdAt: new Date().toDateString(),
     };
-    await fetch(
-      `${BASE_API}/users?uid=${auth?.currentUser?.uid}`,
-      {
-        method: "PATCH",
-        headers: {
-          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          "content-Type": "application/json",
-        },
-        body: JSON.stringify(profileData),
-      }
-    )
+    await fetch(`${BASE_API}/users?uid=${auth?.currentUser?.uid}`, {
+      method: "PATCH",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        "content-Type": "application/json",
+      },
+      body: JSON.stringify(profileData),
+    })
       .then((res) => res.json())
       .then((result) => {
         if (result?.success) {
@@ -61,14 +66,11 @@ const Profile = () => {
     isLoading,
     refetch,
   } = useQuery(["profileData", auth?.currentUser?.uid], () =>
-    fetch(
-      `${BASE_API}/users?uid=${auth?.currentUser?.uid}`,
-      {
-        headers: {
-          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-      }
-    ).then((res) => res.json())
+    fetch(`${BASE_API}/users?uid=${auth?.currentUser?.uid}`, {
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    }).then((res) => res.json())
   );
   if (isLoading)
     return (
@@ -81,7 +83,7 @@ const Profile = () => {
     result[0];
 
   return (
-    <div className="grid place-items-center py-36 lg:py-48 md:px-24 lg:px-[200px] h-screen bg-base-100">
+    <div className="grid place-items-center py-24 lg:py-36 md:px-24 lg:px-[200px] h-screen bg-base-100">
       <div className="profile-card w-[97%] md:w-2/3 lg:w-1/3 text-center shadow-xl rounded-3xl bg-base-100 p-7">
         <div className="avatar w-40 h-40 rounded-full border-8 text-7xl font-semibold overflow-hidden mt-[-5rem] z-10 grid place-items-center mx-auto ring ring-primary ring-offset-base-100 ring-offset-2">
           {auth?.currentUser?.photoURL ? (
@@ -136,6 +138,25 @@ const Profile = () => {
               ) : (
                 <strong>Not available</strong>
               )}
+            </li>
+
+            <li className="flex justify-between w-full items-center">
+              <span className="profile-details-item-label">
+                Used Browser -{" "}
+              </span>
+              <span className="profile-details-item-value font-bold">
+                <span className="badge badge-primary text-white">
+                  {browserName} {fullBrowserVersion}
+                </span>
+              </span>
+            </li>
+            <li className="flex justify-between w-full items-center border-b pb-2">
+              <span className="profile-details-item-label">Used Device - </span>
+              <span className="profile-details-item-value font-bold">
+                <span className="badge badge-primary text-white">
+                  {osName} {osVersion}
+                </span>
+              </span>
             </li>
           </ul>
           {isShow ? (

@@ -8,7 +8,9 @@ import auth from "../Login/Firebase/firebase.init";
 import TaskToDo from "./ToDoList";
 import { MdAddCircleOutline } from "react-icons/md";
 import { BASE_API } from "../../../config";
+import useScrollToTop from "../../../hooks/useScrollToTop";
 const ManageToDo = () => {
+  useScrollToTop();
   useTitle("Manage To Do");
   const [modalToDo, setModalToDo] = useState({});
   const [user] = useAuthState(auth);
@@ -105,7 +107,7 @@ const ManageToDo = () => {
               htmlFor="toDosModal"
               className="btn btn-md btn-primary text-white uppercase"
             >
-              <MdAddCircleOutline className="mr-1 text-lg" /> Add ToDoS
+              <MdAddCircleOutline className="mr-1 text-lg" /> Add more ToDoS
             </label>
           )}
         </div>
@@ -256,7 +258,7 @@ const ManageToDo = () => {
                     />
                   </div>
                   <div className="text-right">
-                    <button className="btn text-white">Update Task</button>
+                    <button className="btn text-white">Update Todo</button>
                   </div>
                 </form>
               </div>
