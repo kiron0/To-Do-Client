@@ -114,7 +114,7 @@ const Dashboard = () => {
               to="/"
               className="logo font-semibold text-center flex items-center flex-col gap-2"
             >
-              <img src={todo} alt="" className="w-16"/> K Task ToDo
+              <img src={todo} alt="" className="w-16" /> K Task ToDo
             </Link>
             <div
               onClick={handleLogOut}
@@ -125,15 +125,37 @@ const Dashboard = () => {
             </div>
           </div>
           <li className="py-2 mt-4">
-            <NavLink to="/dashboard"><i className='bx bxs-dashboard' ></i> Dashboard</NavLink>
+            <NavLink
+              className={({ isActive }) =>
+                isActive ? "text-white bg-primary" : ""
+              }
+              to="/dashboard"
+            >
+              <i className="bx bxs-dashboard text-xl"></i> Dashboard
+            </NavLink>
           </li>
           {admin && (
             <>
               <li className="py-2">
-                <NavLink to="/dashboard/manageToDoS"><i className='bx bx-list-ul text-xl' ></i> Manage All ToDoS</NavLink>
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive ? "text-white bg-primary" : ""
+                  }
+                  to="/dashboard/manageToDoS"
+                >
+                  <i className="bx bx-list-ul text-xl"></i> Manage All ToDoS
+                </NavLink>
               </li>
               <li className="py-2">
-                <NavLink to="/dashboard/manageUsers"><i className='bx bxs-user-detail text-xl'></i> Manage All Users</NavLink>
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive ? "text-white bg-primary" : ""
+                  }
+                  to="/dashboard/manageUsers"
+                >
+                  <i className="bx bxs-user-detail text-xl"></i> Manage All
+                  Users
+                </NavLink>
               </li>
             </>
           )}

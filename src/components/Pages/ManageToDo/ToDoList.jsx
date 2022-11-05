@@ -4,6 +4,8 @@ import Swal from "sweetalert2";
 import auth from "../Login/Firebase/firebase.init";
 import { FaRegEye } from "react-icons/fa";
 import { BASE_API } from "../../../config";
+import { useContext } from "react";
+import { InitializeContext } from "../../../App";
 
 const TaskToDo = ({
   title,
@@ -16,12 +18,15 @@ const TaskToDo = ({
   addedBy,
   createdAt,
 }) => {
+  const { theme } = useContext(InitializeContext);
   /* Handle Product Delete */
   const handleDelete = (id) => {
     Swal.fire({
       text: "Are you sure you want to delete this?",
       icon: "warning",
       showCancelButton: true,
+      background: theme ? "#333" : "#fff",
+      color: theme ? "#fff" : "#333",
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, Delete it!",
@@ -133,7 +138,7 @@ const TaskToDo = ({
           disabled={completed && true}
           onClick={() => setModalToDo({ _id, title, description })}
         >
-          <i class="bx bxs-edit"></i>
+          <i className="bx bxs-edit"></i>
         </label>
       </td>
       <td>

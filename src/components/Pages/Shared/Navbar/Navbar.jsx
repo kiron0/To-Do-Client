@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { NavLink, Link, useLocation } from "react-router-dom";
-import { FcTodoList } from "react-icons/fc";
-import { CgMenuLeft } from "react-icons/cg";
+import logo from "../../../Assets/todo.png";
+import { HiOutlineMenuAlt4 } from "react-icons/hi";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { signOut } from "firebase/auth";
 import { toast } from "react-hot-toast";
@@ -94,11 +94,11 @@ const Navbar = () => {
           <div className="navbar-start">
             <div className="dropdown">
               <label tabIndex="0" className="btn btn-ghost lg:hidden">
-                <CgMenuLeft className="text-3xl" />
+                <HiOutlineMenuAlt4 className="text-3xl" />
               </label>
               <ul
                 tabIndex="0"
-                className="menu menu-compact dropdown-content mt-4 p-2 shadow-xl bg-base-100 rounded-box w-[23.5rem] flex flex-wrap justify-center items-center"
+                className="menu menu-compact dropdown-content mt-4 p-2 shadow-xl bg-base-300 rounded-box w-[23.5rem] flex flex-wrap justify-center items-center"
               >
                 {NavbarMenus}
               </ul>
@@ -107,14 +107,14 @@ const Navbar = () => {
               className="btn btn-ghost normal-case text-xl flex gap-2 items-center"
               to="/"
             >
-              <FcTodoList className="hidden lg:block md:text-2xl lg:text-3xl grayscale" />{" "}
+              <img src={logo} alt="" className="w-8 h-8 md:w-12 md:h-12" />
               {!user ? (
-                <span className="ml-[-17px] md:ml-0 lg:ml-0 text-2xl lg:text-2xl">
-                  K Task To Do
+                <span className="text-xl lg:text-2xl flex justify-center items-center">
+                  K Task ToDo
                 </span>
               ) : (
-                <span className="ml-[-17px] md:ml-0 lg:ml-0 text-2xl lg:text-2xl">
-                  K Task To Do
+                <span className="text-xl lg:text-2xl flex justify-center items-center">
+                  K Task ToDo
                 </span>
               )}
             </Link>
@@ -200,14 +200,22 @@ const Navbar = () => {
                     <hr className="font-semibold" />
                     {admin && (
                       <li className="py-1 font-semibold">
-                        <Link to="/dashboard" className="py-3">
+                        <Link
+                          className={({ isActive }) =>
+                            isActive ? "text-white py-3 bg-primary" : "py-3"
+                          }
+                          to="/dashboard"
+                        >
                           <i className="bx bxs-dashboard"></i> Dashboard
                         </Link>
                       </li>
                     )}
-                    <li className="py-1 font-semibold">
-                      <button onClick={handleLogOut} className="py-3">
-                        <i className="bx bx-log-out"></i>
+                    <li className="py-1">
+                      <button
+                        onClick={handleLogOut}
+                        className="py-3 font-semibold"
+                      >
+                        <i className="bx bx-log-out font-semibold"></i>
                         Logout
                       </button>
                     </li>

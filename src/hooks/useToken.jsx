@@ -6,9 +6,11 @@ const useToken = (user) => {
   const [token, setToken] = useState("");
   useEffect(() => {
     const email = user?.user?.email;
+    const displayName = user?.user?.displayName;
     const uid = user?.user?.uid;
     const currentUser = {
       email: email,
+      displayName: displayName,
       uid: uid,
       image: auth?.currentUser?.photoURL,
     };

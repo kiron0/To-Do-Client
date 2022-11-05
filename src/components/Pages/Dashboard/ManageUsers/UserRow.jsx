@@ -1,11 +1,13 @@
 import React from "react";
-import { FiDelete } from "react-icons/fi";
+import { useContext } from "react";
 import { toast } from "react-hot-toast";
 import Swal from "sweetalert2";
+import { InitializeContext } from "../../../../App";
 import { BASE_API } from "../../../../config";
 
 const UserRow = ({ user, index, refetch }) => {
-  const { _id, email, role, uid, image } = user;
+  const { theme } = useContext(InitializeContext);
+  const { _id, email, role, uid, image, displayName } = user;
 
   /* Handle Delete User */
   const handleUserDelete = () => {
@@ -14,6 +16,8 @@ const UserRow = ({ user, index, refetch }) => {
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
+      background: theme ? "#333" : "#fff",
+      color: theme ? "#fff" : "#333",
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
@@ -126,6 +130,7 @@ const UserRow = ({ user, index, refetch }) => {
           />
         )}
       </td>
+      <td>{displayName ? displayName : "Not Available"}</td>
       <td>{uid ? uid : "Not Available"}</td>
       <td>{email}</td>
       <td>
@@ -161,7 +166,7 @@ const UserRow = ({ user, index, refetch }) => {
           htmlFor="user-delete-confirm-modal"
           className="text-red-500 cursor-pointer"
         >
-          <FiDelete className="text-2xl"></FiDelete>
+          <i className="bx bxs-trash text-xl"></i>
         </label>
       </td>
     </tr>

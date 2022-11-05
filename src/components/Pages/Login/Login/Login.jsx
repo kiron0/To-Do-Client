@@ -27,7 +27,7 @@ const Login = () => {
   }, [token, navigate, from]);
 
   if (gLoading) {
-    return <Loading></Loading>;
+    return <Loading />;
   }
 
   if (token) {
@@ -44,8 +44,7 @@ const Login = () => {
               onClick={() => signInWithGoogle()}
               className="btn btn-outline border-primary flex items-center justify-center rounded-full hover:btn-primary gap-2 hover:text-white"
             >
-              <i className='bx bxl-google text-2xl'></i>Continue with
-              Google
+              <i className="bx bxl-google text-2xl"></i>Continue with Google
             </button>
           </div>
         </div>
