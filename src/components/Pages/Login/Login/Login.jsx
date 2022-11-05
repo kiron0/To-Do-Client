@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useSignInWithGoogle } from "react-firebase-hooks/auth";
 import { useNavigate, useLocation } from "react-router-dom";
-import { FcGoogle } from "react-icons/fc";
 import { toast } from "react-hot-toast";
 import Loading from "../../Shared/Loading/Loading";
 import useToken from "../../../../hooks/useToken";
@@ -43,9 +42,9 @@ const Login = () => {
             <h2 className="text-center text-4xl font-bold pb-6">Login</h2>
             <button
               onClick={() => signInWithGoogle()}
-              className="btn btn-outline border-primary flex items-center justify-center rounded-full hover:btn-primary"
+              className="btn btn-outline border-primary flex items-center justify-center rounded-full hover:btn-primary gap-2 hover:text-white"
             >
-              <FcGoogle className="text-2xl mr-2"></FcGoogle>Continue with
+              <i className='bx bxl-google text-2xl'></i>Continue with
               Google
             </button>
           </div>

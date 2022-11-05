@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { toast } from "react-hot-toast";
+import { Link } from "react-router-dom";
 import { useQuery } from "react-query";
 import useTitle from "../../../hooks/useTitle";
 import Loader from "../Shared/Loader/Loader";
@@ -9,6 +10,8 @@ import TaskToDo from "./ToDoList";
 import { MdAddCircleOutline } from "react-icons/md";
 import { BASE_API } from "../../../config";
 import useScrollToTop from "../../../hooks/useScrollToTop";
+import useCompletedToDos from "../../../hooks/useCompletedToDos";
+
 const ManageToDo = () => {
   useScrollToTop();
   useTitle("Manage To Do");
@@ -18,15 +21,12 @@ const ManageToDo = () => {
     data: toDosData,
     isLoading,
     refetch,
-  } = useQuery("todos", () =>
-    fetch(
-      `${BASE_API}/myToDoS?email=${auth?.currentUser?.email}`,
-      {
-        headers: {
-          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-      }
-    ).then((res) => res.json())
+  } = useQuery("toDos", () =>
+    fetch(`${BASE_API}/myToDoS?email=${auth?.currentUser?.email}`, {
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    }).then((res) => res.json())
   );
 
   const handleToCreateToDoS = (e) => {
@@ -43,17 +43,14 @@ const ManageToDo = () => {
         email: auth?.currentUser?.email,
       },
     };
-    fetch(
-      `${BASE_API}/createToDo?uid=${auth?.currentUser?.uid}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-        body: JSON.stringify(createToDo),
-      }
-    )
+    fetch(`${BASE_API}/createToDo?uid=${auth?.currentUser?.uid}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+      body: JSON.stringify(createToDo),
+    })
       .then((res) => res.json())
       .then((result) => {
         if (result.success) {
@@ -70,20 +67,17 @@ const ManageToDo = () => {
   const handleUpdateToDoS = async (e) => {
     e.preventDefault();
 
-    await fetch(
-      `${BASE_API}/todos/updateToDoS/${modalToDo._id}`,
-      {
-        method: "PATCH",
-        headers: {
-          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          "content-type": "application/json",
-        },
-        body: JSON.stringify({
-          title: titleField || modalToDo?.title,
-          description: descriptionField || modalToDo?.description,
-        }),
-      }
-    )
+    await fetch(`${BASE_API}/todos/updateToDoS/${modalToDo._id}`, {
+      method: "PATCH",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        title: titleField || modalToDo?.title,
+        description: descriptionField || modalToDo?.description,
+      }),
+    })
       .then((res) => res.json())
       .then((result) => {
         if (result.modifiedCount) {
@@ -94,13 +88,15 @@ const ManageToDo = () => {
       });
   };
 
+  const { completedToDos } = useCompletedToDos();
+
   if (isLoading) {
     return <Loader />;
   }
 
   return (
     <section className="bg-base-100 h-screen">
-      <div className="py-12 mt-12 lg:pt-12 bg-base-100">
+      <div className="py-12 md:mt-12 lg:pt-12 bg-base-100">
         <div className="card-actions justify-center">
           {toDosData?.length > 0 && (
             <label
@@ -167,6 +163,7 @@ const ManageToDo = () => {
                     <th>Title</th>
                     <th>Description</th>
                     <th>Full Details</th>
+                    <th>Status</th>
                     <th>Update</th>
                     <th>Delete</th>
                   </tr>
@@ -178,7 +175,7 @@ const ManageToDo = () => {
                       {...task}
                       serialize={ind}
                       refetch={refetch}
-                      setModalProduct={setModalToDo}
+                      setModalToDo={setModalToDo}
                     />
                   ))}
                 </tbody>
@@ -235,7 +232,7 @@ const ManageToDo = () => {
                 </p>
                 <form onSubmit={handleUpdateToDoS} action="" className="my-2">
                   <div className="my-4">
-                    <label htmlFor="stock">Title</label>
+                    <label htmlFor="title">Title</label>
                     <input
                       type="text"
                       placeholder="Put Your Product Name"
@@ -245,7 +242,7 @@ const ManageToDo = () => {
                     />
                   </div>
                   <div className="my-4">
-                    <label htmlFor="stock">Description</label>
+                    <label htmlFor="description">Description</label>
                     <textarea
                       type="text"
                       value={descriptionField || modalToDo?.description}
@@ -282,6 +279,15 @@ const ManageToDo = () => {
                 <div className="my-4 p-4">
                   <p className="text-center">{modalToDo?.description}</p>
                 </div>
+                <div className="card-actions justify-end my-2">
+                  <div
+                    className={`badge badge-outline ${
+                      modalToDo?.completed ? "badge-success" : "badge-error"
+                    }`}
+                  >
+                    {modalToDo?.completed ? "Completed" : "Pending"}
+                  </div>
+                </div>
                 <div className="card-actions justify-end">
                   Added By -{" "}
                   <div className="badge badge-outline badge-success">
@@ -297,6 +303,17 @@ const ManageToDo = () => {
               </div>
             </div>
           </>
+        )}
+      </div>
+
+      <div className="card-actions justify-center py-12">
+        {completedToDos?.length > 0 && (
+          <Link to="/completed">
+            <button className="btn btn-md btn-primary text-white uppercase">
+              <i className="bx bxs-badge-check mr-1 text-lg"></i> See all
+              completed ToDos
+            </button>
+          </Link>
         )}
       </div>
     </section>

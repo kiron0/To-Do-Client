@@ -25,12 +25,12 @@ const ManageUsers = () => {
     return <Loading></Loading>;
   }
   return (
-    <div className="lg:px-10 py-8 bg-base-100 h-screen rounded-md">
+    <div className="lg:px-10 py-0 md:py-8 bg-base-100 rounded-md pb-12">
       <div className="title my-2 mb-10">
         <h3 className="text-2xl font-semibold">Manage Users</h3>
         <span>You can manage all the users whom are already registered</span>
       </div>
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto shadow-xl rounded-xl">
         <table className="table w-full">
           <thead className="bg-base-300">
             <tr>

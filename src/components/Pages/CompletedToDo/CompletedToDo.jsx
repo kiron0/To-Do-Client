@@ -1,34 +1,27 @@
 import React from "react";
-import { useQuery } from "react-query";
 import Loader from "../Shared/Loader/Loader";
-import auth from "../Login/Firebase/firebase.init";
 import ToDoRow from "./ToDoRow";
 import useTitle from "../../../hooks/useTitle";
-import { BASE_API } from "../../../config";
 import useScrollToTop from "../../../hooks/useScrollToTop";
+import useCompletedToDos from "../../../hooks/useCompletedToDos";
+import { useNavigate } from "react-router-dom";
 
 const CompletedToDo = () => {
   useScrollToTop();
   useTitle("Completed To Do");
-  const {
-    data: completedData,
-    isLoading,
-    refetch,
-  } = useQuery("completed", () =>
-    fetch(
-      `${BASE_API}/myToDoS/completed?email=${auth?.currentUser?.email}`,
-      {
-        headers: {
-          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-      }
-    ).then((res) => res.json())
-  );
+  const navigate = useNavigate();
+  const { completedToDos, isLoading, refetch } = useCompletedToDos();
 
   return (
     <div className="px-0 lg:px-52 py-2 md:pt-10 bg-base-100 h-screen">
       <div className="title my-2 mb-6 px-4">
-        <h3 className="text-2xl font-semibold">Completed ToDoS</h3>
+        <span className="flex items-center">
+          <i
+            className="bx bx-chevron-left text-3xl cursor-pointer"
+            onClick={() => navigate(-1)}
+          ></i>
+          <h3 className="text-xl md:text-2xl font-semibold">Completed ToDoS</h3>
+        </span>
         <span>
           You can see all the completed tasks which you're completed already.
         </span>
@@ -36,9 +29,9 @@ const CompletedToDo = () => {
       <div>
         {isLoading ? (
           <Loader />
-        ) : completedData?.length > 0 ? (
+        ) : completedToDos?.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mx-auto px-4">
-            {completedData?.map((task) => (
+            {completedToDos?.map((task) => (
               <ToDoRow key={task._id} task={task} refetch={refetch} />
             ))}
           </div>

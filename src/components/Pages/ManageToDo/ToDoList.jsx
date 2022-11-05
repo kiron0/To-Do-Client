@@ -1,6 +1,5 @@
 import React from "react";
 import toast from "react-hot-toast";
-import { FiDelete, FiEdit3 } from "react-icons/fi";
 import Swal from "sweetalert2";
 import auth from "../Login/Firebase/firebase.init";
 import { FaRegEye } from "react-icons/fa";
@@ -13,7 +12,7 @@ const TaskToDo = ({
   _id,
   completed,
   refetch,
-  setModalProduct,
+  setModalToDo,
   addedBy,
   createdAt,
 }) => {
@@ -28,15 +27,12 @@ const TaskToDo = ({
       confirmButtonText: "Yes, Delete it!",
     }).then((result) => {
       if (result.value) {
-        fetch(
-          `${BASE_API}/todos?todoId=${id}&&uid=${auth?.currentUser?.uid}`,
-          {
-            method: "DELETE",
-            headers: {
-              authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-            },
-          }
-        )
+        fetch(`${BASE_API}/todos?todoId=${id}&&uid=${auth?.currentUser?.uid}`, {
+          method: "DELETE",
+          headers: {
+            authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        })
           .then((res) => res.json())
           .then((result) => {
             if (result.success) {
@@ -105,11 +101,29 @@ const TaskToDo = ({
           htmlFor="detailsModal"
           className="btn btn-sm btn-neutral text-white modal-button"
           onClick={() =>
-            setModalProduct({ _id, title, description, addedBy, createdAt })
+            setModalToDo({
+              _id,
+              title,
+              description,
+              addedBy,
+              createdAt,
+              completed,
+            })
           }
         >
           <FaRegEye />
         </label>
+      </td>
+      <td>
+        <div className="card-actions">
+          <div
+            className={`badge badge-outline ${
+              completed ? "badge-success" : "badge-error"
+            }`}
+          >
+            {completed ? "Completed" : "Pending"}
+          </div>
+        </div>
       </td>
       <td>
         <label
@@ -117,9 +131,9 @@ const TaskToDo = ({
           htmlFor="updateModal"
           className="btn btn-sm btn-success text-white modal-button"
           disabled={completed && true}
-          onClick={() => setModalProduct({ _id, title, description })}
+          onClick={() => setModalToDo({ _id, title, description })}
         >
-          <FiEdit3 />
+          <i class="bx bxs-edit"></i>
         </label>
       </td>
       <td>
@@ -127,7 +141,7 @@ const TaskToDo = ({
           onClick={() => handleDelete(_id)}
           className="btn btn-sm btn-error text-white"
         >
-          <FiDelete />
+          <i className="bx bxs-trash"></i>
         </button>
       </td>
     </tr>
