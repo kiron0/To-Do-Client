@@ -100,7 +100,7 @@ const TaskToDo = ({
       >
         {description?.slice(0, 25)}
       </td>
-      <td>
+      <td className="tooltip" data-tip="Click to see full details">
         <label
           type="button"
           htmlFor="detailsModal"
@@ -119,12 +119,16 @@ const TaskToDo = ({
           <FaRegEye />
         </label>
       </td>
+
       <td>
         <div className="card-actions">
           <div
-            className={`badge badge-outline ${
-              completed ? "badge-success" : "badge-error"
+            className={`badge badge-outline tooltip ${
+              completed
+                ? "badge-success tooltip-success"
+                : "badge-error tooltip-error"
             }`}
+            data-tip={completed ? "Completed" : "Pending"}
           >
             {completed ? "Completed" : "Pending"}
           </div>
@@ -138,7 +142,7 @@ const TaskToDo = ({
           disabled={completed && true}
           onClick={() => setModalToDo({ _id, title, description })}
         >
-          <i className="bx bxs-edit"></i>
+          <i class='bx bxs-pen'></i>
         </label>
       </td>
       <td>

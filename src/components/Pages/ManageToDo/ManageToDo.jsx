@@ -2,15 +2,17 @@ import React, { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
+import { PulseLoader } from "react-spinners";
 import { useQuery } from "react-query";
 import useTitle from "../../../hooks/useTitle";
 import Loader from "../Shared/Loader/Loader";
 import auth from "../Login/Firebase/firebase.init";
 import TaskToDo from "./ToDoList";
-import { MdAddCircleOutline } from "react-icons/md";
 import { BASE_API } from "../../../config";
 import useScrollToTop from "../../../hooks/useScrollToTop";
 import useCompletedToDos from "../../../hooks/useCompletedToDos";
+import Loading from "../Shared/Loading/Loading";
+import { Fade } from "react-reveal";
 
 const ManageToDo = () => {
   useScrollToTop();
@@ -96,102 +98,150 @@ const ManageToDo = () => {
 
   return (
     <section className="bg-base-100 h-screen">
-      <div className="py-12 md:mt-12 lg:pt-12 bg-base-100">
-        <div className="card-actions justify-center">
-          {toDosData?.length > 0 && (
-            <label
-              htmlFor="toDosModal"
-              className="btn btn-md btn-primary text-white uppercase"
-            >
-              <MdAddCircleOutline className="mr-1 text-lg" /> Add more ToDoS
-            </label>
-          )}
+      <div className="py-8 md:py-12">
+        <div className="title text-center mb-5">
+          <h3 className="text-3xl font-semibold">ToDo List</h3>
+          <span>Here you will get all your ToDo list.</span>
         </div>
+        <div className="header bg-base-300 rounded-md container mx-auto w-[22rem] md:w-full py-4 md:py-0">
+          <div className="flex-wrap gap-4 navbar">
+            <div className="sm:flex-1 flex-col sm:flex-row w-full">
+              <div className="form-control">
+                <input
+                  type="text"
+                  placeholder="Search by title"
+                  className="input input-bordered "
+                  // onChange={handleSearch}
+                />
+              </div>
+
+              <div className="flex md:flex-auto mx-auto mt-4 md:mt-0 md:ml-4">
+                <select
+                  // onChange={(e) => setLimit(Number(e.target.value))}
+                  className="select select-sm select-bordered"
+                >
+                  <option value="5">5</option>
+                  <option value="10">10</option>
+                  <option value="15">15</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="flex-none gap-2 justify-center items-center w-full sm:justify-start sm:items-start sm:w-auto">
+              <label
+                htmlFor="toDosModal"
+                className="btn btn-md btn-primary text-white uppercase"
+              >
+                <i className="bx bxs-pen text-lg mr-1"></i> Add new ToDoS
+              </label>
+            </div>
+          </div>
+        </div>
+
         <form
           onSubmit={handleToCreateToDoS}
           className="grid grid-cols-1 gap-3 justify-items-center mt-2"
         >
           <input type="checkbox" id="toDosModal" className="modal-toggle" />
           <div className="modal modal-bottom sm:modal-middle">
-            <div className="modal-box text-center">
-              <label
-                htmlFor="toDosModal"
-                className="btn btn-sm btn-circle absolute right-2 top-2 text-white"
-              >
-                ✕
-              </label>
-              <h3 className="font-semibold text-xl mb-6">
+            <div className="modal-box">
+              <h3 className="font-semibold flex justify-center">
                 Input Your To Do Details
               </h3>
+              <div className="name border rounded p-3 relative mt-10">
+                <div className="name-title absolute -top-4 bg-base-100 border rounded p-1">
+                  <h3 className="text-xs font-poppins">Put your title</h3>
+                </div>
+                <div className="input-group flex items-center my-2 border p-3 rounded-md mt-2">
+                  <div className="icon">
+                    <i class="bx bxs-pen"></i>
+                  </div>
+                  <input
+                    type="text"
+                    name="title"
+                    className="form-control outline-none pl-4 w-full bg-transparent"
+                    placeholder="Title"
+                    required
+                  />
+                </div>
+              </div>
 
-              <input
-                type="text"
-                name="title"
-                className="input input-bordered w-full max-w-sm mb-5"
-                placeholder="Title"
-                required
-              />
-              <textarea
-                type="text"
-                name="description"
-                className="input input-bordered w-full max-w-sm"
-                placeholder="Description"
-                style={{ resize: "none", height: "10rem" }}
-                required
-              />
-              <input
-                type="submit"
-                value="Add ToDo"
-                className="btn btn-md mt-3 text-white"
-              />
+              <div className="name border rounded p-3 relative mt-10">
+                <div className="name-title absolute -top-4 bg-base-100 border rounded p-1">
+                  <h3 className="text-xs font-poppins">Put your description</h3>
+                </div>
+                <div className="input-group flex items-center my-2 border p-3 rounded-md mt-2">
+                  <div className="icon">
+                    <i class="bx bx-detail"></i>
+                  </div>
+                  <textarea
+                    type="text"
+                    name="description"
+                    className="form-control outline-none pl-4 w-full bg-transparent"
+                    placeholder="Description"
+                    style={{ resize: "none", height: "10rem" }}
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="modal-action">
+                <label htmlFor="toDosModal" className="btn btn-warning">
+                  <i class="bx bx-x text-xl"></i> Cancel
+                </label>
+
+                {isLoading ? (
+                  <button className="btn btn-primary" type="button">
+                    <PulseLoader size={8} color="#fff" />
+                  </button>
+                ) : (
+                  <button className="btn btn-success" type="submit">
+                    <i className="bx bxs-pen text-lg"></i> Add ToDo
+                  </button>
+                )}
+              </div>
             </div>
           </div>
         </form>
       </div>
 
-      <div className="container w-full mx-auto">
+      <div className="container w-full mx-auto -mt-8">
         <div className="overflow-x-auto">
           {isLoading ? (
-            <Loader />
+            <Loading />
           ) : toDosData?.length > 0 ? (
             <>
-              <table className="table w-full">
-                <thead>
-                  <tr>
-                    <th>No</th>
-                    <th>Complete</th>
-                    <th>Title</th>
-                    <th>Description</th>
-                    <th>Full Details</th>
-                    <th>Status</th>
-                    <th>Update</th>
-                    <th>Delete</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {toDosData?.map((task, ind) => (
-                    <TaskToDo
-                      key={task._id}
-                      {...task}
-                      serialize={ind}
-                      refetch={refetch}
-                      setModalToDo={setModalToDo}
-                    />
-                  ))}
-                </tbody>
-              </table>
+              <Fade top distance="20px">
+                <table className="table w-full">
+                  <thead>
+                    <tr>
+                      <th>No</th>
+                      <th>Complete</th>
+                      <th>Title</th>
+                      <th>Description</th>
+                      <th>Full Details</th>
+                      <th>Status</th>
+                      <th>Update</th>
+                      <th>Delete</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {toDosData?.map((task, ind) => (
+                      <TaskToDo
+                        key={task._id}
+                        {...task}
+                        serialize={ind}
+                        refetch={refetch}
+                        setModalToDo={setModalToDo}
+                      />
+                    ))}
+                  </tbody>
+                </table>
+              </Fade>
             </>
           ) : (
-            <div>
-              <div className="flex justify-center items-center mx-auto pb-7">
-                <label
-                  htmlFor="toDosModal"
-                  className="btn btn-md btn-primary text-white uppercase"
-                >
-                  <MdAddCircleOutline className="mr-1 text-lg" /> Add New ToDoS
-                </label>
-              </div>
-              <tr className="flex items-center justify-center mx-auto rounded">
+            <div className="md:mt-16">
+              <tr className="flex items-center justify-center mx-auto rounded my-6">
                 <td>
                   <div className="alert alert-warning shadow-lg" role="alert">
                     <div>
@@ -213,6 +263,16 @@ const ManageToDo = () => {
                   </div>
                 </td>
               </tr>
+              <div className="flex justify-center items-center mx-auto pb-7">
+                {toDosData?.length <= 0 && (
+                  <label
+                    htmlFor="toDosModal"
+                    className="btn btn-md btn-primary text-white uppercase"
+                  >
+                    <i className="bx bxs-pen text-lg mr-1"></i> Add new ToDoS
+                  </label>
+                )}
+              </div>
             </div>
           )}
         </div>
@@ -221,41 +281,67 @@ const ManageToDo = () => {
             <input type="checkbox" id="updateModal" className="modal-toggle" />
             <div className="modal modal-bottom sm:modal-middle">
               <div className="modal-box relative">
-                <label
-                  htmlFor="updateModal"
-                  className="btn btn-sm btn-circle absolute right-2 top-2 text-white"
-                >
-                  ✕
-                </label>
-                <p className="font-semibold">
-                  Update Your To Do Details From Here
+                <p className="font-semibold flex justify-center">
+                  Update Your ToDo From Here
                 </p>
                 <form onSubmit={handleUpdateToDoS} action="" className="my-2">
-                  <div className="my-4">
-                    <label htmlFor="title">Title</label>
-                    <input
-                      type="text"
-                      placeholder="Put Your Product Name"
-                      className="input input-bordered w-full my-3"
-                      value={titleField || modalToDo?.title}
-                      onChange={(event) => setTitleField(event.target.value)}
-                    />
+                  <div className="name border rounded p-3 relative mt-10">
+                    <div className="name-title absolute -top-4 bg-base-100 border rounded p-1">
+                      <h3 className="text-xs font-poppins">
+                        Update your title
+                      </h3>
+                    </div>
+                    <div className="input-group flex items-center my-2 border p-3 rounded-md mt-2">
+                      <div className="icon">
+                        <i class="bx bxs-pen"></i>
+                      </div>
+                      <input
+                        type="text"
+                        placeholder="Update Your Title"
+                        className="form-control outline-none pl-4 w-full bg-transparent"
+                        value={titleField || modalToDo?.title}
+                        onChange={(event) => setTitleField(event.target.value)}
+                      />
+                    </div>
                   </div>
-                  <div className="my-4">
-                    <label htmlFor="description">Description</label>
-                    <textarea
-                      type="text"
-                      value={descriptionField || modalToDo?.description}
-                      className="input input-bordered w-full my-3"
-                      placeholder="Description"
-                      style={{ resize: "none", height: "8rem" }}
-                      onChange={(event) =>
-                        setDescriptionField(event.target.value)
-                      }
-                    />
+
+                  <div className="name border rounded p-3 relative mt-10">
+                    <div className="name-title absolute -top-4 bg-base-100 border rounded p-1">
+                      <h3 className="text-xs font-poppins">
+                        Update your description
+                      </h3>
+                    </div>
+                    <div className="input-group flex items-center my-2 border p-3 rounded-md mt-2">
+                      <div className="icon">
+                        <i class="bx bx-detail"></i>
+                      </div>
+                      <textarea
+                        type="text"
+                        value={descriptionField || modalToDo?.description}
+                        className="form-control outline-none pl-4 w-full bg-transparent"
+                        placeholder="Description"
+                        style={{ resize: "none", height: "8rem" }}
+                        onChange={(event) =>
+                          setDescriptionField(event.target.value)
+                        }
+                      />
+                    </div>
                   </div>
-                  <div className="text-right">
-                    <button className="btn text-white">Update Todo</button>
+
+                  <div className="modal-action">
+                    <label htmlFor="updateModal" className="btn btn-warning">
+                      <i class="bx bx-x text-xl"></i> Cancel
+                    </label>
+
+                    {isLoading ? (
+                      <button className="btn btn-primary" type="button">
+                        <PulseLoader size={8} color="#fff" />
+                      </button>
+                    ) : (
+                      <button className="btn btn-success" type="submit">
+                        <i className="bx bx-pen text-lg"></i> Update ToDo
+                      </button>
+                    )}
                   </div>
                 </form>
               </div>
@@ -267,19 +353,36 @@ const ManageToDo = () => {
             <input type="checkbox" id="detailsModal" className="modal-toggle" />
             <div className="modal modal-bottom sm:modal-middle">
               <div className="modal-box relative overflow-x-hidden">
-                <label
-                  htmlFor="detailsModal"
-                  className="btn btn-sm btn-circle absolute right-2 top-2 text-white"
-                >
-                  ✕
-                </label>
-                <div className="my-4">
-                  <p className="text-2xl text-center">{modalToDo?.title}</p>
+                <p className="font-semibold flex justify-center">
+                  Full Details of your ToDo
+                </p>
+                <div className="name border rounded p-3 relative mt-10">
+                  <div className="name-title absolute -top-4 bg-base-100 border rounded p-1">
+                    <h3 className="text-xs font-poppins">Your title</h3>
+                  </div>
+                  <div className="input-group flex items-center my-2 border p-3 rounded-md mt-2">
+                    <div className="icon">
+                      <i class="bx bxs-pen"></i>
+                    </div>
+                    <p className="overflow-auto max-h-20">{modalToDo?.title}</p>
+                  </div>
                 </div>
-                <div className="my-4 p-4">
-                  <p className="text-center">{modalToDo?.description}</p>
+
+                <div className="name border rounded p-3 relative mt-10">
+                  <div className="name-title absolute -top-4 bg-base-100 border rounded p-1">
+                    <h3 className="text-xs font-poppins">Your description</h3>
+                  </div>
+                  <div className="input-group flex items-center my-2 border p-3 rounded-md mt-2">
+                    <div className="icon">
+                      <i class="bx bx-detail"></i>
+                    </div>
+                    <p className="overflow-auto max-h-36">
+                      {modalToDo?.description}
+                    </p>
+                  </div>
                 </div>
-                <div className="card-actions justify-end my-2">
+
+                <div className="card-actions justify-end my-4">
                   <div
                     className={`badge badge-outline ${
                       modalToDo?.completed ? "badge-success" : "badge-error"
@@ -289,16 +392,21 @@ const ManageToDo = () => {
                   </div>
                 </div>
                 <div className="card-actions justify-end">
-                  Added By -{" "}
+                  Created By -{" "}
                   <div className="badge badge-outline badge-success">
                     {modalToDo?.addedBy?.name}
                   </div>
                 </div>
                 <div className="card-actions justify-end mt-2">
-                  Added On -{" "}
+                  Created at -{" "}
                   <div className="badge badge-outline badge-neutral">
                     {modalToDo?.createdAt}
                   </div>
+                </div>
+                <div className="modal-action">
+                  <label htmlFor="detailsModal" className="btn btn-warning">
+                    <i class="bx bx-x text-xl"></i> Close
+                  </label>
                 </div>
               </div>
             </div>
@@ -310,7 +418,7 @@ const ManageToDo = () => {
         {completedToDos?.length > 0 && (
           <Link to="/completed">
             <button className="btn btn-md btn-primary text-white uppercase">
-              <i className="bx bxs-badge-check mr-1 text-lg"></i> See all
+              <i className="bx bxs-check-circle mr-1 text-lg"></i> See all
               completed ToDos
             </button>
           </Link>

@@ -20,7 +20,7 @@ export default function AboutMe() {
             <ul className={styles.profile__social}>
               <a
                 href="https://github.com/kiron0"
-                className={styles.profile__social__link}
+                className={styles.profile__social_link}
                 target="_blank"
                 rel="noreferrer"
               >
@@ -28,7 +28,7 @@ export default function AboutMe() {
               </a>
               <a
                 href="https://www.linkedin.com/in/toufiq-hasan-kiron/"
-                className={styles.profile__social__link}
+                className={styles.profile__social_link}
                 target="_blank"
                 rel="noreferrer"
               >
@@ -36,7 +36,7 @@ export default function AboutMe() {
               </a>
               <a
                 href="https://facebook.com/toufiqhasankiron"
-                className={styles.profile__social__link}
+                className={styles.profile__social_link}
                 target="_blank"
                 rel="noreferrer"
               >

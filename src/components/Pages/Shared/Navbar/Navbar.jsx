@@ -82,7 +82,7 @@ const Navbar = () => {
     <div className="sticky top-0 w-full z-50 bg-base-100">
       <div
         className={`drawer-content flex flex-col backdrop-blur-[18px] bg-base-100 duration-500 ${
-          scrollY > 60 && "glass shadow-xl"
+          scrollY > 60 && "shadow-xl"
         }`}
         style={
           pathname.includes("dashboard")
@@ -107,9 +107,9 @@ const Navbar = () => {
               className="btn btn-ghost normal-case text-xl flex gap-2 items-center"
               to="/"
             >
-              <img src={logo} alt="" className="w-8 h-8 md:w-12 md:h-12" />
+              <img src={logo} alt="" className={`w-8 h-8 md:w-12 md:h-12 ${!user && "ml-[-1rem]"}`} />
               {!user ? (
-                <span className="text-xl lg:text-2xl flex justify-center items-center">
+                <span className="text-xl lg:text-2xl">
                   K Task ToDo
                 </span>
               ) : (

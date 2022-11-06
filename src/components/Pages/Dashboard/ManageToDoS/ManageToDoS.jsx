@@ -1,4 +1,5 @@
 import React from "react";
+import { Fade } from "react-reveal";
 import { useQuery } from "react-query";
 import { BASE_API } from "../../../../config";
 import useScrollToTop from "../../../../hooks/useScrollToTop";
@@ -31,11 +32,13 @@ const ManageToDoS = () => {
         {isLoading ? (
           <Loader />
         ) : toDosData?.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mx-auto lg:px-4 lg:mt-10">
-            {toDosData?.map((todo) => (
-              <ToDoSRow key={todo._id} todo={todo} refetch={refetch} />
-            ))}
-          </div>
+          <Fade top distance="20px">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mx-auto lg:px-4 lg:mt-10">
+              {toDosData?.map((todo) => (
+                <ToDoSRow key={todo._id} todo={todo} refetch={refetch} />
+              ))}
+            </div>
+          </Fade>
         ) : (
           <div className="flex items-center justify-center mx-auto rounded">
             <div>

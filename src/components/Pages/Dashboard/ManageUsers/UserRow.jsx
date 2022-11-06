@@ -4,6 +4,7 @@ import { toast } from "react-hot-toast";
 import Swal from "sweetalert2";
 import { InitializeContext } from "../../../../App";
 import { BASE_API } from "../../../../config";
+import auth from "../../Login/Firebase/firebase.init";
 
 const UserRow = ({ user, index, refetch }) => {
   const { theme } = useContext(InitializeContext);
@@ -131,7 +132,7 @@ const UserRow = ({ user, index, refetch }) => {
         )}
       </td>
       <td>{displayName ? displayName : "Not Available"}</td>
-      <td>{uid ? uid : "Not Available"}</td>
+      {/* <td>{uid ? uid : "Not Available"}</td> */}
       <td>{email}</td>
       <td>
         {role === "admin" ? (
@@ -144,7 +145,10 @@ const UserRow = ({ user, index, refetch }) => {
       </td>
       <td>
         {role === "admin" ? (
-          <button onClick={removeAdmin} className="btn btn-xs text-white">
+          <button
+            onClick={removeAdmin}
+            className="btn btn-xs btn-error text-white"
+          >
             Remove Admin
           </button>
         ) : (
@@ -157,17 +161,25 @@ const UserRow = ({ user, index, refetch }) => {
             Admin
           </span>
         ) : (
-          <span className="badge text-white">User</span>
+          <span className="badge badge-success text-white">User</span>
         )}
       </td>
       <td>
-        <label
+        {auth?.currentUser?.uid === uid ? (
+          <span className="badge bg-green-500 border-green-500 text-white">
+            Active{" "}
+          </span>
+        ) : (
+          ""
+        )}
+      </td>
+      <td className="tooltip tooltip-error" data-tip="Delete user data!">
+        <button
           onClick={() => handleUserDelete(_id)}
-          htmlFor="user-delete-confirm-modal"
-          className="text-red-500 cursor-pointer"
+          className="btn btn-sm btn-error text-white"
         >
-          <i className="bx bxs-trash text-xl"></i>
-        </label>
+          <i className="bx bxs-trash"></i>
+        </button>
       </td>
     </tr>
   );

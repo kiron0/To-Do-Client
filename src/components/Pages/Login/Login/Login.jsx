@@ -42,7 +42,7 @@ const Login = () => {
             <h2 className="text-center text-4xl font-bold pb-6">Login</h2>
             <button
               onClick={() => signInWithGoogle()}
-              className="btn btn-outline border-primary flex items-center justify-center rounded-full hover:btn-primary gap-2 hover:text-white"
+              className="btn btn-outline border-primary flex items-center justify-center rounded-full hover:bg-primary hover:border-primary duration-500 gap-2 hover:text-white"
             >
               <i className="bx bxl-google text-2xl"></i>Continue with Google
             </button>

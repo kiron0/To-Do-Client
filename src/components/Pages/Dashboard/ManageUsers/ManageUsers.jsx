@@ -37,12 +37,13 @@ const ManageUsers = () => {
               <th>No</th>
               <th>Image</th>
               <th>Name</th>
-              <th>Uid</th>
+              {/* <th>Uid</th> */}
               <th>Email</th>
               <th>Make Admin</th>
               <th>Remove Admin</th>
               <th>Role</th>
-              <th>Delete</th>
+              <th>isLogin</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>

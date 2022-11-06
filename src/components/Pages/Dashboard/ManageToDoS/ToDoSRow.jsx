@@ -1,6 +1,5 @@
 import React from "react";
 import toast from "react-hot-toast";
-import { FiDelete } from "react-icons/fi";
 import Swal from "sweetalert2";
 import { BASE_API } from "../../../../config";
 
@@ -39,9 +38,9 @@ const ToDoSRow = ({ todo, refetch }) => {
     <div className="card w-100 bg-base-100 shadow-xl">
       <label
         onClick={() => handleDelete(todo._id)}
-        className="btn btn-sm absolute right-2 top-2 text-white"
+        className="btn btn-sm btn-error absolute right-2 top-2 text-white"
       >
-        <FiDelete className="text-lg mr-[3px]" />
+        <i className="bx bxs-trash"></i>
       </label>
       <div className="card-body">
         <h2 className="card-title">{todo?.title}</h2>

@@ -10,7 +10,12 @@ const CompletedToDo = () => {
   useScrollToTop();
   useTitle("Completed To Do");
   const navigate = useNavigate();
+
   const { completedToDos, isLoading, refetch } = useCompletedToDos();
+
+  if (isLoading || !completedToDos || !completedToDos.length) {
+    return <Loader />;
+  }
 
   return (
     <div className="px-0 lg:px-52 py-2 md:pt-10 bg-base-100 h-screen">
