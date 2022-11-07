@@ -1,17 +1,17 @@
 import React, { useContext } from "react";
 import { toast } from "react-hot-toast";
-import todo from "../../../Assets/todo.png";
+import todo from "../../../assets/todo.png";
 import { BsGrid } from "react-icons/bs";
 import { signOut } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
-import Loader from "../../Shared/Loader/Loader";
-import useAdmin from "../../../../hooks/useAdmin";
-import useProfileImage from "../../../../hooks/useProfileImage";
+import Loader from "../../../components/Loader/Loader";
+import useAdmin from "../../../hooks/useAdmin";
+import useProfileImage from "../../../hooks/useProfileImage";
 import auth from "../../Login/Firebase/firebase.init";
-import useTitle from "../../../../hooks/useTitle";
-import { InitializeContext } from "../../../../App";
-import useScrollToTop from "../../../../hooks/useScrollToTop";
+import useTitle from "../../../hooks/useTitle";
+import { InitializeContext } from "../../../App";
+import useScrollToTop from "../../../hooks/useScrollToTop";
 
 const Dashboard = () => {
   useScrollToTop();
@@ -118,7 +118,7 @@ const Dashboard = () => {
             </Link>
             <div
               onClick={handleLogOut}
-              className="badge badge-outline hover:badge cursor-pointer flex justify-center items-center gap-1 p-4"
+              className="badge badge-outline border-primary hover:bg-primary hover:text-white duration-500 cursor-pointer flex justify-center items-center gap-1 p-4"
             >
               <i className="bx bx-log-out"></i>
               Sign Out

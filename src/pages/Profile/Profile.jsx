@@ -3,9 +3,9 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { FaFacebook, FaLinkedin } from "react-icons/fa";
 import { useQuery } from "react-query";
-import { BASE_API } from "../../../config";
-import useTitle from "../../../hooks/useTitle";
-import Loading from "../../Pages/Shared/Loading/Loading";
+import { BASE_API } from "../../config";
+import useTitle from "../../hooks/useTitle";
+import Loading from "../../components/Loading/Loading";
 import auth from "../Login/Firebase/firebase.init";
 import {
   browserName,
@@ -13,7 +13,7 @@ import {
   osName,
   osVersion,
 } from "react-device-detect";
-import useScrollToTop from "../../../hooks/useScrollToTop";
+import useScrollToTop from "../../hooks/useScrollToTop";
 
 const Profile = () => {
   useScrollToTop();

@@ -1,20 +1,20 @@
 import { createContext, useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { Routes, Route } from "react-router-dom";
-import RequireAuth from "./components/Pages/Login/RequireAuth/RequireAuth";
-import Profile from "./components/Pages/Profile/Profile";
-import Navbar from "./components/Pages/Shared/Navbar/Navbar";
-import Home from "./components/Pages/Home/Home/Home";
-import Login from "./components/Pages/Login/Login/Login";
-import ManageToDo from "./components/Pages/ManageToDo/ManageToDo";
-import CompletedToDo from "./components/Pages/CompletedToDo/CompletedToDo";
-import Dashboard from "./components/Pages/Dashboard/Dashboard/Dashboard";
-import Welcome from "./components/Pages/Dashboard/Welcome/Welcome";
-import ManageToDoS from "./components/Pages/Dashboard/ManageToDoS/ManageToDoS";
-import ManageUsers from "./components/Pages/Dashboard/ManageUsers/ManageUsers";
-import RequireAdmin from "./components/Pages/Login/RequireAdmin/RequireAdmin";
-import NotFound from "./components/Pages/Shared/NotFound/NotFound";
-import AboutMe from "./components/Pages/AboutMe/AboutMe";
+import RequireAuth from "./pages/Login/RequireAuth/RequireAuth";
+import Profile from "./pages/Profile/Profile";
+import Navbar from "./shared/Navbar/Navbar";
+import Home from "./pages/Home/Home/Home";
+import Login from "./pages/Login/Login/Login";
+import ManageToDo from "./pages/ManageToDo/ManageToDo";
+import CompletedToDo from "./pages/CompletedToDo/CompletedToDo";
+import Dashboard from "./pages/Dashboard/Dashboard/Dashboard";
+import Welcome from "./pages/Dashboard/Welcome/Welcome";
+import ManageToDoS from "./pages/Dashboard/ManageToDoS/ManageToDoS";
+import ManageUsers from "./pages/Dashboard/ManageUsers/ManageUsers";
+import RequireAdmin from "./pages/Login/RequireAdmin/RequireAdmin";
+import NotFound from "./shared/NotFound/NotFound";
+import AboutMe from "./pages/AboutMe/AboutMe";
 export const InitializeContext = createContext(null);
 
 function App() {

@@ -3,11 +3,11 @@ import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 import auth from "../Login/Firebase/firebase.init";
 import { FaRegEye } from "react-icons/fa";
-import { BASE_API } from "../../../config";
+import { BASE_API } from "../../config";
 import { useContext } from "react";
-import { InitializeContext } from "../../../App";
+import { InitializeContext } from "../../App";
 
-const TaskToDo = ({
+const TodoList = ({
   title,
   description,
   serialize,
@@ -162,4 +162,4 @@ const TaskToDo = ({
   );
 };
 
-export default TaskToDo;
+export default TodoList;

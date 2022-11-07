@@ -2,11 +2,11 @@ import React, { useEffect } from "react";
 import { useSignInWithGoogle } from "react-firebase-hooks/auth";
 import { useNavigate, useLocation } from "react-router-dom";
 import { toast } from "react-hot-toast";
-import Loading from "../../Shared/Loading/Loading";
-import useToken from "../../../../hooks/useToken";
+import Loading from "../../../components/Loading/Loading";
+import useToken from "../../../hooks/useToken";
 import auth from "../Firebase/firebase.init";
-import useTitle from "../../../../hooks/useTitle";
-import useScrollToTop from "../../../../hooks/useScrollToTop";
+import useTitle from "../../../hooks/useTitle";
+import useScrollToTop from "../../../hooks/useScrollToTop";
 
 const Login = () => {
   useScrollToTop();

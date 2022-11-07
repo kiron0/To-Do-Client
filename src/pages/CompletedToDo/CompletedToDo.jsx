@@ -1,9 +1,9 @@
 import React from "react";
-import Loader from "../Shared/Loader/Loader";
+import Loader from "../../components/Loader/Loader";
 import ToDoRow from "./ToDoRow";
-import useTitle from "../../../hooks/useTitle";
-import useScrollToTop from "../../../hooks/useScrollToTop";
-import useCompletedToDos from "../../../hooks/useCompletedToDos";
+import useTitle from "../../hooks/useTitle";
+import useScrollToTop from "../../hooks/useScrollToTop";
+import useCompletedToDos from "../../hooks/useCompletedToDos";
 import { useNavigate } from "react-router-dom";
 
 const CompletedToDo = () => {

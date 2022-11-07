@@ -1,10 +1,10 @@
 import React from "react";
 import { useQuery } from "react-query";
 import { Fade } from "react-reveal";
-import { BASE_API } from "../../../../config";
-import useScrollToTop from "../../../../hooks/useScrollToTop";
-import useTitle from "../../../../hooks/useTitle";
-import Loading from "../../Shared/Loading/Loading";
+import { BASE_API } from "../../../config";
+import useScrollToTop from "../../../hooks/useScrollToTop";
+import useTitle from "../../../hooks/useTitle";
+import Loading from "../../../components/Loading/Loading";
 import UserRow from "./UserRow";
 
 const ManageUsers = () => {

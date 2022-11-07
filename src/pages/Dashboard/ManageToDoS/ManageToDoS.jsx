@@ -1,10 +1,10 @@
 import React from "react";
 import { Fade } from "react-reveal";
 import { useQuery } from "react-query";
-import { BASE_API } from "../../../../config";
-import useScrollToTop from "../../../../hooks/useScrollToTop";
-import useTitle from "../../../../hooks/useTitle";
-import Loader from "../../Shared/Loader/Loader";
+import { BASE_API } from "../../../config";
+import useScrollToTop from "../../../hooks/useScrollToTop";
+import useTitle from "../../../hooks/useTitle";
+import Loader from "../../../components/Loader/Loader";
 import ToDoSRow from "./ToDoSRow";
 
 const ManageToDoS = () => {

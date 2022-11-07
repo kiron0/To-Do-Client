@@ -4,14 +4,14 @@ import { toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
 import { PulseLoader } from "react-spinners";
 import { useQuery } from "react-query";
-import useTitle from "../../../hooks/useTitle";
-import Loader from "../Shared/Loader/Loader";
+import useTitle from "../../hooks/useTitle";
+import Loader from "../../components/Loader/Loader";
 import auth from "../Login/Firebase/firebase.init";
-import TaskToDo from "./ToDoList";
-import { BASE_API } from "../../../config";
-import useScrollToTop from "../../../hooks/useScrollToTop";
-import useCompletedToDos from "../../../hooks/useCompletedToDos";
-import Loading from "../Shared/Loading/Loading";
+import TodoList from "./ToDoList";
+import { BASE_API } from "../../config";
+import useScrollToTop from "../../hooks/useScrollToTop";
+import useCompletedToDos from "../../hooks/useCompletedToDos";
+import Loading from "../../components/Loading/Loading";
 import { Fade } from "react-reveal";
 
 const ManageToDo = () => {
@@ -244,7 +244,7 @@ const ManageToDo = () => {
                   </thead>
                   <tbody>
                     {toDosData?.map((task, ind) => (
-                      <TaskToDo
+                      <TodoList
                         key={task._id}
                         {...task}
                         serialize={ind}

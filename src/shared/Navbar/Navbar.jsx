@@ -1,16 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
 import { NavLink, Link, useLocation } from "react-router-dom";
-import logo from "../../../Assets/todo.png";
+import logo from "../../assets/todo.png";
 import { HiOutlineMenuAlt4 } from "react-icons/hi";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { signOut } from "firebase/auth";
 import { toast } from "react-hot-toast";
 import { BiLogInCircle } from "react-icons/bi";
-import useProfileImage from "../../../../hooks/useProfileImage";
-import auth from "../../Login/Firebase/firebase.init";
-import useAdmin from "../../../../hooks/useAdmin";
-import { InitializeContext } from "../../../../App";
-import useScrollToTop from "../../../../hooks/useScrollToTop";
+import useProfileImage from "../../hooks/useProfileImage";
+import auth from "../../pages/Login/Firebase/firebase.init";
+import useAdmin from "../../hooks/useAdmin";
+import { InitializeContext } from "../../App";
+import useScrollToTop from "../../hooks/useScrollToTop";
 
 const Navbar = () => {
   useScrollToTop();

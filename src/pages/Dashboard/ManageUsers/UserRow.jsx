@@ -2,8 +2,8 @@ import React from "react";
 import { useContext } from "react";
 import { toast } from "react-hot-toast";
 import Swal from "sweetalert2";
-import { InitializeContext } from "../../../../App";
-import { BASE_API } from "../../../../config";
+import { InitializeContext } from "../../../App";
+import { BASE_API } from "../../../config";
 import auth from "../../Login/Firebase/firebase.init";
 
 const UserRow = ({ user, index, refetch }) => {

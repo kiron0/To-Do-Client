@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import auth from "../components/Pages/Login/Firebase/firebase.init";
+import auth from "../pages/Login/Firebase/firebase.init";
 import { BASE_API } from "../config";
 
 const useToken = (user) => {

@@ -1,5 +1,5 @@
 import React from "react";
-import useScrollToTop from "../../../../hooks/useScrollToTop";
+import useScrollToTop from "../../../hooks/useScrollToTop";
 import auth from "../../Login/Firebase/firebase.init";
 
 const Welcome = () => {
