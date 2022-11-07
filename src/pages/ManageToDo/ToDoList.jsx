@@ -77,7 +77,7 @@ const TaskToDo = ({
       >
         {serialize + 1}
       </th>
-      <td>
+      <th>
         <input
           type="checkbox"
           onClick={() => handleCompleteInfo(_id)}
@@ -85,22 +85,27 @@ const TaskToDo = ({
           disabled={completed && true}
           checked={completed}
         ></input>
-      </td>
-      <td
+      </th>
+      <th
         style={{
           textDecoration: `${completed && "line-through"}`,
         }}
+        className="font-normal"
       >
-        {title?.slice(0, 20)}
-      </td>
-      <td
+        {title?.slice(0, 10)}
+      </th>
+      <th
         style={{
           textDecoration: `${completed && "line-through"}`,
         }}
+        className="font-normal"
       >
-        {description?.slice(0, 25)}
-      </td>
-      <td className="tooltip" data-tip="Click to see full details">
+        {description?.slice(0, 10)}
+      </th>
+      <th
+        className="tooltip tooltip-left flex justify-center"
+        data-tip="See full details"
+      >
         <label
           type="button"
           htmlFor="detailsModal"
@@ -118,12 +123,12 @@ const TaskToDo = ({
         >
           <FaRegEye />
         </label>
-      </td>
+      </th>
 
-      <td>
-        <div className="card-actions">
+      <th>
+        <div className="card-actions flex justify-center">
           <div
-            className={`badge badge-outline tooltip ${
+            className={`badge badge-outline tooltip tooltip-right font-normal ${
               completed
                 ? "badge-success tooltip-success"
                 : "badge-error tooltip-error"
@@ -133,8 +138,8 @@ const TaskToDo = ({
             {completed ? "Completed" : "Pending"}
           </div>
         </div>
-      </td>
-      <td>
+      </th>
+      <th>
         <label
           type="button"
           htmlFor="updateModal"
@@ -142,17 +147,17 @@ const TaskToDo = ({
           disabled={completed && true}
           onClick={() => setModalToDo({ _id, title, description })}
         >
-          <i class='bx bxs-pen'></i>
+          <i class="bx bxs-pen"></i>
         </label>
-      </td>
-      <td>
+      </th>
+      <th>
         <button
           onClick={() => handleDelete(_id)}
           className="btn btn-sm btn-error text-white"
         >
           <i className="bx bxs-trash"></i>
         </button>
-      </td>
+      </th>
     </tr>
   );
 };

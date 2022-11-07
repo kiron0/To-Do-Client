@@ -103,16 +103,33 @@ const ManageToDo = () => {
           <h3 className="text-3xl font-semibold">ToDo List</h3>
           <span>Here you will get all your ToDo list.</span>
         </div>
-        <div className="header bg-base-300 rounded-md container mx-auto w-[22rem] md:w-full py-4 md:py-0">
+        <div className="header bg-base-300 rounded-md shadow-md container mx-auto w-[22rem] md:w-full py-4 md:py-0">
           <div className="flex-wrap gap-4 navbar">
             <div className="sm:flex-1 flex-col sm:flex-row w-full">
               <div className="form-control">
-                <input
-                  type="text"
-                  placeholder="Search by title"
-                  className="input input-bordered "
-                  // onChange={handleSearch}
-                />
+                <div className="input-group">
+                  <input
+                    type="text"
+                    placeholder="Search by title"
+                    className="input input-bordered md:input-md"
+                  />
+                  <button className="btn btn-square">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6 text-white"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                      />
+                    </svg>
+                  </button>
+                </div>
               </div>
 
               <div className="flex md:flex-auto mx-auto mt-4 md:mt-0 md:ml-4">
@@ -205,23 +222,23 @@ const ManageToDo = () => {
         </form>
       </div>
 
-      <div className="container w-full mx-auto -mt-8">
-        <div className="overflow-x-auto">
+      <div className="container w-full mx-auto -mt-4 md:-mt-8">
+        <div className="overflow-x-auto shadow-md rounded-md">
           {isLoading ? (
             <Loading />
           ) : toDosData?.length > 0 ? (
             <>
               <Fade top distance="20px">
-                <table className="table w-full">
+                <table className="table-normal w-full bg-base-300">
                   <thead>
                     <tr>
                       <th>No</th>
                       <th>Complete</th>
                       <th>Title</th>
                       <th>Description</th>
-                      <th>Full Details</th>
+                      <th>Details</th>
                       <th>Status</th>
-                      <th>Update</th>
+                      <th>Edit</th>
                       <th>Delete</th>
                     </tr>
                   </thead>
@@ -364,7 +381,9 @@ const ManageToDo = () => {
                     <div className="icon">
                       <i class="bx bxs-pen"></i>
                     </div>
-                    <p className="overflow-auto max-h-20">{modalToDo?.title}</p>
+                    <p className="overflow-auto max-h-20 select-none">
+                      {modalToDo?.title}
+                    </p>
                   </div>
                 </div>
 
@@ -376,7 +395,7 @@ const ManageToDo = () => {
                     <div className="icon">
                       <i class="bx bx-detail"></i>
                     </div>
-                    <p className="overflow-auto max-h-36">
+                    <p className="overflow-auto overflow-x-hidden max-h-36 select-none">
                       {modalToDo?.description}
                     </p>
                   </div>
