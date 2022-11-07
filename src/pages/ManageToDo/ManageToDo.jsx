@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
@@ -7,16 +7,19 @@ import { useQuery } from "react-query";
 import useTitle from "../../hooks/useTitle";
 import Loader from "../../components/Loader/Loader";
 import auth from "../Login/Firebase/firebase.init";
+import Swal from "sweetalert2";
 import TodoList from "./ToDoList";
 import { BASE_API } from "../../config";
 import useScrollToTop from "../../hooks/useScrollToTop";
 import useCompletedToDos from "../../hooks/useCompletedToDos";
 import Loading from "../../components/Loading/Loading";
 import { Fade } from "react-reveal";
+import { InitializeContext } from "../../App";
 
 const ManageToDo = () => {
   useScrollToTop();
   useTitle("Manage To Do");
+  const { theme } = useContext(InitializeContext);
   const [modalToDo, setModalToDo] = useState({});
   const [user] = useAuthState(auth);
   const {
@@ -34,7 +37,21 @@ const ManageToDo = () => {
   const HandleSearchToDos = async (e) => {
     e.preventDefault();
     const searchText = e.target.search.value;
-    if (!searchText) return toast.error(`Search field is required.`);
+    if (!searchText) {
+      return theme
+        ? Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Search field is required!",
+            background: "#333",
+            color: "#fff",
+          })
+        : Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Search field is required!",
+          });
+    }
     console.log(searchText);
   };
 
@@ -120,7 +137,7 @@ const ManageToDo = () => {
                       type="text"
                       name="search"
                       placeholder="Search by title"
-                      className="input input-bordered md:input-md"
+                      className="input input-bordered md:input-md w-[16rem] md:w-full"
                     />
                     <button className="btn btn-square">
                       <svg
@@ -239,8 +256,8 @@ const ManageToDo = () => {
           ) : toDosData?.length > 0 ? (
             <>
               <Fade top distance="20px">
-                <table className="table-normal w-full bg-base-300">
-                  <thead>
+                <table className="table-normal w-full bg-base-100">
+                  <thead className="border-b">
                     <tr>
                       <th>No</th>
                       <th>Complete</th>

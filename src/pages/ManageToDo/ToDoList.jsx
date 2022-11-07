@@ -133,9 +133,9 @@ const TodoList = ({
                 ? "badge-success tooltip-success"
                 : "badge-error tooltip-error"
             }`}
-            data-tip={completed ? "Completed" : "Pending"}
+            data-tip={completed ? "Complete" : "Pending"}
           >
-            {completed ? "Completed" : "Pending"}
+            {completed ? "Complete" : "Pending....."}
           </div>
         </div>
       </th>
