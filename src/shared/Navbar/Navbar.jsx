@@ -107,11 +107,13 @@ const Navbar = () => {
               className="btn btn-ghost normal-case text-xl flex gap-2 items-center"
               to="/"
             >
-              <img src={logo} alt="" className={`w-8 h-8 md:w-12 md:h-12 ${!user && "ml-[-1rem]"}`} />
+              <img
+                src={logo}
+                alt=""
+                className={`w-8 h-8 md:w-12 md:h-12 ${!user && "ml-[-1rem]"}`}
+              />
               {!user ? (
-                <span className="text-xl lg:text-2xl">
-                  K Task ToDo
-                </span>
+                <span className="text-xl lg:text-2xl">K Task ToDo</span>
               ) : (
                 <span className="text-xl lg:text-2xl flex justify-center items-center">
                   K Task ToDo

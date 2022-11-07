@@ -14,7 +14,7 @@ const ManageToDoS = () => {
     data: toDosData,
     isLoading,
     refetch,
-  } = useQuery("todos", () =>
+  } = useQuery("toDos", () =>
     fetch(`${BASE_API}/toDoS`, {
       headers: {
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,

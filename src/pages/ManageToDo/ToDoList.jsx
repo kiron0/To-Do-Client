@@ -19,7 +19,7 @@ const TodoList = ({
   createdAt,
 }) => {
   const { theme } = useContext(InitializeContext);
-  /* Handle Product Delete */
+  /* Handle ToDo Delete */
   const handleDelete = (id) => {
     Swal.fire({
       text: "Are you sure you want to delete this?",
@@ -32,7 +32,7 @@ const TodoList = ({
       confirmButtonText: "Yes, Delete it!",
     }).then((result) => {
       if (result.value) {
-        fetch(`${BASE_API}/todos?todoId=${id}&&uid=${auth?.currentUser?.uid}`, {
+        fetch(`${BASE_API}/toDoS?todoId=${id}&&uid=${auth?.currentUser?.uid}`, {
           method: "DELETE",
           headers: {
             authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -51,7 +51,7 @@ const TodoList = ({
 
   const handleCompleteInfo = async (id) => {
     await fetch(
-      `${BASE_API}/todos?todoId=${id}&&uid=${auth?.currentUser?.uid}`,
+      `${BASE_API}/toDoS?todoId=${id}&&uid=${auth?.currentUser?.uid}`,
       {
         method: "PATCH",
         headers: {
@@ -147,7 +147,7 @@ const TodoList = ({
           disabled={completed && true}
           onClick={() => setModalToDo({ _id, title, description })}
         >
-          <i class="bx bxs-pen"></i>
+          <i className="bx bxs-pen"></i>
         </label>
       </th>
       <th>

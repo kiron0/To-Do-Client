@@ -44,7 +44,7 @@ const ToDoSRow = ({ todo, refetch }) => {
       </label>
       <div className="card-body">
         <h2 className="card-title">{todo?.title}</h2>
-        <p>{todo?.description}</p>
+        <p>{todo?.description?.slice(0, 50)}</p>
         {todo?.completed ? (
           <div className="card-actions justify-center py-5">
             <div className="badge badge-outline badge-success">Completed</div>

@@ -4,7 +4,7 @@ import { Fade } from "react-reveal";
 import { BASE_API } from "../../../config";
 import useScrollToTop from "../../../hooks/useScrollToTop";
 import useTitle from "../../../hooks/useTitle";
-import Loading from "../../../components/Loading/Loading";
+import Loader from "../../../components/Loader/Loader";
 import UserRow from "./UserRow";
 
 const ManageUsers = () => {
@@ -23,7 +23,7 @@ const ManageUsers = () => {
     }).then((res) => res.json())
   );
   if (isLoading || !users || !users.length) {
-    return <Loading></Loading>;
+    return <Loader />;
   }
   return (
     <div className="lg:px-10 py-0 md:py-8 bg-base-100 rounded-md pb-12">

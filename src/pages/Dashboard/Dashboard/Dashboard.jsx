@@ -146,17 +146,19 @@ const Dashboard = () => {
                   <i className="bx bx-list-ul text-xl"></i> Manage All ToDoS
                 </NavLink>
               </li>
-              <li className="py-2">
-                <NavLink
-                  className={({ isActive }) =>
-                    isActive ? "text-white bg-primary" : ""
-                  }
-                  to="/dashboard/manageUsers"
-                >
-                  <i className="bx bxs-user-detail text-xl"></i> Manage All
-                  Users
-                </NavLink>
-              </li>
+              {admin && (
+                <li className="py-2">
+                  <NavLink
+                    className={({ isActive }) =>
+                      isActive ? "text-white bg-primary" : ""
+                    }
+                    to="/dashboard/manageUsers"
+                  >
+                    <i className="bx bxs-user-detail text-xl"></i> Manage All
+                    Users
+                  </NavLink>
+                </li>
+              )}
             </>
           )}
         </ul>

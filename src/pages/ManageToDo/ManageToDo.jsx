@@ -31,6 +31,13 @@ const ManageToDo = () => {
     }).then((res) => res.json())
   );
 
+  const HandleSearchToDos = async (e) => {
+    e.preventDefault();
+    const searchText = e.target.search.value;
+    if (!searchText) return toast.error(`Search field is required.`);
+    console.log(searchText);
+  };
+
   const handleToCreateToDoS = (e) => {
     e.preventDefault();
     const createToDo = {
@@ -69,7 +76,7 @@ const ManageToDo = () => {
   const handleUpdateToDoS = async (e) => {
     e.preventDefault();
 
-    await fetch(`${BASE_API}/todos/updateToDoS/${modalToDo._id}`, {
+    await fetch(`${BASE_API}/toDoS/updateToDoS/${modalToDo._id}`, {
       method: "PATCH",
       headers: {
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -83,7 +90,7 @@ const ManageToDo = () => {
       .then((res) => res.json())
       .then((result) => {
         if (result.modifiedCount) {
-          toast.success(`ToDoS updated successfully`);
+          toast.success(`ToDo updated successfully`);
           setModalToDo(null);
           refetch();
         }
@@ -107,29 +114,32 @@ const ManageToDo = () => {
           <div className="flex-wrap gap-4 navbar">
             <div className="sm:flex-1 flex-col sm:flex-row w-full">
               <div className="form-control">
-                <div className="input-group">
-                  <input
-                    type="text"
-                    placeholder="Search by title"
-                    className="input input-bordered md:input-md"
-                  />
-                  <button className="btn btn-square">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6 text-white"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                      />
-                    </svg>
-                  </button>
-                </div>
+                <form onSubmit={HandleSearchToDos}>
+                  <div className="input-group">
+                    <input
+                      type="text"
+                      name="search"
+                      placeholder="Search by title"
+                      className="input input-bordered md:input-md"
+                    />
+                    <button className="btn btn-square">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-6 w-6 text-white"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </form>
               </div>
 
               <div className="flex md:flex-auto mx-auto mt-4 md:mt-0 md:ml-4">
@@ -171,7 +181,7 @@ const ManageToDo = () => {
                 </div>
                 <div className="input-group flex items-center my-2 border p-3 rounded-md mt-2">
                   <div className="icon">
-                    <i class="bx bxs-pen"></i>
+                    <i className="bx bxs-pen"></i>
                   </div>
                   <input
                     type="text"
@@ -189,7 +199,7 @@ const ManageToDo = () => {
                 </div>
                 <div className="input-group flex items-center my-2 border p-3 rounded-md mt-2">
                   <div className="icon">
-                    <i class="bx bx-detail"></i>
+                    <i className="bx bx-detail"></i>
                   </div>
                   <textarea
                     type="text"
@@ -204,7 +214,7 @@ const ManageToDo = () => {
 
               <div className="modal-action">
                 <label htmlFor="toDosModal" className="btn btn-warning">
-                  <i class="bx bx-x text-xl"></i> Cancel
+                  <i className="bx bx-x text-xl"></i> Cancel
                 </label>
 
                 {isLoading ? (
@@ -310,7 +320,7 @@ const ManageToDo = () => {
                     </div>
                     <div className="input-group flex items-center my-2 border p-3 rounded-md mt-2">
                       <div className="icon">
-                        <i class="bx bxs-pen"></i>
+                        <i className="bx bxs-pen"></i>
                       </div>
                       <input
                         type="text"
@@ -330,7 +340,7 @@ const ManageToDo = () => {
                     </div>
                     <div className="input-group flex items-center my-2 border p-3 rounded-md mt-2">
                       <div className="icon">
-                        <i class="bx bx-detail"></i>
+                        <i className="bx bx-detail"></i>
                       </div>
                       <textarea
                         type="text"
@@ -347,7 +357,7 @@ const ManageToDo = () => {
 
                   <div className="modal-action">
                     <label htmlFor="updateModal" className="btn btn-warning">
-                      <i class="bx bx-x text-xl"></i> Cancel
+                      <i className="bx bx-x text-xl"></i> Cancel
                     </label>
 
                     {isLoading ? (
@@ -379,7 +389,7 @@ const ManageToDo = () => {
                   </div>
                   <div className="input-group flex items-center my-2 border p-3 rounded-md mt-2">
                     <div className="icon">
-                      <i class="bx bxs-pen"></i>
+                      <i className="bx bxs-pen"></i>
                     </div>
                     <p className="overflow-auto max-h-20 select-none">
                       {modalToDo?.title}
@@ -393,7 +403,7 @@ const ManageToDo = () => {
                   </div>
                   <div className="input-group flex items-center my-2 border p-3 rounded-md mt-2">
                     <div className="icon">
-                      <i class="bx bx-detail"></i>
+                      <i className="bx bx-detail"></i>
                     </div>
                     <p className="overflow-auto overflow-x-hidden max-h-36 select-none">
                       {modalToDo?.description}
@@ -424,7 +434,7 @@ const ManageToDo = () => {
                 </div>
                 <div className="modal-action">
                   <label htmlFor="detailsModal" className="btn btn-warning">
-                    <i class="bx bx-x text-xl"></i> Close
+                    <i className="bx bx-x text-xl"></i> Close
                   </label>
                 </div>
               </div>
