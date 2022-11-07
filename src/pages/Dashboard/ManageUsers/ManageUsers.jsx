@@ -1,5 +1,6 @@
 import React from "react";
 import { useQuery } from "react-query";
+import { Fade } from "react-reveal";
 import { BASE_API } from "../../../../config";
 import useScrollToTop from "../../../../hooks/useScrollToTop";
 import useTitle from "../../../../hooks/useTitle";
@@ -30,34 +31,36 @@ const ManageUsers = () => {
         <h3 className="text-2xl font-semibold">Manage Users</h3>
         <span>You can manage all the users whom are already registered</span>
       </div>
-      <div className="overflow-x-auto shadow-xl rounded-xl">
-        <table className="table w-full">
-          <thead className="bg-base-300">
-            <tr>
-              <th>No</th>
-              <th>Image</th>
-              <th>Name</th>
-              {/* <th>Uid</th> */}
-              <th>Email</th>
-              <th>Make Admin</th>
-              <th>Remove Admin</th>
-              <th>Role</th>
-              <th>isLogin</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users?.map((user, index) => (
-              <UserRow
-                index={index}
-                key={user._id}
-                user={user}
-                refetch={refetch}
-              ></UserRow>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <Fade top distance="20px">
+        <div className="overflow-x-auto shadow-xl rounded-xl">
+          <table className="table w-full">
+            <thead className="bg-base-300">
+              <tr>
+                <th>No</th>
+                <th>Image</th>
+                <th>Name</th>
+                {/* <th>Uid</th> */}
+                <th>Email</th>
+                <th>Make Admin</th>
+                <th>Remove Admin</th>
+                <th>Role</th>
+                <th>isLogin</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {users?.map((user, index) => (
+                <UserRow
+                  index={index}
+                  key={user._id}
+                  user={user}
+                  refetch={refetch}
+                ></UserRow>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </Fade>
     </div>
   );
 };
