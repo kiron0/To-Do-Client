@@ -25,8 +25,8 @@ const TodoList = ({
       text: "Are you sure you want to delete this?",
       icon: "warning",
       showCancelButton: true,
-      background: theme ? "#333" : "#fff",
-      color: theme ? "#fff" : "#333",
+      background: theme === "night" ? "#333" : "#fff",
+      color: theme === "night" ? "#fff" : "#333",
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, Delete it!",
@@ -106,7 +106,7 @@ const TodoList = ({
         <label
           type="button"
           htmlFor="detailsModal"
-          className="btn btn-sm btn-neutral text-white modal-button"
+          className="btn btn-sm btn-primary rounded-full h-10 w-10 btn-neutral text-white modal-button"
           onClick={() =>
             setModalToDo({
               _id,

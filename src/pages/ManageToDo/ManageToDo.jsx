@@ -38,7 +38,7 @@ const ManageToDo = () => {
     e.preventDefault();
     const searchText = e.target.search.value;
     if (!searchText) {
-      return theme
+      return theme === "night"
         ? Swal.fire({
             icon: "error",
             title: "Oops...",
@@ -159,7 +159,7 @@ const ManageToDo = () => {
                 </form>
               </div>
 
-              <div className="flex md:flex-auto mx-auto mt-4 md:mt-0 md:ml-4">
+              {/* <div className="flex md:flex-auto mx-auto mt-4 md:mt-0 md:ml-4">
                 <select
                   // onChange={(e) => setLimit(Number(e.target.value))}
                   className="select select-sm select-bordered"
@@ -168,7 +168,7 @@ const ManageToDo = () => {
                   <option value="10">10</option>
                   <option value="15">15</option>
                 </select>
-              </div>
+              </div> */}
             </div>
 
             <div className="flex-none gap-2 justify-center items-center w-full sm:justify-start sm:items-start sm:w-auto">

@@ -20,82 +20,6 @@ import LoadingScreen from "./shared/LoadingScreen/LoadingScreen";
 export const InitializeContext = createContext(null);
 
 function App() {
-  // const router = createBrowserRouter([
-  //   {
-  //     path: "/",
-  //     element: <Root />,
-  //     errorElement: <NotFound />,
-  //     children: [
-  //       {
-  //         path: "/",
-  //         element: <Home />,
-  //       },
-  //       {
-  //         path: "/aboutMe",
-  //         element: <AboutMe />,
-  //       },
-  //       {
-  //         path: "/login",
-  //         element: <Login />,
-  //       },
-  //       {
-  //         path: "/toDos",
-  //         element: (
-  //           <RequireAuth>
-  //             <ManageToDo />
-  //           </RequireAuth>
-  //         ),
-  //       },
-  //       {
-  //         path: "/completed",
-  //         element: (
-  //           <RequireAuth>
-  //             <CompletedToDo />
-  //           </RequireAuth>
-  //         ),
-  //       },
-  //       {
-  //         path: "/profile",
-  //         element: (
-  //           <RequireAuth>
-  //             <Profile />
-  //           </RequireAuth>
-  //         ),
-  //       },
-  //       {
-  //         path: "*",
-  //         element: <NotFound />,
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     path: "/dashboard",
-  //     element: (
-  //       <RequireAdmin>
-  //         <Dashboard />
-  //       </RequireAdmin>
-  //     ),
-  //     children: [
-  //       {
-  //         index: true,
-  //         element: <Welcome />,
-  //       },
-  //       {
-  //         path: "manageToDoS",
-  //         element: <ManageToDoS />,
-  //       },
-  //       {
-  //         path: "manageUsers",
-  //         element: <ManageUsers />,
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     path: "*",
-  //     element: <NotFound />,
-  //   },
-  // ]);
-
   const [theme, setTheme] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -165,7 +89,6 @@ function App() {
         {loading ? null : <ThemeChanger />}
       </div>
     </InitializeContext.Provider>
-    // <RouterProvider router={router} />
   );
 }
 
