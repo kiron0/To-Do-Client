@@ -107,7 +107,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    setTheme(JSON.parse(window.localStorage.getItem("theme")));
+    setTheme(window.localStorage.getItem("theme"));
   }, []);
 
   const handleThemeChange = () => {
