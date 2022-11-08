@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink, Link, useLocation } from "react-router-dom";
 import logo from "../../assets/todo.png";
 import { HiOutlineMenuAlt4 } from "react-icons/hi";
@@ -9,12 +9,10 @@ import { BiLogInCircle } from "react-icons/bi";
 import useProfileImage from "../../hooks/useProfileImage";
 import auth from "../../pages/Login/Firebase/firebase.init";
 import useAdmin from "../../hooks/useAdmin";
-import { InitializeContext } from "../../App";
 import useScrollToTop from "../../hooks/useScrollToTop";
 
 const Navbar = () => {
   useScrollToTop();
-  const { handleThemeChange, theme } = useContext(InitializeContext);
   const [user] = useAuthState(auth);
   const [image] = useProfileImage(user);
   const { pathname } = useLocation();
@@ -45,16 +43,6 @@ const Navbar = () => {
 
   const NavbarMenus = (
     <>
-      <li className="py-1 lg:py-0">
-        <NavLink
-          className={({ isActive }) =>
-            isActive ? "text-white uppercase bg-primary" : "uppercase"
-          }
-          to="/"
-        >
-          Home
-        </NavLink>
-      </li>
       <li className="py-1 lg:py-0">
         <NavLink
           className={({ isActive }) =>
@@ -125,18 +113,18 @@ const Navbar = () => {
             <ul className="menu menu-horizontal p-0 gap-3">{NavbarMenus}</ul>
           </div>
           <div className="navbar-end gap-3">
-            <li className="list-none">
+            {/* <li className="list-none">
               <button
                 onClick={handleThemeChange}
                 className="rounded-full lg:mx-2 font-bold ml-2"
               >
                 {theme ? (
-                  <i className="bx bx-sun text-2xl text-primary"></i>
+                  <i className="bx bx-sun text-2xl"></i>
                 ) : (
-                  <i className="bx bx-moon text-2xl text-primary"></i>
+                  <i className="bx bx-moon text-2xl"></i>
                 )}
               </button>
-            </li>
+            </li> */}
             {!user && (
               <NavLink
                 to="/login"

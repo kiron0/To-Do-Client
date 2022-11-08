@@ -15,7 +15,7 @@ import useScrollToTop from "../../../hooks/useScrollToTop";
 
 const Dashboard = () => {
   useScrollToTop();
-  const { handleThemeChange, theme } = useContext(InitializeContext);
+  const { theme } = useContext(InitializeContext);
   useTitle("Dashboard");
   const [user] = useAuthState(auth);
   const [admin, adminLoading] = useAdmin(user);
@@ -43,9 +43,9 @@ const Dashboard = () => {
         <div className="header z-50 sticky top-0 flex justify-between items-center bg-base-300 p-4 rounded">
           <label
             htmlFor="dashboard-sidebar"
-            className="btn bg-base-300 text-black hover:text-white drawer-button lg:hidden "
+            className="btn bg-base-300 text-gray-700 hover:text-white drawer-button lg:hidden "
           >
-            <BsGrid className={theme ? "text-2xl text-white" : "text-2xl"} />
+            <BsGrid className={theme ? "text-2xl" : "text-2xl"} />
           </label>
           <Link
             to="/"
@@ -54,7 +54,7 @@ const Dashboard = () => {
             K Task ToDo
           </Link>
           <div className="mr-[-1rem] lg:mr-[-81rem] pt-2 md:mr-[-18rem] flex justify-center items-center">
-            <li className="list-none">
+            {/* <li className="list-none">
               <button
                 onClick={handleThemeChange}
                 className="rounded-full lg:mx-2 font-bold"
@@ -65,7 +65,7 @@ const Dashboard = () => {
                   <i className="bx bx-moon text-2xl text-primary"></i>
                 )}
               </button>
-            </li>
+            </li> */}
           </div>
           <div className="dropdown dropdown-end">
             <label

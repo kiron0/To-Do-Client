@@ -102,10 +102,7 @@ const TodoList = ({
       >
         {description?.slice(0, 10)}
       </th>
-      <th
-        className="tooltip tooltip-left flex justify-center"
-        data-tip="See full details"
-      >
+      <th className="flex justify-center">
         <label
           type="button"
           htmlFor="detailsModal"

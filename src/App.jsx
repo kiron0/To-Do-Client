@@ -15,6 +15,8 @@ import ManageUsers from "./pages/Dashboard/ManageUsers/ManageUsers";
 import RequireAdmin from "./pages/Login/RequireAdmin/RequireAdmin";
 import NotFound from "./shared/NotFound/NotFound";
 import AboutMe from "./pages/AboutMe/AboutMe";
+import ThemeChanger from "./shared/ThemeChanger/ThemeChanger";
+import LoadingScreen from "./shared/LoadingScreen/LoadingScreen";
 export const InitializeContext = createContext(null);
 
 function App() {
@@ -95,7 +97,6 @@ function App() {
   // ]);
 
   const [theme, setTheme] = useState(false);
-
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -115,40 +116,9 @@ function App() {
   };
 
   return (
-    <InitializeContext.Provider value={{ handleThemeChange, theme }}>
-      <div data-theme={theme && "night"} className="bg-base-100">
-        {loading ? (
-          <div className="h-screen">
-            <div className="dots">
-              <div className="dot"></div>
-              <div className="dot"></div>
-              <div className="dot"></div>
-              <div className="dot"></div>
-              <div className="dot"></div>
-            </div>
-
-            <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
-              <defs>
-                <filter id="goo">
-                  <feGaussianBlur
-                    in="SourceGraphic"
-                    stdDeviation="12"
-                    result="blur"
-                  />
-                  <feColorMatrix
-                    in="blur"
-                    mode="matrix"
-                    values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7"
-                    result="goo"
-                  />
-                  <feBlend in="SourceGraphic" in2="goo" />
-                </filter>
-              </defs>
-            </svg>
-          </div>
-        ) : (
-          <Navbar />
-        )}
+    <InitializeContext.Provider value={{ handleThemeChange, theme, setTheme }}>
+      <div data-theme={theme ? theme : "light"} className="bg-base-100">
+        {loading ? <LoadingScreen /> : <Navbar />}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/aboutMe" element={<AboutMe />} />
@@ -192,6 +162,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Toaster />
+        {loading ? null : <ThemeChanger />}
       </div>
     </InitializeContext.Provider>
     // <RouterProvider router={router} />

@@ -10,17 +10,13 @@ const Footer = () => {
       <footer className="footer footer-center p-10 bg-primary text-white rounded">
         <div className="grid grid-flow-col gap-4">
           <Link
-            to="/aboutUs"
-            target="_blank"
-            rel="noopener noreferrer"
+            to="/aboutMe"
             className="link link-hover"
           >
-            About us
+            About me
           </Link>
           <Link
             to="/contactUs"
-            target="_blank"
-            rel="noopener noreferrer"
             className="link link-hover"
           >
             Contact us
@@ -80,7 +76,7 @@ const Footer = () => {
         </div>
         <div>
           <p>
-            Copyright &copy; {new Date().getFullYear()} - All right reserved by
+            Copyright &copy; {new Date().getFullYear()} - All rights reserved.
           </p>
           <p>
             <a href="/">K Task To Do</a>
