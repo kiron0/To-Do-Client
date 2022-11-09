@@ -106,7 +106,7 @@ const TodoList = ({
         <label
           type="button"
           htmlFor="detailsModal"
-          className="btn btn-sm btn-primary rounded-full h-10 w-10 btn-neutral text-white modal-button"
+          className="btn btn-sm btn-primary btn-neutral text-white modal-button"
           onClick={() =>
             setModalToDo({
               _id,

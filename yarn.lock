@@ -8130,6 +8130,11 @@ react-scripts@5.0.1:
   optionalDependencies:
     fsevents "^2.3.2"
 
+react-simple-scroll-up@^0.2.3:
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/react-simple-scroll-up/-/react-simple-scroll-up-0.2.3.tgz#4e75b26943c1dd0685553fc3e62be5e5c2225ec4"
+  integrity sha512-krImJtKTQJZb1wlBFazZuAuqDiI4nOR7+smtY29NMeSHBPPgaSnrOaza1Ippu3qboHIXZOfjjgbZUlOqMWybgw==
+
 react-spinners@^0.12.0:
   version "0.12.0"
   resolved "https://registry.yarnpkg.com/react-spinners/-/react-spinners-0.12.0.tgz#082b3e247878c7dc4f89ba7f23d6994aa2269075"

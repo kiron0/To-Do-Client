@@ -17,7 +17,7 @@ const Dashboard = () => {
   useScrollToTop();
   const { theme } = useContext(InitializeContext);
   useTitle("Dashboard");
-  const [user] = useAuthState(auth);
+  const [user, isLoading] = useAuthState(auth);
   const [admin, adminLoading] = useAdmin(user);
   const [image] = useProfileImage();
   const navigate = useNavigate();
@@ -32,7 +32,7 @@ const Dashboard = () => {
     });
   };
 
-  if (adminLoading) {
+  if (isLoading || adminLoading) {
     return <Loader />;
   }
 

@@ -82,7 +82,7 @@ const Navbar = () => {
           <div className="navbar-start">
             <div className="dropdown">
               <label tabIndex="0" className="btn btn-ghost lg:hidden">
-                <HiOutlineMenuAlt4 className="text-3xl" />
+                <HiOutlineMenuAlt4 className="text-3xl text-primary" />
               </label>
               <ul
                 tabIndex="0"

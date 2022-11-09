@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
+import { ScrollToTop } from "react-simple-scroll-up";
 import { Routes, Route } from "react-router-dom";
 import RequireAuth from "./pages/Login/RequireAuth/RequireAuth";
 import Profile from "./pages/Profile/Profile";
@@ -86,6 +87,14 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Toaster />
+        <ScrollToTop
+          size={50}
+          className="z-50"
+          strokeFillColor="#9b7be7"
+          bgColor="#fff"
+          symbolSize={30}
+          symbolColor="#9b7be7"
+        />
         {loading ? null : <ThemeChanger />}
       </div>
     </InitializeContext.Provider>
