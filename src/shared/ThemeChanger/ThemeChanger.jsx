@@ -55,7 +55,7 @@ export default function ThemeChanger() {
             <p>
               Current theme:{" "}
               <span className="capitalize btn btn-xs btn-primary cursor-default no-animation text-white">
-                {theme}
+                {theme ? theme : "Light"}
               </span>
             </p>
           </div>

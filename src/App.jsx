@@ -21,7 +21,7 @@ import LoadingScreen from "./shared/LoadingScreen/LoadingScreen";
 export const InitializeContext = createContext(null);
 
 function App() {
-  const [theme, setTheme] = useState(false);
+  const [theme, setTheme] = useState("light");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -35,13 +35,8 @@ function App() {
     setTheme(window.localStorage.getItem("theme"));
   }, []);
 
-  const handleThemeChange = () => {
-    setTheme(!theme);
-    window.localStorage.setItem("theme", !theme);
-  };
-
   return (
-    <InitializeContext.Provider value={{ handleThemeChange, theme, setTheme }}>
+    <InitializeContext.Provider value={{ theme, setTheme }}>
       <div data-theme={theme ? theme : "light"} className="bg-base-100">
         {loading ? <LoadingScreen /> : <Navbar />}
         <Routes>
