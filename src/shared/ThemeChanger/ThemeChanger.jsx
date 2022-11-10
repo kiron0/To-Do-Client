@@ -13,7 +13,6 @@ export default function ThemeChanger() {
 
   return (
     <div>
-      {/* The button to open modal */}
       <label
         htmlFor="themeChanger"
         className="btn btn-sm btn-primary rounded-full h-8 w-8 absolute right-1 top-1/3"
@@ -21,7 +20,6 @@ export default function ThemeChanger() {
         <i className={`bx bx-cog text-lg text-white ${styles.themeBtn}`}></i>
       </label>
 
-      {/* Put this part before </body> tag */}
       <input type="checkbox" id="themeChanger" className="modal-toggle" />
       <div className="modal">
         <div className="modal-box relative">
@@ -54,7 +52,12 @@ export default function ThemeChanger() {
           </div>
 
           <div className="pt-3 font-semibold">
-            <p>Current theme: <span className="capitalize text-primary">{theme}</span></p>
+            <p>
+              Current theme:{" "}
+              <span className="capitalize btn btn-xs btn-primary cursor-default no-animation text-white">
+                {theme}
+              </span>
+            </p>
           </div>
 
           <div className="modal-action">

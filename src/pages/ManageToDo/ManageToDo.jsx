@@ -439,13 +439,16 @@ const ManageToDo = () => {
                 </div>
                 <div className="card-actions justify-end">
                   Created By -{" "}
-                  <div className="badge badge-outline badge-success">
+                  <div
+                    className="badge badge-outline badge-primary tooltip tooltip-left tooltip-primary"
+                    data-tip={modalToDo?.addedBy?.email}
+                  >
                     {modalToDo?.addedBy?.name}
                   </div>
                 </div>
-                <div className="card-actions justify-end mt-2">
+                <div className="card-actions justify-end mt-3">
                   Created at -{" "}
-                  <div className="badge badge-outline badge-neutral">
+                  <div className="badge badge-outline badge-info">
                     {modalToDo?.createdAt}
                   </div>
                 </div>

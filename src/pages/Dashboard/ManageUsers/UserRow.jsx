@@ -131,8 +131,9 @@ const UserRow = ({ user, index, refetch }) => {
           />
         )}
       </td>
-      <td>{displayName ? displayName : "Not Available"}</td>
-      {/* <td>{uid ? uid : "Not Available"}</td> */}
+      <td className="tooltip" data-tip={uid ? uid : "Not available"}>
+        {displayName ? displayName : "Not Available"}
+      </td>
       <td>{email}</td>
       <td>
         {role === "admin" ? (

@@ -22,7 +22,7 @@ const CompletedToDo = () => {
       <div className="title my-2 mb-6 px-4">
         <span className="flex items-center">
           <i
-            className="bx bx-chevron-left text-3xl cursor-pointer"
+            className="bx bx-chevron-left text-primary text-3xl cursor-pointer"
             onClick={() => navigate(-1)}
           ></i>
           <h3 className="text-xl md:text-2xl font-semibold">Completed ToDoS</h3>

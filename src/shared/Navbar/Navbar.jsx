@@ -86,7 +86,7 @@ const Navbar = () => {
               </label>
               <ul
                 tabIndex="0"
-                className="menu menu-compact dropdown-content mt-4 p-2 shadow-xl bg-base-300 rounded-box w-[23.5rem] flex flex-wrap justify-center items-center"
+                className="menu menu-compact dropdown-content mt-4 p-2 shadow-xl bg-base-200 rounded-box w-[23.5rem] flex flex-wrap justify-center items-center"
               >
                 {NavbarMenus}
               </ul>
