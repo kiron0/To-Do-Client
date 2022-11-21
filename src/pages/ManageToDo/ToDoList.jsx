@@ -1,7 +1,7 @@
 import React from "react";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
-import auth from "../Login/Firebase/firebase.init";
+import auth from "../../auth/Firebase/firebase.init";
 import { FaRegEye } from "react-icons/fa";
 import { BASE_API } from "../../config";
 import { useContext } from "react";

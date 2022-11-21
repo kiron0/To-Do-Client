@@ -1,6 +1,6 @@
 import React from "react";
 import useScrollToTop from "../../../hooks/useScrollToTop";
-import auth from "../../Login/Firebase/firebase.init";
+import auth from "../../../auth/Firebase/firebase.init";
 
 const Welcome = () => {
   useScrollToTop();

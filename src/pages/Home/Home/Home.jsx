@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Fade } from "react-reveal";
 import todo from "../../../assets/todo.png";
 import { NavLink } from "react-router-dom";
@@ -6,10 +6,12 @@ import { MdAddCircleOutline } from "react-icons/md";
 import Footer from "../Footer/Footer";
 import useTitle from "../../../hooks/useTitle";
 import useScrollToTop from "../../../hooks/useScrollToTop";
+import { InitializeContext } from "../../../App";
 
 const Home = () => {
   useScrollToTop();
   useTitle("Home");
+  const { appName } = useContext(InitializeContext);
   return (
     <>
       <div className="bg-base-100">
@@ -23,10 +25,10 @@ const Home = () => {
               />
               <div className="text-center lg:w-2/3 w-full">
                 <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium">
-                  K Task ToDo
+                  {appName}
                 </h1>
                 <p className="mb-8">
-                  K Task ToDo List App is a kind of app that generally used to
+                  {appName} List App is a kind of app that generally used to
                   maintain our day-to-day tasks or list everything that we have
                   to do, with the most important tasks at the top of the list,
                   and the least important tasks at the bottom. It is helpful in
@@ -43,7 +45,6 @@ const Home = () => {
           </Fade>
         </section>
       </div>
-
       <Footer></Footer>
     </>
   );

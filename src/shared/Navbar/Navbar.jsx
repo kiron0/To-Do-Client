@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { NavLink, Link, useLocation } from "react-router-dom";
 import logo from "../../assets/todo.png";
 import { HiOutlineMenuAlt4 } from "react-icons/hi";
@@ -7,12 +7,14 @@ import { signOut } from "firebase/auth";
 import { toast } from "react-hot-toast";
 import { BiLogInCircle } from "react-icons/bi";
 import useProfileImage from "../../hooks/useProfileImage";
-import auth from "../../pages/Login/Firebase/firebase.init";
+import auth from "../../auth/Firebase/firebase.init";
 import useAdmin from "../../hooks/useAdmin";
 import useScrollToTop from "../../hooks/useScrollToTop";
+import { InitializeContext } from "../../App";
 
 const Navbar = () => {
   useScrollToTop();
+  const { appName } = useContext(InitializeContext);
   const [user] = useAuthState(auth);
   const [image] = useProfileImage(user);
   const { pathname } = useLocation();
@@ -101,10 +103,10 @@ const Navbar = () => {
                 className={`w-8 h-8 md:w-12 md:h-12 ${!user && "ml-[-1rem]"}`}
               />
               {!user ? (
-                <span className="text-xl lg:text-2xl">K Task ToDo</span>
+                <span className="text-xl lg:text-2xl">{appName}</span>
               ) : (
                 <span className="text-xl lg:text-2xl flex justify-center items-center">
-                  K Task ToDo
+                  {appName}
                 </span>
               )}
             </Link>
@@ -113,18 +115,6 @@ const Navbar = () => {
             <ul className="menu menu-horizontal p-0 gap-3">{NavbarMenus}</ul>
           </div>
           <div className="navbar-end gap-3">
-            {/* <li className="list-none">
-              <button
-                onClick={handleThemeChange}
-                className="rounded-full lg:mx-2 font-bold ml-2"
-              >
-                {theme ? (
-                  <i className="bx bx-sun text-2xl"></i>
-                ) : (
-                  <i className="bx bx-moon text-2xl"></i>
-                )}
-              </button>
-            </li> */}
             {!user && (
               <NavLink
                 to="/login"
@@ -180,6 +170,10 @@ const Navbar = () => {
                       <h2 className="font-semibold text-lg">
                         {auth?.currentUser?.displayName}
                       </h2>
+
+                      <p className="text-xs font-medium">
+                        User ID: USER-{auth?.currentUser?.uid?.slice(0, 8)}
+                      </p>
 
                       <Link to="/profile">
                         <button className="btn btn-primary mt-4 rounded-full text-white">

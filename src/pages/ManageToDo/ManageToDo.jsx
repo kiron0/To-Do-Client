@@ -6,7 +6,7 @@ import { PulseLoader } from "react-spinners";
 import { useQuery } from "react-query";
 import useTitle from "../../hooks/useTitle";
 import Loader from "../../components/Loader/Loader";
-import auth from "../Login/Firebase/firebase.init";
+import auth from "../../auth/Firebase/firebase.init";
 import Swal from "sweetalert2";
 import TodoList from "./ToDoList";
 import { BASE_API } from "../../config";
@@ -127,7 +127,7 @@ const ManageToDo = () => {
           <h3 className="text-3xl font-semibold">ToDo List</h3>
           <span>Here you will get all your ToDo list.</span>
         </div>
-        <div className="header bg-base-300 rounded-md shadow-md container mx-auto w-[22rem] md:w-full py-4 md:py-0">
+        <div className="header bg-base-200 rounded-md shadow-md container mx-auto w-[22rem] md:w-full py-4 md:py-0">
           <div className="flex-wrap gap-4 navbar">
             <div className="sm:flex-1 flex-col sm:flex-row w-full">
               <div className="form-control">

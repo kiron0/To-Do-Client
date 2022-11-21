@@ -1,23 +1,26 @@
 import { createContext, useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
-import { ScrollToTop } from "react-simple-scroll-up";
 import { Routes, Route } from "react-router-dom";
-import RequireAuth from "./pages/Login/RequireAuth/RequireAuth";
+import RequireAuth from "./auth/RequireAuth/RequireAuth";
 import Profile from "./pages/Profile/Profile";
 import Navbar from "./shared/Navbar/Navbar";
 import Home from "./pages/Home/Home/Home";
-import Login from "./pages/Login/Login/Login";
+import Login from "./pages/Authentication/Login/Login";
 import ManageToDo from "./pages/ManageToDo/ManageToDo";
 import CompletedToDo from "./pages/CompletedToDo/CompletedToDo";
 import Dashboard from "./pages/Dashboard/Dashboard/Dashboard";
 import Welcome from "./pages/Dashboard/Welcome/Welcome";
 import ManageToDoS from "./pages/Dashboard/ManageToDoS/ManageToDoS";
 import ManageUsers from "./pages/Dashboard/ManageUsers/ManageUsers";
-import RequireAdmin from "./pages/Login/RequireAdmin/RequireAdmin";
+import RequireAdmin from "./auth/RequireAdmin/RequireAdmin";
 import NotFound from "./shared/NotFound/NotFound";
 import AboutMe from "./pages/AboutMe/AboutMe";
 import ThemeChanger from "./shared/ThemeChanger/ThemeChanger";
 import LoadingScreen from "./shared/LoadingScreen/LoadingScreen";
+import axios from "axios";
+import { useQuery } from "react-query";
+import { BASE_API } from "./config";
+import Setting from "./pages/Dashboard/Setting/Setting";
 export const InitializeContext = createContext(null);
 
 function App() {
@@ -35,8 +38,15 @@ function App() {
     setTheme(window.localStorage.getItem("theme"));
   }, []);
 
+  const { data, refetch } = useQuery("appName", async () => {
+    const res = await axios.get(`${BASE_API}/app/appName`);
+    return res?.data;
+  });
+
+  const appName = data?.appName;
+
   return (
-    <InitializeContext.Provider value={{ theme, setTheme }}>
+    <InitializeContext.Provider value={{ theme, setTheme, appName }}>
       <div data-theme={theme ? theme : "light"} className="bg-base-100">
         {loading ? <LoadingScreen /> : <Navbar />}
         <Routes>
@@ -77,19 +87,19 @@ function App() {
             <Route index element={<Welcome />} />
             <Route path="manageToDoS" element={<ManageToDoS />} />
             <Route path="manageUsers" element={<ManageUsers />} />
+            <Route
+              path="setting"
+              element={
+                <RequireAdmin>
+                  <Setting appChangeRefetch={refetch} />
+                </RequireAdmin>
+              }
+            ></Route>
           </Route>
           <Route path="/login" element={<Login />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Toaster />
-        <ScrollToTop
-          size={50}
-          className="z-50"
-          strokeFillColor="#9b7be7"
-          bgColor="#fff"
-          symbolSize={30}
-          symbolColor="#9b7be7"
-        />
         {loading ? null : <ThemeChanger />}
       </div>
     </InitializeContext.Provider>

@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 import { BASE_API } from "../../../config";
+import useScrollToTop from "../../../hooks/useScrollToTop";
 
 const ToDoSRow = ({ todo, refetch }) => {
+  useScrollToTop();
   const [showMore, setShowMore] = useState(false);
 
   const handleDelete = (id) => {

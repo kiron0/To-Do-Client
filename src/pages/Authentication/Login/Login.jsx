@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import Loading from "../../../components/Loading/Loading";
 import useToken from "../../../hooks/useToken";
-import auth from "../Firebase/firebase.init";
+import auth from "../../../auth/Firebase/firebase.init";
 import useTitle from "../../../hooks/useTitle";
 import useScrollToTop from "../../../hooks/useScrollToTop";
 

@@ -5,7 +5,7 @@ import { FaFacebook, FaLinkedin } from "react-icons/fa";
 import { useQuery } from "react-query";
 import { BASE_API } from "../../config";
 import Loading from "../../components/Loading/Loading";
-import auth from "../Login/Firebase/firebase.init";
+import auth from "../../auth/Firebase/firebase.init";
 import {
   browserName,
   fullBrowserVersion,
@@ -13,10 +13,13 @@ import {
   osVersion,
 } from "react-device-detect";
 import useScrollToTop from "../../hooks/useScrollToTop";
+import { useContext } from "react";
+import { InitializeContext } from "../../App";
 
 const Profile = () => {
   useScrollToTop();
-  document.title = `${auth?.currentUser?.displayName}'s Profile - K Task To Do`;
+  const { appName } = useContext(InitializeContext);
+  document.title = `${auth?.currentUser?.displayName}'s Profile - ${appName}`;
   const [isShow, setIsShow] = useState(false);
   const {
     register,
