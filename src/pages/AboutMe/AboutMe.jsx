@@ -6,7 +6,7 @@ import profile from "../../assets/profile.png";
 import styles from "./AboutMe.module.css";
 
 export default function AboutMe() {
-  useTitle("About Me");
+  useTitle("Developer");
   useScrollToTop();
   return (
     <>
@@ -14,19 +14,23 @@ export default function AboutMe() {
         <header className={`${styles.profile} ${styles.container}`}>
           <div className={`${styles.profile__container} ${styles.grid}`}>
             <div className={styles.profile__data}>
-              <div className={styles.profile__border}>
+              <div
+                className={`${styles.profile__border} border-[3px] border-primary`}
+              >
                 <div className={styles.profile__fill}>
                   <img src={profile} alt="" className={styles.profile__img} />
                 </div>
               </div>
 
               <h2 className={styles.profile__name}>Toufiq Hasan Kiron</h2>
-              <h3 className={styles.profile__profession}>web developer</h3>
+              <h3 className={styles.profile__profession}>
+                MERN Stack developer
+              </h3>
 
               <ul className={styles.profile__social}>
                 <a
                   href="https://github.com/kiron0"
-                  className={styles.profile__social_link}
+                  className={`${styles.profile__social_link} hover:text-primary`}
                   target="_blank"
                   rel="noreferrer"
                 >
@@ -34,7 +38,7 @@ export default function AboutMe() {
                 </a>
                 <a
                   href="https://www.linkedin.com/in/toufiq-hasan-kiron/"
-                  className={styles.profile__social_link}
+                  className={`${styles.profile__social_link} hover:text-primary`}
                   target="_blank"
                   rel="noreferrer"
                 >
@@ -42,7 +46,7 @@ export default function AboutMe() {
                 </a>
                 <a
                   href="https://facebook.com/toufiqhasankiron"
-                  className={styles.profile__social_link}
+                  className={`${styles.profile__social_link} hover:text-primary`}
                   target="_blank"
                   rel="noreferrer"
                 >
@@ -53,7 +57,7 @@ export default function AboutMe() {
 
             <div className={`${styles.profile__info} ${styles.grid}`}>
               <div className={styles.profile__info_group}>
-                <h3 className={styles.profile__info_number}>10+</h3>
+                <h3 className={styles.profile__info_number}>11+</h3>
                 <p className={styles.profile__info_description}>
                   Months of <br /> work
                 </p>
@@ -65,9 +69,9 @@ export default function AboutMe() {
                 </p>
               </div>
               <div className={styles.profile__info_group}>
-                <h3 className={styles.profile__info_number}>10</h3>
+                <h3 className={styles.profile__info_number}>10+</h3>
                 <p className={styles.profile__info_description}>
-                  Satisfied <br /> customers
+                  Stars on <br /> GitHub
                 </p>
               </div>
             </div>
@@ -75,7 +79,7 @@ export default function AboutMe() {
             <div className={styles.profile__buttons}>
               <a
                 href="https://drive.google.com/file/d/1tUlSk9psjwxksSpBVb6-KUDbSgIiN4Wl/view?usp=sharing"
-                className={styles.button}
+                className={`${styles.button} bg-primary hover:bg-primary-dark`}
                 target="_blank"
                 rel="noreferrer"
               >
@@ -137,7 +141,7 @@ export default function AboutMe() {
             <div className={styles.skills__box}>
               <div className={styles.skills__group}>
                 <div className={styles.skills__data}>
-                  <i className="bx bx-check-circle"></i>
+                  <i className="bx bx-check-circle text-primary"></i>
                   <div>
                     <h3 className={styles.skills__name}>HTML</h3>
                     <span className={styles.skills__level}>Basic</span>
@@ -145,7 +149,7 @@ export default function AboutMe() {
                 </div>
 
                 <div className={styles.skills__data}>
-                  <i className="bx bx-check-circle"></i>
+                  <i className="bx bx-check-circle text-primary"></i>
                   <div>
                     <h3 className={styles.skills__name}>CSS</h3>
                     <span className={styles.skills__level}>Advanced</span>
@@ -153,7 +157,7 @@ export default function AboutMe() {
                 </div>
 
                 <div className={styles.skills__data}>
-                  <i className="bx bx-check-circle"></i>
+                  <i className="bx bx-check-circle text-primary"></i>
                   <div>
                     <h3 className={styles.skills__name}>JavaScript</h3>
                     <span className={styles.skills__level}>Intermediate</span>
@@ -163,7 +167,7 @@ export default function AboutMe() {
 
               <div className={styles.skills__group}>
                 <div className={styles.skills__data}>
-                  <i className="bx bx-check-circle"></i>
+                  <i className="bx bx-check-circle text-primary"></i>
                   <div>
                     <h3 className={styles.skills__name}>React</h3>
                     <span className={styles.skills__level}>Intermediate</span>
@@ -171,7 +175,7 @@ export default function AboutMe() {
                 </div>
 
                 <div className={styles.skills__data}>
-                  <i className="bx bx-check-circle"></i>
+                  <i className="bx bx-check-circle text-primary"></i>
                   <div>
                     <h3 className={styles.skills__name}>Bootstrap</h3>
                     <span className={styles.skills__level}>Intermediate</span>
@@ -179,7 +183,7 @@ export default function AboutMe() {
                 </div>
 
                 <div className={styles.skills__data}>
-                  <i className="bx bx-check-circle"></i>
+                  <i className="bx bx-check-circle text-primary"></i>
                   <div>
                     <h3 className={styles.skills__name}>Git</h3>
                     <span className={styles.skills__level}>Intermediate</span>
@@ -194,7 +198,7 @@ export default function AboutMe() {
             <div className={styles.skills__box}>
               <div className={styles.skills__group}>
                 <div className={styles.skills__data}>
-                  <i className="bx bx-check-circle"></i>
+                  <i className="bx bx-check-circle text-primary"></i>
                   <div>
                     <h3 className={styles.skills__name}>PHP</h3>
                     <span className={styles.skills__level}>Intermediate</span>
@@ -202,7 +206,7 @@ export default function AboutMe() {
                 </div>
 
                 <div className={styles.skills__data}>
-                  <i className="bx bx-check-circle"></i>
+                  <i className="bx bx-check-circle text-primary"></i>
                   <div>
                     <h3 className={styles.skills__name}>MySQL</h3>
                     <span className={styles.skills__level}>Advanced</span>
@@ -210,7 +214,7 @@ export default function AboutMe() {
                 </div>
 
                 <div className={styles.skills__data}>
-                  <i className="bx bx-check-circle"></i>
+                  <i className="bx bx-check-circle text-primary"></i>
                   <div>
                     <h3 className={styles.skills__name}>Firebase</h3>
                     <span className={styles.skills__level}>Intermediate</span>
@@ -219,7 +223,7 @@ export default function AboutMe() {
               </div>
               <div className={styles.skills__group}>
                 <div className={styles.skills__data}>
-                  <i className="bx bx-check-circle"></i>
+                  <i className="bx bx-check-circle text-primary"></i>
                   <div>
                     <h3 className={styles.skills__name}>Python</h3>
                     <span className={styles.skills__level}>Basic</span>
@@ -227,7 +231,7 @@ export default function AboutMe() {
                 </div>
 
                 <div className={styles.skills__data}>
-                  <i className="bx bx-check-circle"></i>
+                  <i className="bx bx-check-circle text-primary"></i>
                   <div>
                     <h3 className={styles.skills__name}>Node Js</h3>
                     <span className={styles.skills__level}>Intermediate</span>
@@ -235,7 +239,7 @@ export default function AboutMe() {
                 </div>
 
                 <div className={styles.skills__data}>
-                  <i className="bx bx-check-circle"></i>
+                  <i className="bx bx-check-circle text-primary"></i>
                   <div>
                     <h3 className={styles.skills__name}>Express JS</h3>
                     <span className={styles.skills__level}>Intermediate</span>

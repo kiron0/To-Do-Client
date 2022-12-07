@@ -51,7 +51,7 @@ function App() {
         {loading ? <LoadingScreen /> : <Navbar />}
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/aboutMe" element={<AboutMe />} />
+          <Route path="/developer" element={<AboutMe />} />
           <Route
             path="/toDoS"
             element={

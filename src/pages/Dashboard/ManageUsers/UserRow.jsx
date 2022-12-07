@@ -105,16 +105,14 @@ const UserRow = ({ user, index, refetch }) => {
             <img
               src={image}
               alt=""
-              width={60}
-              className="rounded-full shadow-sm bg-base-200 border p-1"
+              className="rounded-full w-[3rem] h-[3rem] shadow-sm bg-base-200 border p-1"
             />
           </a>
         ) : (
           <img
             src={avatar}
             alt=""
-            width={60}
-            className="rounded-full shadow-sm bg-base-200 border p-1"
+            className="rounded-full w-[3rem] h-[3rem] shadow-sm bg-base-200 border p-1"
           />
         )}
       </td>
@@ -125,25 +123,31 @@ const UserRow = ({ user, index, refetch }) => {
       </td>
       <td>{email}</td>
       <td>
-        <span className="tooltip" data-tip="Change user role">
-          <select
-            className="select select-bordered w-full max-w-xs"
-            defaultValue={role === "admin" ? "Admin" : "User"}
-            onChange={(e) => {
-              if (e.target.value === "Admin") {
-                makeAdmin();
-              } else {
-                removeAdmin();
-              }
-            }}
-          >
-            <option disabled selected>
-              Select Role
-            </option>
-            <option>User</option>
-            <option>Admin</option>
-          </select>
-        </span>
+        {auth?.currentUser?.uid === uid ? (
+          <></>
+        ) : (
+          <span className="tooltip" data-tip="Change user role">
+            <select
+              className={`select select-bordered w-full max-w-xs ${
+                role === "admin" ? "select-secondary" : "select-info"
+              }`}
+              defaultValue={role === "admin" ? "Admin" : "User"}
+              onChange={(e) => {
+                if (e.target.value === "Admin") {
+                  makeAdmin();
+                } else {
+                  removeAdmin();
+                }
+              }}
+            >
+              <option disabled selected>
+                Select Role
+              </option>
+              <option>User</option>
+              <option>Admin</option>
+            </select>
+          </span>
+        )}
       </td>
       <td>
         {role === "admin" ? (
@@ -162,14 +166,19 @@ const UserRow = ({ user, index, refetch }) => {
         )}
       </td>
       <td>
-        <span className="tooltip tooltip-error" data-tip="Delete user data!">
-          <button
-            onClick={() => handleUserDelete(_id)}
-            className="btn btn-sm btn-error text-white"
-          >
-            <i className="bx bxs-trash"></i>
-          </button>
-        </span>
+        {auth?.currentUser?.uid === uid ? (
+          <></>
+        ) : (
+          <span className="tooltip tooltip-error" data-tip="Delete user data!">
+            <label
+              onClick={() => handleUserDelete(_id)}
+              htmlFor="user-delete-confirm-modal"
+              className="btn btn-sm btn-error text-white"
+            >
+              <i className="bx bxs-trash"></i>
+            </label>
+          </span>
+        )}
       </td>
     </tr>
   );

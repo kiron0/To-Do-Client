@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { NavLink, Link, useLocation } from "react-router-dom";
 import logo from "../../assets/todo.png";
 import { HiOutlineMenuAlt4 } from "react-icons/hi";
@@ -19,20 +19,6 @@ const Navbar = () => {
   const [image] = useProfileImage(user);
   const { pathname } = useLocation();
   const [admin] = useAdmin(user);
-  const [scrollY, setScrollY] = useState();
-
-  const handleScroll = () => {
-    const position = window.pageYOffset;
-    setScrollY(position);
-  };
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll, { passive: true });
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [scrollY, user]);
 
   const handleLogOut = () => {
     signOut(auth);
@@ -60,9 +46,9 @@ const Navbar = () => {
           className={({ isActive }) =>
             isActive ? "text-white uppercase bg-primary" : "uppercase"
           }
-          to="/aboutMe"
+          to="/developer"
         >
-          About Me
+          Developer
         </NavLink>
       </li>
     </>
@@ -71,9 +57,7 @@ const Navbar = () => {
   return (
     <div className="sticky top-0 w-full z-50 bg-base-100">
       <div
-        className={`drawer-content flex flex-col backdrop-blur-[18px] bg-base-100 duration-500 ${
-          scrollY > 60 && "shadow-xl"
-        }`}
+        className='drawer-content flex flex-col backdrop-blur-[18px] bg-base-100 shadow-md'
         style={
           pathname.includes("dashboard")
             ? { display: "none" }
@@ -149,7 +133,7 @@ const Navbar = () => {
                   </label>
                   <ul
                     tabIndex="0"
-                    className="mt-3 p-2 shadow-xl menu menu-compact dropdown-content bg-base-100 rounded-box w-60"
+                    className="mt-3 p-2 shadow-xl menu menu-compact dropdown-content bg-base-100 rounded-box w-72"
                   >
                     <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto my-4 border ring ring-primary ring-offset-base-100 ring-offset-2">
                       {auth?.currentUser?.photoURL ? (

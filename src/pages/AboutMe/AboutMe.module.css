@@ -72,7 +72,7 @@
 }
 
 .profile__border {
-  border: 3px solid var(--first-color);
+  /* border: 3px solid var(--first-color); */
   justify-self: center;
   width: 195px;
   height: 195px;
@@ -105,9 +105,9 @@
   transition: 0.3s;
 }
 
-.profile__social_link:hover {
+/* .profile__social_link:hover {
   color: var(--first-color);
-}
+} */
 
 .profile__info {
   grid-template-columns: repeat(3, max-content);
@@ -149,7 +149,7 @@
   display: inline-flex;
   align-items: center;
   column-gap: 0.5rem;
-  background-color: var(--first-color);
+  /* background-color: var(--first-color); */
   color: #fff;
   padding: 1.15rem 1.5rem;
   border-radius: 0.5rem;
@@ -161,9 +161,9 @@
   font-size: 1.25rem;
 }
 
-.button:hover {
+/* .button:hover {
   background-color: var(--first-color-alt);
-}
+} */
 
 .button__small {
   padding: 0.75rem;
@@ -209,7 +209,7 @@
 
 .skills__data i {
   font-size: 1rem;
-  color: var(--first-color);
+  /* color: var(--first-color); */
 }
 
 .skills__name {
