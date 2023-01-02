@@ -28,7 +28,7 @@ const Dashboard = () => {
       navigate("/");
       toast.success(`Thank you, ${user.displayName} to stay with us!`, {
         autoClose: 3000,
-        position: "bottom-left",
+        position: "top-center",
       });
     });
   };

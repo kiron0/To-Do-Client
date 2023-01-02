@@ -31,7 +31,7 @@ const Navbar = () => {
 
   const NavbarMenus = (
     <>
-      <li className="py-1 lg:py-0">
+      {/* <li className="py-1 lg:py-0">
         <NavLink
           className={({ isActive }) =>
             isActive ? "text-white uppercase bg-primary" : "uppercase"
@@ -40,14 +40,9 @@ const Navbar = () => {
         >
           ToDo List
         </NavLink>
-      </li>
+      </li> */}
       <li className="py-1 lg:py-0">
-        <NavLink
-          className={({ isActive }) =>
-            isActive ? "text-white uppercase bg-primary" : "uppercase"
-          }
-          to="/developer"
-        >
+        <NavLink className="text-white uppercase bg-primary" to="/developer">
           Developer
         </NavLink>
       </li>
@@ -57,7 +52,7 @@ const Navbar = () => {
   return (
     <div className="sticky top-0 w-full z-50 bg-base-100">
       <div
-        className='drawer-content flex flex-col backdrop-blur-[18px] bg-base-100 shadow-md'
+        className="drawer-content flex flex-col backdrop-blur-[18px] bg-base-100 shadow-md"
         style={
           pathname.includes("dashboard")
             ? { display: "none" }
@@ -155,8 +150,8 @@ const Navbar = () => {
                         {auth?.currentUser?.displayName}
                       </h2>
 
-                      <p className="text-xs font-medium">
-                        User ID: USER-{auth?.currentUser?.uid?.slice(0, 8)}
+                      <p className="text-xs">
+                        User ID: <span className="font-semibold">USER-{auth?.currentUser?.uid?.slice(0, 6)}</span>
                       </p>
 
                       <Link to="/profile">
@@ -178,6 +173,16 @@ const Navbar = () => {
                         </Link>
                       </li>
                     )}
+                    <li className="py-1 font-semibold">
+                      <Link
+                        className={({ isActive }) =>
+                          isActive ? "text-white py-3 bg-primary" : "py-3"
+                        }
+                        to="/toDos"
+                      >
+                        <i className="bx bx-pen font-semibold"></i> Your ToDos
+                      </Link>
+                    </li>
                     <li className="py-1">
                       <button
                         onClick={handleLogOut}

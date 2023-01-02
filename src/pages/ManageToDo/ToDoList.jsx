@@ -70,21 +70,19 @@ const TodoList = ({
 
   return (
     <tr>
-      <th
-        style={{
-          textDecoration: `${completed && "line-through"}`,
-        }}
-      >
-        {serialize + 1}
+      <th>
+        <i className="bx bxs-notepad text-lg"></i>
       </th>
       <th>
-        <input
-          type="checkbox"
-          onClick={() => handleCompleteInfo(_id)}
-          className="checkbox"
-          disabled={completed && true}
-          checked={completed}
-        ></input>
+        <span className="tooltip" data-tip="Click to completed">
+          <input
+            type="checkbox"
+            onClick={() => handleCompleteInfo(_id)}
+            className="checkbox"
+            disabled={completed && true}
+            checked={completed}
+          ></input>
+        </span>
       </th>
       <th
         style={{

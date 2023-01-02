@@ -22,6 +22,10 @@ const ManageToDoS = () => {
     }).then((res) => res.json())
   );
 
+  if (isLoading || !toDosData || !toDosData.length) {
+    return <Loader />;
+  }
+
   return (
     <div className="lg:px-4 py-7 bg-base-100">
       <div className="title mb-4 px-4 lg:py-4">

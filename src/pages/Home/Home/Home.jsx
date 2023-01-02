@@ -36,7 +36,7 @@ const Home = () => {
                 </p>
                 <div className="flex justify-center">
                   <NavLink to="/toDoS" className="btn btn-primary text-white">
-                    <MdAddCircleOutline className="mr-1 text-xl" /> Add Your
+                    <MdAddCircleOutline className="mr-1 text-xl" /> Create Your
                     ToDo Now
                   </NavLink>
                 </div>
@@ -45,7 +45,7 @@ const Home = () => {
           </Fade>
         </section>
       </div>
-      <Footer></Footer>
+      <Footer/>
     </>
   );
 };

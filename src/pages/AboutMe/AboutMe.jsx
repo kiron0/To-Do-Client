@@ -2,7 +2,7 @@ import React from "react";
 import { Fade } from "react-reveal";
 import useScrollToTop from "../../hooks/useScrollToTop";
 import useTitle from "../../hooks/useTitle";
-import profile from "../../assets/profile.png";
+import profile from "../../assets/me2.JPG";
 import styles from "./AboutMe.module.css";
 
 export default function AboutMe() {

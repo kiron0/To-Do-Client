@@ -47,61 +47,65 @@ function App() {
 
   return (
     <InitializeContext.Provider value={{ theme, setTheme, appName }}>
-      <div data-theme={theme ? theme : "light"} className="bg-base-100">
-        {loading ? <LoadingScreen /> : <Navbar />}
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/developer" element={<AboutMe />} />
-          <Route
-            path="/toDoS"
-            element={
-              <RequireAuth>
-                <ManageToDo />
-              </RequireAuth>
-            }
-          />
-          <Route
-            path="/completed"
-            element={
-              <RequireAuth>
-                <CompletedToDo />
-              </RequireAuth>
-            }
-          />
-          <Route
-            path="/profile"
-            element={
-              <RequireAuth>
-                <Profile />
-              </RequireAuth>
-            }
-          />
-          <Route
-            path="dashboard"
-            element={
-              <RequireAdmin>
-                <Dashboard />
-              </RequireAdmin>
-            }
-          >
-            <Route index element={<Welcome />} />
-            <Route path="manageToDoS" element={<ManageToDoS />} />
-            <Route path="manageUsers" element={<ManageUsers />} />
+      {loading ? (
+        <LoadingScreen />
+      ) : (
+        <div data-theme={theme ? theme : "light"} className="bg-base-100">
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/developer" element={<AboutMe />} />
             <Route
-              path="setting"
+              path="/toDoS"
+              element={
+                <RequireAuth>
+                  <ManageToDo />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/completed"
+              element={
+                <RequireAuth>
+                  <CompletedToDo />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <RequireAuth>
+                  <Profile />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="dashboard"
               element={
                 <RequireAdmin>
-                  <Setting appChangeRefetch={refetch} />
+                  <Dashboard />
                 </RequireAdmin>
               }
-            ></Route>
-          </Route>
-          <Route path="/login" element={<Login />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-        <Toaster />
-        {loading ? null : <ThemeChanger />}
-      </div>
+            >
+              <Route index element={<Welcome />} />
+              <Route path="manageToDoS" element={<ManageToDoS />} />
+              <Route path="manageUsers" element={<ManageUsers />} />
+              <Route
+                path="setting"
+                element={
+                  <RequireAdmin>
+                    <Setting appChangeRefetch={refetch} />
+                  </RequireAdmin>
+                }
+              ></Route>
+            </Route>
+            <Route path="/login" element={<Login />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+          <Toaster />
+          {loading ? null : <ThemeChanger />}
+        </div>
+      )}
     </InitializeContext.Provider>
   );
 }

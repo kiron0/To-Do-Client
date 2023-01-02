@@ -6,8 +6,10 @@ import { InitializeContext } from "../../../App";
 import { BASE_API } from "../../../config";
 import auth from "../../../auth/Firebase/firebase.init";
 import avatar from "../../../assets/avatar.jpg";
+import useScrollToTop from "../../../hooks/useScrollToTop";
 
 const UserRow = ({ user, index, refetch }) => {
+  useScrollToTop();
   const { theme } = useContext(InitializeContext);
   const { _id, email, role, uid, image, displayName } = user;
 
@@ -105,33 +107,40 @@ const UserRow = ({ user, index, refetch }) => {
             <img
               src={image}
               alt=""
-              className="rounded-full w-[3rem] h-[3rem] shadow-sm bg-base-200 border p-1"
+              className="rounded-full w-[2.5rem] h-[2.5rem] shadow-sm bg-base-200 border p-1"
             />
           </a>
         ) : (
           <img
             src={avatar}
             alt=""
-            className="rounded-full w-[3rem] h-[3rem] shadow-sm bg-base-200 border p-1"
+            className="rounded-full w-[2.5rem] h-[2.5rem] shadow-sm bg-base-200 border p-1"
           />
         )}
       </td>
-      <td>
+      <td className="select-none">
         <span className="tooltip" data-tip={uid ? uid : "Not available"}>
           {displayName ? displayName : "Not Available"}
         </span>
       </td>
-      <td>{email}</td>
+      <td className="select-none">{email}</td>
       <td>
-        {auth?.currentUser?.uid === uid ? (
+        {email === "toufiqhasankiron2@gmail.com" ||
+        auth?.currentUser?.uid === uid ? (
           <></>
         ) : (
           <span className="tooltip" data-tip="Change user role">
             <select
               className={`select select-bordered w-full max-w-xs ${
-                role === "admin" ? "select-secondary" : "select-info"
+                role === "admin" ? "select-secondary" : ""
               }`}
-              defaultValue={role === "admin" ? "Admin" : "User"}
+              defaultValue={
+                role === "admin"
+                  ? "Admin"
+                  : role === "superAdmin"
+                  ? "Super Admin"
+                  : "User"
+              }
               onChange={(e) => {
                 if (e.target.value === "Admin") {
                   makeAdmin();
@@ -149,34 +158,44 @@ const UserRow = ({ user, index, refetch }) => {
           </span>
         )}
       </td>
-      <td>
-        {role === "admin" ? (
-          <span className="badge badge-primary text-white">Admin</span>
-        ) : (
-          <span className="badge text-white">User</span>
-        )}
-      </td>
-      <td>
-        {auth?.currentUser?.uid === uid ? (
-          <span className="badge bg-green-500 border-green-500 text-white">
-            Active{" "}
+      {email === "toufiqhasankiron2@gmail.com" ? (
+        <td>
+          <span className="badge badge-outline p-3 select-none">
+            🔥Developer🔥
           </span>
+        </td>
+      ) : (
+        <td>
+          {role === "admin" ? (
+            <span className="badge badge-primary select-none text-white">
+              Admin
+            </span>
+          ) : (
+            <span className="badge badge-neutral select-none text-white">
+              User
+            </span>
+          )}
+        </td>
+      )}
+      <td className="select-none">
+        {auth?.currentUser?.uid === uid ? (
+          <span className="badge badge-error text-white">Active </span>
         ) : (
           ""
         )}
       </td>
       <td>
-        {auth?.currentUser?.uid === uid ? (
+        {email === "toufiqhasankiron2@gmail.com" ||
+        auth?.currentUser?.uid === uid ? (
           <></>
         ) : (
           <span className="tooltip tooltip-error" data-tip="Delete user data!">
-            <label
+            <button
               onClick={() => handleUserDelete(_id)}
-              htmlFor="user-delete-confirm-modal"
-              className="btn btn-sm btn-error text-white"
+              className="btn btn-sm btn-accent text-white"
             >
               <i className="bx bxs-trash"></i>
-            </label>
+            </button>
           </span>
         )}
       </td>

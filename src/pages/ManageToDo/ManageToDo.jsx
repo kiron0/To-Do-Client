@@ -40,19 +40,37 @@ const ManageToDo = () => {
     if (!searchText) {
       return theme === "night"
         ? Swal.fire({
-            icon: "error",
+            icon: "warning",
             title: "Oops...",
             text: "Search field is required!",
             background: "#333",
             color: "#fff",
           })
         : Swal.fire({
-            icon: "error",
+            icon: "warning",
             title: "Oops...",
             text: "Search field is required!",
           });
     }
-    console.log(searchText);
+
+    // fetch url with email and search text query
+
+    await fetch(
+      `${BASE_API}/myToDoS/search?email=${auth?.currentUser?.email}&title=${searchText}`,
+      {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((result) => {
+        if (result.success) {
+          toast.success(result.message);
+          console.log(result.data);
+          // setToDosData(result.data);
+        }
+      });
   };
 
   const handleToCreateToDoS = (e) => {
@@ -127,39 +145,40 @@ const ManageToDo = () => {
           <h3 className="text-3xl font-semibold">ToDo List</h3>
           <span>Here you will get all your ToDo list.</span>
         </div>
-        <div className="header bg-base-200 rounded-md shadow-md container mx-auto w-[22rem] md:w-full py-4 md:py-0">
-          <div className="flex-wrap gap-4 navbar">
-            <div className="sm:flex-1 flex-col sm:flex-row w-full">
-              <div className="form-control">
-                <form onSubmit={HandleSearchToDos}>
-                  <div className="input-group">
-                    <input
-                      type="text"
-                      name="search"
-                      placeholder="Search by title"
-                      className="input input-bordered md:input-md w-[16rem] md:w-full"
-                    />
-                    <button className="btn btn-square">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-6 w-6 text-white"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                        />
-                      </svg>
-                    </button>
-                  </div>
-                </form>
-              </div>
+        {toDosData?.length > 0 && (
+          <div className="header bg-base-100 rounded-md shadow-md container mx-auto w-[22rem] md:w-full py-4 md:py-0">
+            <div className="flex-wrap gap-4 navbar">
+              <div className="sm:flex-1 flex-col sm:flex-row w-full">
+                <div className="form-control">
+                  <form onSubmit={HandleSearchToDos}>
+                    <div className="input-group">
+                      <input
+                        type="text"
+                        name="search"
+                        placeholder="Search by title"
+                        className="input input-bordered md:input-md w-[16rem] md:w-full"
+                      />
+                      <button className="btn btn-square">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-6 w-6 text-white"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+                  </form>
+                </div>
 
-              {/* <div className="flex md:flex-auto mx-auto mt-4 md:mt-0 md:ml-4">
+                {/* <div className="flex md:flex-auto mx-auto mt-4 md:mt-0 md:ml-4">
                 <select
                   // onChange={(e) => setLimit(Number(e.target.value))}
                   className="select select-sm select-bordered"
@@ -169,18 +188,19 @@ const ManageToDo = () => {
                   <option value="15">15</option>
                 </select>
               </div> */}
-            </div>
+              </div>
 
-            <div className="flex-none gap-2 justify-center items-center w-full sm:justify-start sm:items-start sm:w-auto">
-              <label
-                htmlFor="toDosModal"
-                className="btn btn-md btn-primary text-white uppercase"
-              >
-                <i className="bx bxs-pen text-lg mr-1"></i> Add new ToDoS
-              </label>
+              <div className="flex-none gap-2 justify-center items-center w-full sm:justify-start sm:items-start sm:w-auto">
+                <label
+                  htmlFor="toDosModal"
+                  className="btn btn-md btn-primary text-white uppercase"
+                >
+                  <i className="bx bxs-pen text-lg mr-1"></i> Add new ToDoS
+                </label>
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
         <form
           onSubmit={handleToCreateToDoS}
@@ -258,8 +278,10 @@ const ManageToDo = () => {
               <Fade top distance="20px">
                 <table className="table-normal w-full bg-base-100">
                   <thead className="border-b">
-                    <tr>
-                      <th>No</th>
+                    <tr className="select-none">
+                      <th>
+                        <i className="bx bxl-kickstarter text-lg"></i>
+                      </th>
                       <th>Complete</th>
                       <th>Title</th>
                       <th>Description</th>
@@ -270,15 +292,18 @@ const ManageToDo = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {toDosData?.map((task, ind) => (
-                      <TodoList
-                        key={task._id}
-                        {...task}
-                        serialize={ind}
-                        refetch={refetch}
-                        setModalToDo={setModalToDo}
-                      />
-                    ))}
+                    {toDosData
+                      ?.slice(0)
+                      .reverse()
+                      .map((task, ind) => (
+                        <TodoList
+                          key={task._id}
+                          {...task}
+                          serialize={ind}
+                          refetch={refetch}
+                          setModalToDo={setModalToDo}
+                        />
+                      ))}
                   </tbody>
                 </table>
               </Fade>
@@ -302,7 +327,9 @@ const ManageToDo = () => {
                           d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
                         />
                       </svg>
-                      <span>You don't have any todoS in your list</span>
+                      <span className="select-none">
+                        You don't have any todoS in your list
+                      </span>
                     </div>
                   </div>
                 </td>
@@ -440,7 +467,7 @@ const ManageToDo = () => {
                 <div className="card-actions justify-end">
                   Created By -{" "}
                   <div
-                    className="badge badge-outline badge-primary tooltip tooltip-left tooltip-primary"
+                    className="badge badge-outline badge-primary tooltip tooltip-left tooltip-primary select-none"
                     data-tip={modalToDo?.addedBy?.email}
                   >
                     {modalToDo?.addedBy?.name}
@@ -463,7 +490,7 @@ const ManageToDo = () => {
         )}
       </div>
 
-      <div className="card-actions justify-center py-12">
+      <div className="card-actions justify-center py-12 bg-base-100">
         {completedToDos?.length > 0 && (
           <Link to="/completed">
             <button className="btn btn-md btn-primary text-white uppercase">
