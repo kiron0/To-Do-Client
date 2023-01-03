@@ -20,9 +20,7 @@ const Login = () => {
   useEffect(() => {
     if (token) {
       navigate(from, { replace: true });
-      toast.success(`Welcome to K Task ToDo, ${auth?.currentUser?.displayName}`, {
-        autoClose: 4000,
-      });
+      toast.success(`Welcome to K Task ToDo, ${auth?.currentUser?.displayName}`);
     }
   }, [token, navigate, from]);
 

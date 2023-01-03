@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import auth from "../auth/Firebase/firebase.init";
 import { BASE_API } from "../config";
 
-const useToken = (user) => {
+const useToken = (user: any) => {
   const [token, setToken] = useState("");
   useEffect(() => {
     const email = user?.user?.email;

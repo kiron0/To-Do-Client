@@ -17,7 +17,7 @@ const Welcome = () => {
       <div className="flex mx-auto mt-4">
         <div className="avatar">
           <div className="w-48 mask mask-hexagon border-primary">
-            <img src={auth?.currentUser?.photoURL} alt="" />
+            <img src={auth?.currentUser?.photoURL as string} alt="" />
           </div>
         </div>
       </div>

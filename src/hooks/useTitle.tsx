@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { InitializeContext } from "../App";
 
-const useTitle = (titleText) => {
+const useTitle = (titleText: string) => {
   const { appName } = useContext(InitializeContext);
   const [title, setTitle] = useState("");
   useEffect(() => {

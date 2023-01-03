@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import { Fade } from "react-reveal";
 import todo from "../../../assets/todo.png";
 import { NavLink } from "react-router-dom";
 import { MdAddCircleOutline } from "react-icons/md";
@@ -7,6 +6,8 @@ import Footer from "../Footer/Footer";
 import useTitle from "../../../hooks/useTitle";
 import useScrollToTop from "../../../hooks/useScrollToTop";
 import { InitializeContext } from "../../../App";
+
+const Fade = require("react-reveal/Fade");
 
 const Home = () => {
   useScrollToTop();

@@ -6,7 +6,11 @@ import Loading from "../../components/Loading/Loading";
 import auth from "../Firebase/firebase.init";
 import useAdmin from "../../hooks/useAdmin";
 
-const RequireAdmin = ({ children }) => {
+type Props = {
+  children: any;
+};
+
+const RequireAdmin = ({ children }: Props) => {
   const [user, loading] = useAuthState(auth);
   const [admin, adminLoading] = useAdmin(user);
   const location = useLocation();

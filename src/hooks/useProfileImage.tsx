@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import auth from "../auth/Firebase/firebase.init";
 import { BASE_API } from "../config";
 
-const useProfileImage = (user) => {
+const useProfileImage = (user: any) => {
   const [image, setImage] = useState({});
   const [imageLoading, setImageLoading] = useState(true);
 

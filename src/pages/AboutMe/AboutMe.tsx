@@ -1,9 +1,10 @@
 import React from "react";
-import { Fade } from "react-reveal";
 import useScrollToTop from "../../hooks/useScrollToTop";
 import useTitle from "../../hooks/useTitle";
 import profile from "../../assets/me2.JPG";
 import styles from "./AboutMe.module.css";
+
+const Fade = require("react-reveal/Fade");
 
 export default function AboutMe() {
   useTitle("Developer");

@@ -1,11 +1,12 @@
 import React from "react";
 import { useQuery } from "react-query";
-import { Fade } from "react-reveal";
 import { BASE_API } from "../../../config";
 import useScrollToTop from "../../../hooks/useScrollToTop";
 import useTitle from "../../../hooks/useTitle";
 import Loader from "../../../components/Loader/Loader";
 import UserRow from "./UserRow";
+
+const Fade = require("react-reveal/Fade");
 
 const ManageUsers = () => {
   useScrollToTop();
@@ -47,7 +48,7 @@ const ManageUsers = () => {
               </tr>
             </thead>
             <tbody>
-              {users?.map((user, index) => (
+              {users?.map((user: any, index: number) => (
                 <UserRow
                   index={index}
                   key={user._id}

@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 
-const ToDoRow = ({ task }) => {
+type Props = {
+  task: any;
+};
+
+const ToDoRow = ({ task }: Props) => {
   const [showMore, setShowMore] = useState(false);
   return (
     <div className="card w-100 bg-base-100 shadow-xl">

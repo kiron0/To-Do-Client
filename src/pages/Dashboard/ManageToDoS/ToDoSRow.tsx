@@ -4,11 +4,16 @@ import Swal from "sweetalert2";
 import { BASE_API } from "../../../config";
 import useScrollToTop from "../../../hooks/useScrollToTop";
 
-const ToDoSRow = ({ todo, refetch }) => {
+type TodoListProps = {
+  todo: any;
+  refetch: () => void;
+};
+
+const ToDoSRow = ({ todo, refetch }: TodoListProps) => {
   useScrollToTop();
   const [showMore, setShowMore] = useState(false);
 
-  const handleDelete = (id) => {
+  const handleDelete = (id: any) => {
     Swal.fire({
       text: "Are you sure you want to delete this?",
       icon: "warning",
@@ -16,7 +21,7 @@ const ToDoSRow = ({ todo, refetch }) => {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, Delete it!",
-    }).then((result) => {
+    }).then((result: any) => {
       if (result.value) {
         fetch(`${BASE_API}/todoS/${id}`, {
           method: "DELETE",
@@ -27,10 +32,7 @@ const ToDoSRow = ({ todo, refetch }) => {
           .then((res) => res.json())
           .then((result) => {
             if (result.success) {
-              toast.success(`TodoS Deleted for ${todo?.addedBy?.name}`, {
-                autoClose: 5000,
-                pauseOnHover: true,
-              });
+              toast.success(`TodoS Deleted for ${todo?.addedBy?.name}`);
               refetch();
             }
           });

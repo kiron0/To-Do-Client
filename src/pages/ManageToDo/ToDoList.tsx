@@ -7,20 +7,32 @@ import { BASE_API } from "../../config";
 import { useContext } from "react";
 import { InitializeContext } from "../../App";
 
-const TodoList = ({
-  title,
-  description,
-  serialize,
-  _id,
-  completed,
-  refetch,
-  setModalToDo,
-  addedBy,
-  createdAt,
-}) => {
+type TodoListProps = {
+  title: string,
+  description: string,
+  serialize: string,
+  _id: string,
+  completed: boolean,
+  refetch: () => void,
+  setModalToDo: any,
+  addedBy: string,
+  createdAt: string,
+}
+
+const TodoList = (task: TodoListProps) => {
+
+  const { title,
+    description,
+    _id,
+    completed,
+    refetch,
+    setModalToDo,
+    addedBy,
+    createdAt, } = task;
+
   const { theme } = useContext(InitializeContext);
   /* Handle ToDo Delete */
-  const handleDelete = (id) => {
+  const handleDelete = (id: number) => {
     Swal.fire({
       text: "Are you sure you want to delete this?",
       icon: "warning",
@@ -30,7 +42,7 @@ const TodoList = ({
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, Delete it!",
-    }).then((result) => {
+    }).then((result: any) => {
       if (result.value) {
         fetch(`${BASE_API}/toDoS?todoId=${id}&&uid=${auth?.currentUser?.uid}`, {
           method: "DELETE",
@@ -49,7 +61,7 @@ const TodoList = ({
     });
   };
 
-  const handleCompleteInfo = async (id) => {
+  const handleCompleteInfo = async (id: number) => {
     await fetch(
       `${BASE_API}/toDoS?todoId=${id}&&uid=${auth?.currentUser?.uid}`,
       {
@@ -77,7 +89,7 @@ const TodoList = ({
         <span className="tooltip" data-tip="Click to completed">
           <input
             type="checkbox"
-            onClick={() => handleCompleteInfo(_id)}
+            onClick={() => handleCompleteInfo(_id as any)}
             className="checkbox"
             disabled={completed && true}
             checked={completed}
@@ -102,7 +114,7 @@ const TodoList = ({
       </th>
       <th className="flex justify-center">
         <label
-          type="button"
+          typeof="button"
           htmlFor="detailsModal"
           className="btn btn-sm btn-primary btn-neutral text-white modal-button"
           onClick={() =>
@@ -113,7 +125,7 @@ const TodoList = ({
               addedBy,
               createdAt,
               completed,
-            })
+            } as any)
           }
         >
           <FaRegEye />
@@ -123,11 +135,10 @@ const TodoList = ({
       <th>
         <div className="card-actions flex justify-center">
           <div
-            className={`badge badge-outline tooltip tooltip-right font-normal ${
-              completed
-                ? "badge-success tooltip-success"
-                : "badge-error tooltip-error"
-            }`}
+            className={`badge badge-outline tooltip tooltip-right font-normal ${completed
+              ? "badge-success tooltip-success"
+              : "badge-error tooltip-error"
+              }`}
             data-tip={completed ? "Complete" : "Pending"}
           >
             {completed ? "Complete" : "Pending....."}
@@ -136,18 +147,18 @@ const TodoList = ({
       </th>
       <th>
         <label
-          type="button"
+          typeof="button"
           htmlFor="updateModal"
           className="btn btn-sm btn-success text-white modal-button"
-          disabled={completed && true}
-          onClick={() => setModalToDo({ _id, title, description })}
+          aria-disabled={completed && true}
+          onClick={() => setModalToDo({ _id, title, description }) as any}
         >
           <i className="bx bxs-pen"></i>
         </label>
       </th>
       <th>
         <button
-          onClick={() => handleDelete(_id)}
+          onClick={() => handleDelete(_id as any)}
           className="btn btn-sm btn-error text-white"
         >
           <i className="bx bxs-trash"></i>

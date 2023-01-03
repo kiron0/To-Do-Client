@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { BASE_API } from "../config";
 
-const useAdmin = (user) => {
+const useAdmin = (user: any) => {
   const [admin, setAdmin] = useState(false);
   const [adminLoading, setAdminLoading] = useState(true);
   useEffect(() => {

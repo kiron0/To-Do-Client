@@ -8,13 +8,26 @@ import auth from "../../../auth/Firebase/firebase.init";
 import avatar from "../../../assets/avatar.jpg";
 import useScrollToTop from "../../../hooks/useScrollToTop";
 
-const UserRow = ({ user, index, refetch }) => {
+type UserRowProps = {
+  user: {
+    _id: string;
+    email: string;
+    role: string;
+    uid: string;
+    image: string;
+    displayName: string;
+  };
+  index: number;
+  refetch: () => void;
+};
+
+const UserRow = ({ user, index, refetch }: UserRowProps) => {
   useScrollToTop();
   const { theme } = useContext(InitializeContext);
   const { _id, email, role, uid, image, displayName } = user;
 
   /* Handle Delete User */
-  const handleUserDelete = () => {
+  const handleUserDelete = (id: any) => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -25,7 +38,7 @@ const UserRow = ({ user, index, refetch }) => {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
-    }).then((willDelete) => {
+    }).then((willDelete: any) => {
       if (willDelete.isConfirmed) {
         fetch(`${BASE_API}/user/${email}`, {
           method: "DELETE",
@@ -126,20 +139,19 @@ const UserRow = ({ user, index, refetch }) => {
       <td className="select-none">{email}</td>
       <td>
         {email === "toufiqhasankiron2@gmail.com" ||
-        auth?.currentUser?.uid === uid ? (
+          auth?.currentUser?.uid === uid ? (
           <></>
         ) : (
           <span className="tooltip" data-tip="Change user role">
             <select
-              className={`select select-bordered w-full max-w-xs ${
-                role === "admin" ? "select-secondary" : ""
-              }`}
+              className={`select select-bordered w-full max-w-xs ${role === "admin" ? "select-secondary" : ""
+                }`}
               defaultValue={
                 role === "admin"
                   ? "Admin"
                   : role === "superAdmin"
-                  ? "Super Admin"
-                  : "User"
+                    ? "Super Admin"
+                    : "User"
               }
               onChange={(e) => {
                 if (e.target.value === "Admin") {
@@ -186,7 +198,7 @@ const UserRow = ({ user, index, refetch }) => {
       </td>
       <td>
         {email === "toufiqhasankiron2@gmail.com" ||
-        auth?.currentUser?.uid === uid ? (
+          auth?.currentUser?.uid === uid ? (
           <></>
         ) : (
           <span className="tooltip tooltip-error" data-tip="Delete user data!">

@@ -6,7 +6,7 @@ import styles from "./ThemeChanger.module.css";
 export default function ThemeChanger() {
   const { theme, setTheme } = useContext(InitializeContext);
 
-  const handleThemeChange = (e) => {
+  const handleThemeChange = (e: any) => {
     setTheme(e.target.value);
     window.localStorage.setItem("theme", e.target.value);
   };

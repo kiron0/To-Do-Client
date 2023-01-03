@@ -21,7 +21,8 @@ import axios from "axios";
 import { useQuery } from "react-query";
 import { BASE_API } from "./config";
 import Setting from "./pages/Dashboard/Setting/Setting";
-export const InitializeContext = createContext(null);
+
+export const InitializeContext = createContext(null as any);
 
 function App() {
   const [theme, setTheme] = useState("light");
@@ -35,10 +36,10 @@ function App() {
   }, []);
 
   useEffect(() => {
-    setTheme(window.localStorage.getItem("theme"));
+    setTheme(window.localStorage.getItem("theme") || "light");
   }, []);
 
-  const { data, refetch } = useQuery("appName", async () => {
+  const { data, refetch, isLoading } = useQuery("appName", async () => {
     const res = await axios.get(`${BASE_API}/app/appName`);
     return res?.data;
   });
@@ -72,14 +73,6 @@ function App() {
               }
             />
             <Route
-              path="/profile"
-              element={
-                <RequireAuth>
-                  <Profile />
-                </RequireAuth>
-              }
-            />
-            <Route
               path="dashboard"
               element={
                 <RequireAdmin>
@@ -89,6 +82,12 @@ function App() {
             >
               <Route index element={<Welcome />} />
               <Route path="manageToDoS" element={<ManageToDoS />} />
+              <Route
+                path="profile"
+                element={
+                  <Profile refetch={refetch} isLoading={isLoading} />
+                }
+              />
               <Route path="manageUsers" element={<ManageUsers />} />
               <Route
                 path="setting"

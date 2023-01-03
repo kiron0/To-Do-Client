@@ -11,7 +11,11 @@ import useScrollToTop from "../../../hooks/useScrollToTop";
 import { BASE_API } from "../../../config";
 import auth from "../../../auth/Firebase/firebase.init";
 
-export default function Setting({ appChangeRefetch }) {
+type Props = {
+  appChangeRefetch: () => void;
+};
+
+export default function Setting({ appChangeRefetch }: Props) {
   useTitle("Setting");
   useScrollToTop();
   const { appName } = useContext(InitializeContext);
@@ -22,7 +26,7 @@ export default function Setting({ appChangeRefetch }) {
   const [input, setInput] = useState(appName);
 
   /* Handle Change App Name */
-  const handleChangeAppName = async (e) => {
+  const handleChangeAppName = async (e: any) => {
     e.preventDefault();
     try {
       await fetch(`${BASE_API}/app/changeAppName`, {
@@ -43,7 +47,7 @@ export default function Setting({ appChangeRefetch }) {
             toast.error(data.message);
           }
         });
-    } catch (error) {
+    } catch (error: string | any) {
       toast.error(error.response.data.message);
     }
   };

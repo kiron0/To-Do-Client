@@ -13,17 +13,18 @@ import { BASE_API } from "../../config";
 import useScrollToTop from "../../hooks/useScrollToTop";
 import useCompletedToDos from "../../hooks/useCompletedToDos";
 import Loading from "../../components/Loading/Loading";
-import { Fade } from "react-reveal";
 import { InitializeContext } from "../../App";
+
+const Fade = require("react-reveal/Fade");
 
 const ManageToDo = () => {
   useScrollToTop();
   useTitle("Manage To Do");
   const { theme } = useContext(InitializeContext);
-  const [modalToDo, setModalToDo] = useState({});
+  const [modalToDo, setModalToDo] = useState({} as any);
   const [user] = useAuthState(auth);
   const {
-    data: toDosData,
+    data: toDosData = [],
     isLoading,
     refetch,
   } = useQuery("toDos", () =>
@@ -34,23 +35,23 @@ const ManageToDo = () => {
     }).then((res) => res.json())
   );
 
-  const HandleSearchToDos = async (e) => {
+  const HandleSearchToDos = async (e: any) => {
     e.preventDefault();
     const searchText = e.target.search.value;
     if (!searchText) {
       return theme === "night"
         ? Swal.fire({
-            icon: "warning",
-            title: "Oops...",
-            text: "Search field is required!",
-            background: "#333",
-            color: "#fff",
-          })
+          icon: "warning",
+          title: "Oops...",
+          text: "Search field is required!",
+          background: "#333",
+          color: "#fff",
+        })
         : Swal.fire({
-            icon: "warning",
-            title: "Oops...",
-            text: "Search field is required!",
-          });
+          icon: "warning",
+          title: "Oops...",
+          text: "Search field is required!",
+        });
     }
 
     // fetch url with email and search text query
@@ -73,7 +74,7 @@ const ManageToDo = () => {
       });
   };
 
-  const handleToCreateToDoS = (e) => {
+  const handleToCreateToDoS = (e: any) => {
     e.preventDefault();
     const createToDo = {
       email: user?.email,
@@ -108,7 +109,7 @@ const ManageToDo = () => {
   const [titleField, setTitleField] = useState("");
   const [descriptionField, setDescriptionField] = useState("");
 
-  const handleUpdateToDoS = async (e) => {
+  const handleUpdateToDoS = async (e: any) => {
     e.preventDefault();
 
     await fetch(`${BASE_API}/toDoS/updateToDoS/${modalToDo._id}`, {
@@ -239,7 +240,7 @@ const ManageToDo = () => {
                     <i className="bx bx-detail"></i>
                   </div>
                   <textarea
-                    type="text"
+                    typeof="text"
                     name="description"
                     className="form-control outline-none pl-4 w-full bg-transparent"
                     placeholder="Description"
@@ -295,7 +296,7 @@ const ManageToDo = () => {
                     {toDosData
                       ?.slice(0)
                       .reverse()
-                      .map((task, ind) => (
+                      .map((task: any, ind: number) => (
                         <TodoList
                           key={task._id}
                           {...task}
@@ -387,7 +388,7 @@ const ManageToDo = () => {
                         <i className="bx bx-detail"></i>
                       </div>
                       <textarea
-                        type="text"
+                        typeof="text"
                         value={descriptionField || modalToDo?.description}
                         className="form-control outline-none pl-4 w-full bg-transparent"
                         placeholder="Description"
@@ -457,9 +458,8 @@ const ManageToDo = () => {
 
                 <div className="card-actions justify-end my-4">
                   <div
-                    className={`badge badge-outline ${
-                      modalToDo?.completed ? "badge-success" : "badge-error"
-                    }`}
+                    className={`badge badge-outline ${modalToDo?.completed ? "badge-success" : "badge-error"
+                      }`}
                   >
                     {modalToDo?.completed ? "Completed" : "Pending"}
                   </div>

@@ -1,9 +1,12 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { InitializeContext } from "../../../App";
+import auth from "../../../auth/Firebase/firebase.init";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const Footer = () => {
   const { appName } = useContext(InitializeContext);
+  const [user] = useAuthState(auth);
   return (
     <div
       style={{ clipPath: `ellipse(90% 100% at 51.45% 100%)` }}
@@ -17,9 +20,13 @@ const Footer = () => {
           <Link to="/contactUs" className="link link-hover">
             Contact us
           </Link>
-          <Link to="/toDoS" className="link link-hover">
-            Add ToDo
-          </Link>
+          {
+            user && (
+              <Link to="/toDoS" className="link link-hover">
+                Add ToDo
+              </Link>
+            )
+          }
         </div>
         <div>
           <div className="grid grid-flow-col gap-4">

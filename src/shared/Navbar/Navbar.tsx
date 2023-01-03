@@ -23,26 +23,17 @@ const Navbar = () => {
   const handleLogOut = () => {
     signOut(auth);
     localStorage.removeItem("accessToken");
-    toast.success(`Thank you, ${user.displayName} to stay with us!`, {
+    toast.success(`Thank you, ${user?.displayName} to stay with us!`, {
       position: "top-center",
-      autoClose: 5000,
     });
   };
 
   const NavbarMenus = (
     <>
-      {/* <li className="py-1 lg:py-0">
-        <NavLink
-          className={({ isActive }) =>
-            isActive ? "text-white uppercase bg-primary" : "uppercase"
-          }
-          to="/toDoS"
-        >
-          ToDo List
-        </NavLink>
-      </li> */}
       <li className="py-1 lg:py-0">
-        <NavLink className="text-white uppercase bg-primary" to="/developer">
+        <NavLink className={({ isActive }) =>
+          isActive ? "text-white uppercase bg-primary" : "uppercase"
+        } to="/developer">
           Developer
         </NavLink>
       </li>
@@ -62,13 +53,27 @@ const Navbar = () => {
         <div className="navbar py-3 container mx-auto">
           <div className="navbar-start">
             <div className="dropdown">
-              <label tabIndex="0" className="btn btn-ghost lg:hidden">
+              <label tabIndex={0} className="btn btn-ghost lg:hidden">
                 <HiOutlineMenuAlt4 className="text-3xl text-primary" />
               </label>
               <ul
-                tabIndex="0"
+                tabIndex={0}
                 className="menu menu-compact dropdown-content mt-4 p-2 shadow-xl bg-base-200 rounded-box w-[23.5rem] flex flex-wrap justify-center items-center"
               >
+                {
+                  user && (
+                    <li className="py-1 lg:py-0">
+                      <NavLink
+                        className={({ isActive }) =>
+                          isActive ? "text-white uppercase bg-primary" : "uppercase"
+                        }
+                        to="/toDoS"
+                      >
+                        ToDo List
+                      </NavLink>
+                    </li>
+                  )
+                }
                 {NavbarMenus}
               </ul>
             </div>
@@ -91,7 +96,23 @@ const Navbar = () => {
             </Link>
           </div>
           <div className="navbar-center hidden lg:flex">
-            <ul className="menu menu-horizontal p-0 gap-3">{NavbarMenus}</ul>
+            <ul className="menu menu-horizontal p-0 gap-3">
+              {
+                user && (
+                  <li className="py-1 lg:py-0">
+                    <NavLink
+                      className={({ isActive }) =>
+                        isActive ? "text-white uppercase bg-primary" : "uppercase"
+                      }
+                      to="/toDoS"
+                    >
+                      ToDo List
+                    </NavLink>
+                  </li>
+                )
+              }
+              {NavbarMenus}
+            </ul>
           </div>
           <div className="navbar-end gap-3">
             {!user && (
@@ -106,7 +127,7 @@ const Navbar = () => {
               <div className="flex-none gap-2">
                 <div className="dropdown dropdown-end">
                   <label
-                    tabIndex="0"
+                    tabIndex={0}
                     className="btn btn-ghost btn-circle avatar"
                   >
                     <div
@@ -116,18 +137,18 @@ const Navbar = () => {
                       {auth?.currentUser?.photoURL ? (
                         <img
                           src={auth?.currentUser?.photoURL}
-                          alt={auth?.currentUser?.displayName.slice(0, 1)}
+                          alt={auth?.currentUser?.displayName?.slice(0, 1)}
                         />
                       ) : (
                         <img
-                          src={image}
-                          alt={auth?.currentUser?.displayName.slice(0, 2)}
+                          src={image as string}
+                          alt={auth?.currentUser?.displayName?.slice(0, 2)}
                         />
                       )}
                     </div>
                   </label>
                   <ul
-                    tabIndex="0"
+                    tabIndex={0}
                     className="mt-3 p-2 shadow-xl menu menu-compact dropdown-content bg-base-100 rounded-box w-72"
                   >
                     <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto my-4 border ring ring-primary ring-offset-base-100 ring-offset-2">
@@ -139,7 +160,7 @@ const Navbar = () => {
                         />
                       ) : (
                         <img
-                          src={image}
+                          src={image as string}
                           alt="profile"
                           className="w-full h-full rounded-full"
                         />
@@ -154,7 +175,7 @@ const Navbar = () => {
                         User ID: <span className="font-semibold">USER-{auth?.currentUser?.uid?.slice(0, 6)}</span>
                       </p>
 
-                      <Link to="/profile">
+                      <Link to="/dashboard/profile">
                         <button className="btn btn-primary mt-4 rounded-full text-white">
                           View Profile
                         </button>
@@ -163,25 +184,25 @@ const Navbar = () => {
                     <hr className="font-semibold" />
                     {admin && (
                       <li className="py-1 font-semibold">
-                        <Link
+                        <NavLink
                           className={({ isActive }) =>
-                            isActive ? "text-white py-3 bg-primary" : "py-3"
+                            isActive ? "text-white bg-primary" : ""
                           }
                           to="/dashboard"
                         >
                           <i className="bx bxs-dashboard"></i> Dashboard
-                        </Link>
+                        </NavLink>
                       </li>
                     )}
                     <li className="py-1 font-semibold">
-                      <Link
+                      <NavLink
                         className={({ isActive }) =>
-                          isActive ? "text-white py-3 bg-primary" : "py-3"
+                          isActive ? "text-white bg-primary" : ""
                         }
                         to="/toDos"
                       >
                         <i className="bx bx-pen font-semibold"></i> Your ToDos
-                      </Link>
+                      </NavLink>
                     </li>
                     <li className="py-1">
                       <button

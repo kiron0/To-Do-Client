@@ -20,14 +20,13 @@ const Dashboard = () => {
   useTitle("Dashboard");
   const [user, isLoading] = useAuthState(auth);
   const [admin, adminLoading] = useAdmin(user);
-  const [image] = useProfileImage();
+  const [image] = useProfileImage(user);
   const navigate = useNavigate();
 
   const handleLogOut = async () => {
     await signOut(auth).then(() => {
       navigate("/");
-      toast.success(`Thank you, ${user.displayName} to stay with us!`, {
-        autoClose: 3000,
+      toast.success(`Thank you, ${user?.displayName} to stay with us!`, {
         position: "top-center",
       });
     });
@@ -64,7 +63,7 @@ const Dashboard = () => {
           </div>
           <div className="dropdown dropdown-end">
             <label
-              tabIndex="0"
+              tabIndex={0}
               className="btn btn-ghost btn-circle avatar online"
             >
               <div
@@ -74,28 +73,28 @@ const Dashboard = () => {
                 {auth?.currentUser?.photoURL ? (
                   <img
                     src={auth?.currentUser?.photoURL}
-                    alt={auth?.currentUser?.displayName}
+                    alt={auth?.currentUser?.displayName || ""}
                   />
                 ) : (
-                  <img src={image} alt={auth?.currentUser?.displayName} />
+                  <img src={image as string} alt={auth?.currentUser?.displayName || ""} />
                 )}
               </div>
             </label>
             <ul
-              tabIndex="0"
+              tabIndex={0}
               className="mt-4 p-2 shadow-xl menu menu-compact dropdown-content bg-base-100 rounded-box w-[16rem]"
             >
               <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto my-4 border ring ring-primary ring-offset-base-100 ring-offset-2">
                 {auth?.currentUser?.photoURL ? (
                   <img
                     src={auth?.currentUser?.photoURL}
-                    alt={auth?.currentUser?.displayName}
+                    alt={auth?.currentUser?.displayName || ""}
                     className="w-16 h-16 rounded-full"
                   />
                 ) : (
                   <img
-                    src={image}
-                    alt={auth?.currentUser?.displayName}
+                    src={image as string}
+                    alt={auth?.currentUser?.displayName || ""}
                     className="w-16 h-16 rounded-full"
                   />
                 )}
