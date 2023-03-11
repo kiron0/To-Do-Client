@@ -1,10 +1,8 @@
 import { createContext, useEffect, useState } from "react";
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { Toaster } from "react-hot-toast";
-import { Routes, Route } from "react-router-dom";
 import RequireAuth from "./auth/RequireAuth/RequireAuth";
 import Profile from "./pages/Profile/Profile";
-import Navbar from "./shared/Navbar/Navbar";
-import Home from "./pages/Home/Home/Home";
 import Login from "./pages/Authentication/Login/Login";
 import ManageToDo from "./pages/ManageToDo/ManageToDo";
 import CompletedToDo from "./pages/CompletedToDo/CompletedToDo";
@@ -21,6 +19,89 @@ import axios from "axios";
 import { useQuery } from "react-query";
 import { BASE_API } from "./config";
 import Setting from "./pages/Dashboard/Setting/Setting";
+import Root from "./Layouts/Root";
+import Navbar from "./shared/Navbar/Navbar";
+import YourTodoS from "./pages/Dashboard/YourTodoS/YourTodoS";
+
+const router = createBrowserRouter(
+  [
+    {
+      path: "/",
+      element: <Root />
+    },
+    {
+      path: "/getStarted",
+      element: <Login />
+    },
+    {
+      path: "/dev",
+      element:
+        <>
+          <Navbar />
+          <AboutMe />
+        </>
+    },
+    {
+      path: "/toDoS",
+      element:
+        <RequireAuth>
+          <Navbar />
+          <ManageToDo />
+        </RequireAuth>
+    },
+    {
+      path: "/completed",
+      element: <RequireAuth>
+        <Navbar />
+        <CompletedToDo />
+      </RequireAuth>
+    },
+    {
+      path: "/dashboard",
+      element: <RequireAuth>
+        <Dashboard />
+      </RequireAuth>,
+      children: [
+        {
+          path: "/dashboard",
+          element: <Welcome />
+        },
+        {
+          path: "/dashboard/profile",
+          element: <Profile />
+        },
+        {
+          path: "/dashboard/manageToDoS",
+          element: <ManageToDoS />
+        },
+        {
+          path: "/dashboard/yourToDos",
+          element: <YourTodoS />
+        },
+        {
+          path: "/dashboard/manageUsers",
+          element: <RequireAdmin>
+            <ManageUsers />
+          </RequireAdmin>
+        },
+        {
+          path: "/dashboard/setting",
+          element: <RequireAdmin>
+            <Setting />
+          </RequireAdmin>
+        },
+        {
+          path: "*",
+          element: <NotFound />
+        }
+      ]
+    },
+    {
+      path: "*",
+      element: <NotFound />
+    }
+  ]
+)
 
 export const InitializeContext = createContext(null as any);
 
@@ -36,7 +117,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    setTheme(window.localStorage.getItem("theme") || "light");
+    setTheme(window.localStorage.getItem("todoSTheme") || "light");
   }, []);
 
   const { data, refetch, isLoading } = useQuery("appName", async () => {
@@ -47,65 +128,19 @@ function App() {
   const appName = data?.appName;
 
   return (
-    <InitializeContext.Provider value={{ theme, setTheme, appName }}>
-      {loading ? (
-        <LoadingScreen />
-      ) : (
-        <div data-theme={theme ? theme : "light"} className="bg-base-100">
-          <Navbar />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/developer" element={<AboutMe />} />
-            <Route
-              path="/toDoS"
-              element={
-                <RequireAuth>
-                  <ManageToDo />
-                </RequireAuth>
-              }
-            />
-            <Route
-              path="/completed"
-              element={
-                <RequireAuth>
-                  <CompletedToDo />
-                </RequireAuth>
-              }
-            />
-            <Route
-              path="dashboard"
-              element={
-                <RequireAdmin>
-                  <Dashboard />
-                </RequireAdmin>
-              }
-            >
-              <Route index element={<Welcome />} />
-              <Route path="manageToDoS" element={<ManageToDoS />} />
-              <Route
-                path="profile"
-                element={
-                  <Profile refetch={refetch} isLoading={isLoading} />
-                }
-              />
-              <Route path="manageUsers" element={<ManageUsers />} />
-              <Route
-                path="setting"
-                element={
-                  <RequireAdmin>
-                    <Setting appChangeRefetch={refetch} />
-                  </RequireAdmin>
-                }
-              ></Route>
-            </Route>
-            <Route path="/login" element={<Login />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-          <Toaster />
-          {loading ? null : <ThemeChanger />}
-        </div>
-      )}
-    </InitializeContext.Provider>
+    <>
+      <InitializeContext.Provider value={{ theme, setTheme, appName, refetch, isLoading }}>
+        {loading ? (
+          <LoadingScreen />
+        ) : (
+          <div data-theme={theme ? theme : "light"} className="bg-base-100">
+            <RouterProvider router={router} />
+            <Toaster />
+          </div>
+        )}
+        {loading ? null : <ThemeChanger />}
+      </InitializeContext.Provider>
+    </>
   );
 }
 

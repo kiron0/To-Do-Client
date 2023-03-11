@@ -7,6 +7,7 @@ import useToken from "../../../hooks/useToken";
 import auth from "../../../auth/Firebase/firebase.init";
 import useTitle from "../../../hooks/useTitle";
 import useScrollToTop from "../../../hooks/useScrollToTop";
+import { BiHomeHeart } from "react-icons/bi";
 
 const Login = () => {
   useScrollToTop();
@@ -33,18 +34,22 @@ const Login = () => {
   }
 
   return (
-    <div className="bg-base-100 h-screen py-36 lg:py-48">
-      <div className="flex h-96 justify-center items-center px-4 lg:px-12">
-        <div className="card w-full max-w-md bg-base-100">
-          <div className="card-body">
-            <h2 className="text-center text-4xl font-bold pb-6">Login</h2>
-            <button
-              onClick={() => signInWithGoogle()}
-              className="btn btn-outline border-primary flex items-center justify-center rounded-full hover:bg-primary hover:border-primary duration-500 gap-2 hover:text-white"
-            >
-              <i className="bx bxl-google text-2xl"></i>Continue with Google
-            </button>
-          </div>
+    <div className="flex justify-center items-center h-screen px-4 lg:px-12 bg-base-100">
+      <div className="card w-full max-w-md">
+        <div className="card-body">
+          <h2 className="text-center text-4xl font-bold pb-6">Login</h2>
+          <button
+            onClick={() => signInWithGoogle()}
+            className="btn btn-outline border-primary flex items-center justify-center rounded-full hover:bg-primary hover:border-primary duration-500 gap-2 hover:text-white"
+          >
+            <i className="bx bxl-google text-2xl"></i>Continue with Google
+          </button>
+          <button
+            onClick={() => navigate("/")}
+            className="btn btn-outline border-primary mt-6 flex items-center justify-center rounded-full hover:bg-primary hover:border-primary duration-500 gap-2 hover:text-white"
+          >
+            <BiHomeHeart className="text-2xl" /> Go Back to Home
+          </button>
         </div>
       </div>
     </div>

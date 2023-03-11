@@ -23,8 +23,9 @@ const ManageToDo = () => {
   const { theme } = useContext(InitializeContext);
   const [modalToDo, setModalToDo] = useState({} as any);
   const [user] = useAuthState(auth);
+
   const {
-    data: toDosData = [],
+    data: toDosData = [] as any,
     isLoading,
     refetch,
   } = useQuery("toDos", () =>
@@ -39,22 +40,15 @@ const ManageToDo = () => {
     e.preventDefault();
     const searchText = e.target.search.value;
     if (!searchText) {
-      return theme === "night"
-        ? Swal.fire({
-          icon: "warning",
-          title: "Oops...",
-          text: "Search field is required!",
-          background: "#333",
-          color: "#fff",
-        })
-        : Swal.fire({
-          icon: "warning",
-          title: "Oops...",
-          text: "Search field is required!",
-        });
+      return Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Search field can't be empty!",
+        confirmButtonText: "Ok, Got it!",
+        background: theme === "night" ? "#333" : "#fff",
+        color: theme === "night" ? "#fff" : "#333",
+      })
     }
-
-    // fetch url with email and search text query
 
     await fetch(
       `${BASE_API}/myToDoS/search?email=${auth?.currentUser?.email}&title=${searchText}`,
@@ -66,10 +60,26 @@ const ManageToDo = () => {
     )
       .then((res) => res.json())
       .then((result) => {
-        if (result.success) {
-          toast.success(result.message);
-          console.log(result.data);
-          // setToDosData(result.data);
+        if (result.result) {
+          Swal.fire({
+            icon: "success",
+            title: result.result.title,
+            text: result.result.description,
+            confirmButtonText: "Ok, Got it!",
+            background: theme === "night" ? "#333" : "#fff",
+            color: theme === "night" ? "#fff" : "#333",
+          })
+          e.target.search.value = "";
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: result.message,
+            confirmButtonText: "Ok, Got it!",
+            background: theme === "night" ? "#333" : "#fff",
+            color: theme === "night" ? "#fff" : "#333",
+          })
+          e.target.search.value = "";
         }
       });
   };
@@ -178,17 +188,6 @@ const ManageToDo = () => {
                     </div>
                   </form>
                 </div>
-
-                {/* <div className="flex md:flex-auto mx-auto mt-4 md:mt-0 md:ml-4">
-                <select
-                  // onChange={(e) => setLimit(Number(e.target.value))}
-                  className="select select-sm select-bordered"
-                >
-                  <option value="5">5</option>
-                  <option value="10">10</option>
-                  <option value="15">15</option>
-                </select>
-              </div> */}
               </div>
 
               <div className="flex-none gap-2 justify-center items-center w-full sm:justify-start sm:items-start sm:w-auto">
@@ -436,7 +435,7 @@ const ManageToDo = () => {
                     <div className="icon">
                       <i className="bx bxs-pen"></i>
                     </div>
-                    <p className="overflow-auto max-h-20 select-none">
+                    <p className="overflow-auto max-h-20 select-none pl-2">
                       {modalToDo?.title}
                     </p>
                   </div>
@@ -450,7 +449,7 @@ const ManageToDo = () => {
                     <div className="icon">
                       <i className="bx bx-detail"></i>
                     </div>
-                    <p className="overflow-auto overflow-x-hidden max-h-36 select-none">
+                    <p className="overflow-auto overflow-x-hidden max-h-36 select-none pl-2">
                       {modalToDo?.description}
                     </p>
                   </div>

@@ -3,26 +3,25 @@ import auth from "../auth/Firebase/firebase.init";
 import { BASE_API } from "../config";
 
 const useCompletedToDos = () => {
-  const [completedToDos, setCompletedToDos] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [completedToDos, setCompletedToDos] = useState([] as any);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    (async () => {
-      await fetch(
-        `${BASE_API}/myToDoS/completed?email=${auth?.currentUser?.email}`,
-        {
-          headers: {
-            authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          },
-        }
-      )
-        .then((res) => res.json())
-        .then((result) => {
-          setCompletedToDos(result);
-          setLoading(false);
-        });
-    })();
-  }, [completedToDos]);
+    setLoading(true);
+    fetch(
+      `${BASE_API}/myToDoS/completed?email=${auth?.currentUser?.email}`,
+      {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((result) => {
+        setCompletedToDos(result);
+        setLoading(false);
+      });
+  }, []);
   return { completedToDos, loading };
 };
 

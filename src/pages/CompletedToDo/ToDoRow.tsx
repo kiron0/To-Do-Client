@@ -1,11 +1,18 @@
 import React, { useState } from "react";
+import Loader from "../../components/Loader/Loader";
 
 type Props = {
   task: any;
+  loading: boolean;
 };
 
-const ToDoRow = ({ task }: Props) => {
-  const [showMore, setShowMore] = useState(false);
+const ToDoRow = ({ task, loading }: Props) => {
+  const [showMore, setShowMore] = useState<boolean>(false);
+
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
     <div className="card w-100 bg-base-100 shadow-xl">
       <div className="card-body">

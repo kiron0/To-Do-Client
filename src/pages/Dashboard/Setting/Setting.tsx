@@ -11,14 +11,10 @@ import useScrollToTop from "../../../hooks/useScrollToTop";
 import { BASE_API } from "../../../config";
 import auth from "../../../auth/Firebase/firebase.init";
 
-type Props = {
-  appChangeRefetch: () => void;
-};
-
-export default function Setting({ appChangeRefetch }: Props) {
+export default function Setting() {
   useTitle("Setting");
   useScrollToTop();
-  const { appName } = useContext(InitializeContext);
+  const { appName, refetch } = useContext(InitializeContext);
   const [user, isLoading] = useAuthState(auth);
   const [admin, adminLoading] = useAdmin(user);
   const [isEdit, setIsEdit] = useState(false);
@@ -41,7 +37,7 @@ export default function Setting({ appChangeRefetch }: Props) {
         .then((data) => {
           if (data.success) {
             toast.success("App Name Changed Successfully");
-            appChangeRefetch();
+            refetch();
             setIsEdit(false);
           } else {
             toast.error(data.message);
@@ -68,7 +64,7 @@ export default function Setting({ appChangeRefetch }: Props) {
 
           <div className="settings-content">
             {admin && (
-              <div className="flex flex-col sm:flex-row items-center justify-between py-6 rounded my-4 bg-gray-50 px-5">
+              <div className="flex flex-col sm:flex-row items-center justify-between py-6 rounded my-4 px-5">
                 <h2 className="text-xl font-bold pb-3 md:pb-0">
                   Change App Name
                 </h2>

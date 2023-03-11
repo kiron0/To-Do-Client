@@ -144,7 +144,7 @@ const UserRow = ({ user, index, refetch }: UserRowProps) => {
         ) : (
           <span className="tooltip" data-tip="Change user role">
             <select
-              className={`select select-bordered w-full max-w-xs ${role === "admin" ? "select-secondary" : ""
+              className={`select select-xs select-bordered w-full max-w-xs ${role === "admin" ? "select-secondary" : ""
                 }`}
               defaultValue={
                 role === "admin"
@@ -172,7 +172,7 @@ const UserRow = ({ user, index, refetch }: UserRowProps) => {
       </td>
       {email === "toufiqhasankiron2@gmail.com" ? (
         <td>
-          <span className="badge badge-outline p-3 select-none">
+          <span className="badge badge-xs badge-outline p-3 select-none">
             🔥Developer🔥
           </span>
         </td>
@@ -204,7 +204,7 @@ const UserRow = ({ user, index, refetch }: UserRowProps) => {
           <span className="tooltip tooltip-error" data-tip="Delete user data!">
             <button
               onClick={() => handleUserDelete(_id)}
-              className="btn btn-sm btn-accent text-white"
+              className="btn btn-xs btn-error text-white"
             >
               <i className="bx bxs-trash"></i>
             </button>

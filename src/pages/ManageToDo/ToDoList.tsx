@@ -25,7 +25,6 @@ const TodoList = (task: TodoListProps) => {
     description,
     _id,
     completed,
-    refetch,
     setModalToDo,
     addedBy,
     createdAt, } = task;
@@ -54,30 +53,43 @@ const TodoList = (task: TodoListProps) => {
           .then((result) => {
             if (result.success) {
               toast.success(result.message);
-              refetch();
+              task.refetch();
             }
           });
       }
     });
   };
 
-  const handleCompleteInfo = async (id: number) => {
-    await fetch(
-      `${BASE_API}/toDoS?todoId=${id}&&uid=${auth?.currentUser?.uid}`,
-      {
-        method: "PATCH",
-        headers: {
-          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
+  const handleCompleteInfo = (id: number) => {
+    Swal.fire({
+      text: "Are you sure you want to complete this?",
+      icon: "warning",
+      showCancelButton: true,
+      background: theme === "night" ? "#333" : "#fff",
+      color: theme === "night" ? "#fff" : "#333",
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Complete it!",
+    }).then((result: any) => {
+      if (result.isConfirmed) {
+        fetch(
+          `${BASE_API}/toDoS?todoId=${id}&&uid=${auth?.currentUser?.uid}`,
+          {
+            method: "PATCH",
+            headers: {
+              authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+          }
+        )
+          .then((res) => res.json())
+          .then((result) => {
+            if (result.success) {
+              toast.success(`${title} ${result.message}`);
+              task.refetch();
+            }
+          });
       }
-    )
-      .then((res) => res.json())
-      .then((result) => {
-        if (result.success) {
-          toast.success(`${title} ${result.message}`);
-          refetch();
-        }
-      });
+    });
   };
 
   return (
@@ -90,7 +102,7 @@ const TodoList = (task: TodoListProps) => {
           <input
             type="checkbox"
             onClick={() => handleCompleteInfo(_id as any)}
-            className="checkbox"
+            className="checkbox checkbox-xs checkbox-success"
             disabled={completed && true}
             checked={completed}
           ></input>
@@ -116,7 +128,7 @@ const TodoList = (task: TodoListProps) => {
         <label
           typeof="button"
           htmlFor="detailsModal"
-          className="btn btn-sm btn-primary btn-neutral text-white modal-button"
+          className="btn btn-xs btn-primary btn-neutral text-white modal-button"
           onClick={() =>
             setModalToDo({
               _id,
@@ -141,7 +153,7 @@ const TodoList = (task: TodoListProps) => {
               }`}
             data-tip={completed ? "Complete" : "Pending"}
           >
-            {completed ? "Complete" : "Pending....."}
+            {completed ? "Completed" : "Pending"}
           </div>
         </div>
       </th>
@@ -149,8 +161,7 @@ const TodoList = (task: TodoListProps) => {
         <label
           typeof="button"
           htmlFor="updateModal"
-          className="btn btn-sm btn-success text-white modal-button"
-          aria-disabled={completed && true}
+          className={`btn btn-xs btn-success text-white modal-button ${completed && "btn-disabled"}`}
           onClick={() => setModalToDo({ _id, title, description }) as any}
         >
           <i className="bx bxs-pen"></i>
@@ -159,7 +170,7 @@ const TodoList = (task: TodoListProps) => {
       <th>
         <button
           onClick={() => handleDelete(_id as any)}
-          className="btn btn-sm btn-error text-white"
+          className="btn btn-xs btn-error text-white"
         >
           <i className="bx bxs-trash"></i>
         </button>

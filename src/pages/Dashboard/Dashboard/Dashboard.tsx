@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { toast } from "react-hot-toast";
 import todo from "../../../assets/todo.png";
-import { BsGrid } from "react-icons/bs";
+import { MdSpaceDashboard } from "react-icons/md";
 import { MdOutlineWavingHand } from "react-icons/md";
 import { signOut } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -13,23 +13,46 @@ import auth from "../../../auth/Firebase/firebase.init";
 import useTitle from "../../../hooks/useTitle";
 import { InitializeContext } from "../../../App";
 import useScrollToTop from "../../../hooks/useScrollToTop";
+import Swal from "sweetalert2";
 
 const Dashboard = () => {
   useScrollToTop();
-  const { theme, appName } = useContext(InitializeContext);
+  const { appName, theme } = useContext(InitializeContext);
   useTitle("Dashboard");
   const [user, isLoading] = useAuthState(auth);
   const [admin, adminLoading] = useAdmin(user);
   const [image] = useProfileImage(user);
   const navigate = useNavigate();
 
-  const handleLogOut = async () => {
-    await signOut(auth).then(() => {
-      navigate("/");
-      toast.success(`Thank you, ${user?.displayName} to stay with us!`, {
-        position: "top-center",
-      });
-    });
+  const handleLogOut = () => {
+    // swal for confirmation
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You will be signed out from this account.",
+      icon: "warning",
+      showCancelButton: true,
+      background: theme === "night" ? "#333" : "#fff",
+      color: theme === "night" ? "#fff" : "#333",
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, sign out!",
+    }).then((result: any) => {
+      if (result.isConfirmed) {
+        // sign out from firebase
+        signOut(auth).then(() => {
+          localStorage.removeItem("accessToken");
+          navigate("/");
+          toast.success(`Thank you, ${user?.displayName} to stay with us!`, {
+            position: "top-center",
+          });
+        }).catch((err) => {
+          // toast for error
+          toast(err.message, {
+            icon: '👎',
+          })
+        })
+      }
+    })
   };
 
   if (isLoading || adminLoading) {
@@ -43,9 +66,9 @@ const Dashboard = () => {
         <div className="header z-50 sticky top-0 flex justify-between items-center bg-base-100 shadow-lg p-4 rounded-xl">
           <label
             htmlFor="dashboard-sidebar"
-            className="btn bg-base-100 text-black hover:text-white drawer-button lg:hidden "
+            className="btn drawer-button lg:hidden bg-transparent text-primary border-primary hover:bg-primary hover:border-primary hover:text-base-100"
           >
-            <BsGrid className={theme ? "text-2xl" : "text-2xl"} />
+            <MdSpaceDashboard className="text-2xl" />
           </label>
           <div className="flex items-center gap-1">
             <h1 className="text-lg md:text-2xl font-semibold hidden md:flex">
@@ -128,12 +151,17 @@ const Dashboard = () => {
               </div>
               <hr className="font-semibold" />
               <li className="py-1 font-semibold md:hidden">
-                <Link to="/profile" className="py-3">
+                <Link to="/dashboard/profile">
                   <i className="bx bxs-user font-semibold"></i> Profile
                 </Link>
               </li>
+              <li className="py-1 font-semibold md:hidden">
+                <Link to="/toDos">
+                  <i className="bx bx-pen font-semibold"></i> Create ToDoS
+                </Link>
+              </li>
               <li className="py-1">
-                <button onClick={handleLogOut} className="py-3 font-semibold">
+                <button onClick={handleLogOut} className="font-semibold">
                   <i className="bx bx-log-out font-semibold"></i>
                   Logout
                 </button>
@@ -171,9 +199,19 @@ const Dashboard = () => {
               <i className="bx bxs-dashboard text-xl"></i> Dashboard
             </NavLink>
           </li>
+          <li className="py-1">
+            <NavLink
+              className={({ isActive }) =>
+                isActive ? "text-white bg-primary" : ""
+              }
+              to="/dashboard/yourToDos"
+            >
+              <i className="bx bx-pen text-xl"></i> Your ToDoS
+            </NavLink>
+          </li>
           {admin && (
             <>
-              <li className="py-2">
+              <li className="py-1">
                 <NavLink
                   className={({ isActive }) =>
                     isActive ? "text-white bg-primary" : ""
@@ -206,6 +244,13 @@ const Dashboard = () => {
               </li>
             </>
           )}
+          <li className="absolute bottom-5 w-72">
+            <button
+              onClick={handleLogOut}
+              className="bg-outline hover:bg-primary hover:border-primary border-2 border-primary rounded-lg text-primary hover:text-white duration-300">
+              <i className="bx bx-log-out"></i> Sign Out
+            </button>
+          </li>
         </ul>
       </div>
     </div>

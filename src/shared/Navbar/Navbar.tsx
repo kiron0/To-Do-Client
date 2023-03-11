@@ -11,29 +11,50 @@ import auth from "../../auth/Firebase/firebase.init";
 import useAdmin from "../../hooks/useAdmin";
 import useScrollToTop from "../../hooks/useScrollToTop";
 import { InitializeContext } from "../../App";
+import Swal from "sweetalert2";
 
 const Navbar = () => {
   useScrollToTop();
-  const { appName } = useContext(InitializeContext);
+  const { appName, theme } = useContext(InitializeContext);
   const [user] = useAuthState(auth);
   const [image] = useProfileImage(user);
   const { pathname } = useLocation();
   const [admin] = useAdmin(user);
 
   const handleLogOut = () => {
-    signOut(auth);
-    localStorage.removeItem("accessToken");
-    toast.success(`Thank you, ${user?.displayName} to stay with us!`, {
-      position: "top-center",
-    });
+    // swal for confirmation
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You will be signed out from this account.",
+      icon: "warning",
+      showCancelButton: true,
+      background: theme === "night" ? "#333" : "#fff",
+      color: theme === "night" ? "#fff" : "#333",
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, sign out!",
+    }).then((result: any) => {
+      if (result.isConfirmed) {
+        // sign out from firebase
+        signOut(auth).then(() => {
+          localStorage.removeItem("accessToken");
+          toast.success(`Thank you, ${user?.displayName} to stay with us!`, {
+            position: "top-center",
+          });
+        }).catch((err) => {
+          // toast for error
+          toast(err.message, {
+            icon: '👎',
+          })
+        })
+      }
+    })
   };
 
   const NavbarMenus = (
     <>
       <li className="py-1 lg:py-0">
-        <NavLink className={({ isActive }) =>
-          isActive ? "text-white uppercase bg-primary" : "uppercase"
-        } to="/developer">
+        <NavLink className="text-white uppercase bg-primary" to="/dev">
           Developer
         </NavLink>
       </li>
@@ -117,10 +138,10 @@ const Navbar = () => {
           <div className="navbar-end gap-3">
             {!user && (
               <NavLink
-                to="/login"
-                className="btn flex gap-2 items-center btn-primary text-white"
+                to="/getStarted"
+                className="btn btn-sm md:btn-md flex gap-2 items-center btn-primary text-white"
               >
-                <BiLogInCircle /> Login
+                <BiLogInCircle /> <span className="hidden md:block">Get Started</span>
               </NavLink>
             )}
             {user && (
@@ -149,7 +170,7 @@ const Navbar = () => {
                   </label>
                   <ul
                     tabIndex={0}
-                    className="mt-3 p-2 shadow-xl menu menu-compact dropdown-content bg-base-100 rounded-box w-72"
+                    className="mt-4 p-2 shadow-xl menu menu-compact dropdown-content bg-base-100 rounded-box w-72"
                   >
                     <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto my-4 border ring ring-primary ring-offset-base-100 ring-offset-2">
                       {auth?.currentUser?.photoURL ? (
@@ -188,9 +209,9 @@ const Navbar = () => {
                           className={({ isActive }) =>
                             isActive ? "text-white bg-primary" : ""
                           }
-                          to="/dashboard"
+                          to="/manageToDoS"
                         >
-                          <i className="bx bxs-dashboard"></i> Dashboard
+                          <i className="bx bx-pen font-semibold"></i> All ToDos
                         </NavLink>
                       </li>
                     )}
@@ -199,7 +220,17 @@ const Navbar = () => {
                         className={({ isActive }) =>
                           isActive ? "text-white bg-primary" : ""
                         }
-                        to="/toDos"
+                        to="/dashboard"
+                      >
+                        <i className="bx bxs-dashboard"></i> Dashboard
+                      </NavLink>
+                    </li>
+                    <li className="py-1 font-semibold">
+                      <NavLink
+                        className={({ isActive }) =>
+                          isActive ? "text-white bg-primary" : ""
+                        }
+                        to="/dashboard/yourToDos"
                       >
                         <i className="bx bx-pen font-semibold"></i> Your ToDos
                       </NavLink>
@@ -207,7 +238,7 @@ const Navbar = () => {
                     <li className="py-1">
                       <button
                         onClick={handleLogOut}
-                        className="py-3 font-semibold"
+                        className="font-semibold"
                       >
                         <i className="bx bx-log-out font-semibold"></i>
                         Logout

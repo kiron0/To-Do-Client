@@ -19,14 +19,9 @@ import { InitializeContext } from "../../App";
 import useUserInfo from "../../hooks/useUserInfo";
 // import { useAuthState } from "react-firebase-hooks/auth";
 
-type Props = {
-  refetch: any;
-  isLoading: boolean;
-}
-
-const Profile = ({ refetch, isLoading }: Props) => {
+const Profile = () => {
   useScrollToTop();
-  const { appName } = useContext(InitializeContext);
+  const { appName, refetch, isLoading } = useContext(InitializeContext);
   const [editProfile, setEditProfile] = useState(null as any);
   // const [user] = useAuthState(auth);
   document.title = `${auth?.currentUser?.displayName}'s Profile - ${appName}`;

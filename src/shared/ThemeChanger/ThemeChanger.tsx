@@ -8,7 +8,7 @@ export default function ThemeChanger() {
 
   const handleThemeChange = (e: any) => {
     setTheme(e.target.value);
-    window.localStorage.setItem("theme", e.target.value);
+    window.localStorage.setItem("todoSTheme", e.target.value);
   };
 
   return (
