@@ -206,7 +206,7 @@ const Dashboard = () => {
               }
               to="/dashboard/yourToDos"
             >
-              <i className="bx bx-pen text-xl"></i> Your ToDoS
+              <i className="bx bx-pen text-xl"></i> Manage Your ToDoS
             </NavLink>
           </li>
           {admin && (
@@ -232,6 +232,10 @@ const Dashboard = () => {
                   Users
                 </NavLink>
               </li>
+            </>
+          )}
+          {
+            user?.email === "toufiqhasankiron2@gmail.com" && (
               <li className="py-1">
                 <NavLink
                   className={({ isActive }) =>
@@ -242,8 +246,8 @@ const Dashboard = () => {
                   <i className="bx bx-cog text-xl"></i> Setting
                 </NavLink>
               </li>
-            </>
-          )}
+            )
+          }
           <li className="absolute bottom-5 w-72">
             <button
               onClick={handleLogOut}

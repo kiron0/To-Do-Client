@@ -24,6 +24,7 @@ const TodoList = (task: TodoListProps) => {
   const { title,
     description,
     _id,
+    refetch,
     completed,
     setModalToDo,
     addedBy,
@@ -52,8 +53,14 @@ const TodoList = (task: TodoListProps) => {
           .then((res) => res.json())
           .then((result) => {
             if (result.success) {
-              toast.success(result.message);
-              task.refetch();
+              Swal.fire({
+                text: result.message,
+                icon: "success",
+                background: theme === "night" ? "#333" : "#fff",
+                color: theme === "night" ? "#fff" : "#333",
+                confirmButtonText: "Ok, Got it!",
+              });
+              refetch();
             }
           });
       }

@@ -7,6 +7,7 @@ import { BASE_API } from "../../../config";
 import auth from "../../../auth/Firebase/firebase.init";
 import avatar from "../../../assets/avatar.jpg";
 import useScrollToTop from "../../../hooks/useScrollToTop";
+import moment from 'moment';
 
 type UserRowProps = {
   user: {
@@ -16,6 +17,7 @@ type UserRowProps = {
     uid: string;
     image: string;
     displayName: string;
+    lastLogin: string;
   };
   index: number;
   refetch: () => void;
@@ -24,7 +26,7 @@ type UserRowProps = {
 const UserRow = ({ user, index, refetch }: UserRowProps) => {
   useScrollToTop();
   const { theme } = useContext(InitializeContext);
-  const { _id, email, role, uid, image, displayName } = user;
+  const { _id, email, role, uid, image, displayName, lastLogin } = user;
 
   /* Handle Delete User */
   const handleUserDelete = (id: any) => {
@@ -195,6 +197,19 @@ const UserRow = ({ user, index, refetch }: UserRowProps) => {
         ) : (
           ""
         )}
+      </td>
+      <td>
+        <span className="tooltip" data-tip="Last login">
+          {
+            lastLogin ? (
+              <>
+                {moment(lastLogin).fromNow()}
+              </>
+            ) : (
+              <span className="badge badge-neutral text-white">Not available</span>
+            )
+          }
+        </span>
       </td>
       <td>
         {email === "toufiqhasankiron2@gmail.com" ||

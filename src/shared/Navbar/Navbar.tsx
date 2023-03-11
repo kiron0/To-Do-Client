@@ -203,18 +203,6 @@ const Navbar = () => {
                       </Link>
                     </div>
                     <hr className="font-semibold" />
-                    {admin && (
-                      <li className="py-1 font-semibold">
-                        <NavLink
-                          className={({ isActive }) =>
-                            isActive ? "text-white bg-primary" : ""
-                          }
-                          to="/manageToDoS"
-                        >
-                          <i className="bx bx-pen font-semibold"></i> All ToDos
-                        </NavLink>
-                      </li>
-                    )}
                     <li className="py-1 font-semibold">
                       <NavLink
                         className={({ isActive }) =>
@@ -225,6 +213,18 @@ const Navbar = () => {
                         <i className="bx bxs-dashboard"></i> Dashboard
                       </NavLink>
                     </li>
+                    {admin && (
+                      <li className="py-1 font-semibold">
+                        <NavLink
+                          className={({ isActive }) =>
+                            isActive ? "text-white bg-primary" : ""
+                          }
+                          to="/dashboard/manageToDoS"
+                        >
+                          <i className="bx bx-pen font-semibold"></i> All the ToDos
+                        </NavLink>
+                      </li>
+                    )}
                     <li className="py-1 font-semibold">
                       <NavLink
                         className={({ isActive }) =>
