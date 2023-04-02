@@ -15,7 +15,7 @@ export default function ThemeChanger() {
     <div>
       <label
         htmlFor="themeChanger"
-        className="btn btn-sm btn-primary rounded-full h-8 w-8 absolute right-1 top-1/3"
+        className="btn btn-sm btn-success rounded-full h-8 w-8 absolute right-1 top-1/3"
       >
         <i className={`bx bx-cog text-lg text-white ${styles.themeBtn}`}></i>
       </label>
@@ -54,7 +54,7 @@ export default function ThemeChanger() {
           <div className="pt-3 font-semibold">
             <p>
               Current theme:{" "}
-              <span className="capitalize btn btn-xs btn-primary cursor-default no-animation text-white">
+              <span className="capitalize btn btn-xs btn-success cursor-default no-animation text-white">
                 {theme ? theme : "Light"}
               </span>
             </p>

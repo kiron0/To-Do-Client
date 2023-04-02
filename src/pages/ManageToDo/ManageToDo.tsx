@@ -23,30 +23,6 @@ const ManageToDo = () => {
   const { theme } = useContext(InitializeContext);
   const [modalToDo, setModalToDo] = useState({} as any);
   const [user] = useAuthState(auth);
-  const [titleError, setTitleError] = useState<string>("");
-  const [titleTextCount, setTitleTextCount] = useState<number>(0);
-  const [desError, setDesError] = useState<string>("");
-  const [desTextCount, setDesTextCount] = useState<number>(0);
-
-  const handleTitleChange = (e: any) => {
-    const titleText = e.target.value;
-    if (titleText.length > 0) {
-      setTitleError("");
-    } else {
-      setTitleError("Please input your title!");
-    }
-    setTitleTextCount(titleText.length);
-  }
-
-  const handleDesChange = (e: any) => {
-    const desText = e.target.value;
-    if (desText.length > 0) {
-      setDesError("");
-    } else {
-      setDesError("Please input your description!");
-    }
-    setDesTextCount(desText.length);
-  }
 
   const {
     data: toDosData = [] as any,
@@ -110,13 +86,37 @@ const ManageToDo = () => {
 
   const [titleField, setTitleField] = useState<string>("");
   const [titleFieldError, setTitleFieldError] = useState<string>("");
-  const [titleFieldCount, setTitleFieldCount] = useState<number>(0);
+  // const [titleFieldCount, setTitleFieldCount] = useState<number>(0);
   const [descriptionField, setDescriptionField] = useState<string>("");
   const [desFieldError, setDesFieldError] = useState<string>("");
-  const [desFieldCount, setDesFieldCount] = useState<number>(0);
+  // const [desFieldCount, setDesFieldCount] = useState<number>(0);
 
   const handleToCreateToDoS = (e: any) => {
     e.preventDefault();
+
+    const title = e.target.title.value;
+    const description = e.target.description.value;
+
+    if (title.length === 0) {
+      toast.error("Please input your title!", {
+        style: {
+          background: "#333",
+          padding: "15px",
+          color: "#fff",
+        },
+      });
+      return;
+    } else if (description.length === 0) {
+      toast.error("Please input your description!", {
+        style: {
+          background: "#333",
+          padding: "15px",
+          color: "#fff",
+        },
+      });
+      return;
+    }
+
     const createToDo = {
       email: user?.email,
       title: e.target.title.value,
@@ -143,16 +143,16 @@ const ManageToDo = () => {
           toast.success(result.message);
           refetch();
           e.target.reset();
-          setTitleTextCount(0);
-          setDesTextCount(0);
-          setDesError("");
-          setTitleError("");
-          setTitleField("");
-          setDescriptionField("");
-          setTitleFieldCount(0);
-          setDesFieldCount(0);
-          setDesFieldError("");
-          setTitleFieldError("");
+          // setTitleTextCount(0);
+          // setDesTextCount(0);
+          // setDesError("");
+          // setTitleError("");
+          // setTitleField("");
+          // setDescriptionField("");
+          // setTitleFieldCount(0);
+          // setDesFieldCount(0);
+          // setDesFieldError("");
+          // setTitleFieldError("");
         }
       });
   };
@@ -164,7 +164,7 @@ const ManageToDo = () => {
     } else {
       setTitleFieldError("Please input your title!");
     }
-    setTitleFieldCount(titleText.length);
+    // setTitleFieldCount(titleText.length);
     setTitleField(titleText);
   }
 
@@ -175,7 +175,7 @@ const ManageToDo = () => {
     } else {
       setDesFieldError("Please input your description!");
     }
-    setDesFieldCount(desText.length);
+    // setDesFieldCount(desText.length);
     setDescriptionField(desText);
   }
 
@@ -276,66 +276,63 @@ const ManageToDo = () => {
                 <div className="name-title absolute -top-4 bg-base-100 border rounded p-1">
                   <h3 className="text-xs font-poppins">Put your title</h3>
                 </div>
-                <div className={`input-group flex items-center my-2 border p-3 rounded-md mt-2 ${titleError || titleTextCount < 10 || titleTextCount > 30 ? "border-error shadow-red-500 outline-red-500" : ""}`}>
+                <div className={`input-group flex items-center my-2 border p-3 rounded-md mt-2`}>
                   <div className="icon">
                     <i className="bx bxs-pen"></i>
                   </div>
                   <input
                     type="text"
                     name="title"
-                    onChange={handleTitleChange}
+                    onKeyDown={(e) => { e.key === 'Enter' && e.preventDefault() }}
                     className="form-control outline-none pl-4 w-full bg-transparent"
                     placeholder="Title"
-                    required
                   />
                 </div>
-                {titleError && (
+                {/* {titleError && (
                   <small className="flex flex-col pt-2 text-red-500">
                     {titleError}
                   </small>
-                )}
-                <small className={`pt-2 ${titleTextCount < 10 || titleTextCount > 30 ? "flex flex-col text-red-500" : ""}`}>
+                )} */}
+                {/* <small className={`pt-2 ${titleTextCount < 10 || titleTextCount > 30 ? "flex flex-col text-red-500" : ""}`}>
                   {`Word Count: ${titleTextCount}/30`}
 
-                </small>
-                <small className={`${titleTextCount < 10 || titleTextCount > 30 ? "flex flex-col text-red-500" : ""}`}>
+                </small> */}
+                {/* <small className={`${titleTextCount < 10 || titleTextCount > 30 ? "flex flex-col text-red-500" : ""}`}>
 
                   {titleTextCount < 10 ? "You can't write less than 10 words" : titleTextCount > 30 && "You can't write more than 30 words"}
-                </small>
+                </small> */}
               </div>
 
               <div className="name border rounded p-3 relative mt-10">
                 <div className="name-title absolute -top-4 bg-base-100 border rounded p-1">
                   <h3 className="text-xs font-poppins">Put your description</h3>
                 </div>
-                <div className={`input-group flex items-center my-2 border p-3 rounded-md mt-2 ${desError || desTextCount < 50 || desTextCount > 200 ? "border-error shadow-red-500 outline-red-500" : ""}`}>
+                <div className={`input-group flex items-center my-2 border p-3 rounded-md mt-2`}>
                   <div className="icon">
                     <i className="bx bx-detail"></i>
                   </div>
                   <textarea
                     typeof="text"
                     name="description"
-                    onChange={handleDesChange}
-                    onKeyDown={(e) => { e.key === 'Enter' && desError !== "" && e.preventDefault() }}
-                    className={`form-control outline-none pl-4 w-full bg-transparent ${desTextCount < 50 || desTextCount > 200 ? "text-red-500" : ""}`}
+                    onKeyDown={(e) => { e.key === 'Enter' && e.preventDefault() }}
+                    className={`form-control outline-none pl-4 w-full bg-transparent`}
                     placeholder="Description"
                     style={{ resize: "none", height: "10rem" }}
-                    required
                   />
                 </div>
-                {desError && (
+                {/* {desError && (
                   <small className="flex flex-col pt-2 text-red-500">
                     {desError}
                   </small>
-                )}
-                <small className={`pt-2 ${desTextCount < 50 || desTextCount > 200 ? "flex flex-col text-red-500" : ""}`}>
+                )} */}
+                {/* <small className={`pt-2 ${desTextCount < 50 || desTextCount > 200 ? "flex flex-col text-red-500" : ""}`}>
                   {`Word Count: ${desTextCount}/200`}
 
-                </small>
-                <small className={`${desTextCount < 50 || desTextCount > 200 ? "flex flex-col text-red-500" : ""}`}>
+                </small> */}
+                {/* <small className={`${desTextCount < 50 || desTextCount > 200 ? "flex flex-col text-red-500" : ""}`}>
 
                   {desTextCount < 50 ? "You can't write less than 50 words" : desTextCount > 200 && "You can't write more than 200 words"}
-                </small>
+                </small> */}
               </div>
 
               <div className="modal-action">
@@ -348,7 +345,7 @@ const ManageToDo = () => {
                     <PulseLoader size={8} color="#fff" />
                   </button>
                 ) : (
-                  <button className={`btn btn-success ${titleTextCount < 10 || titleTextCount > 30 || desTextCount < 50 || desTextCount > 200 ? "btn-disabled btn-error" : ""}`} type="submit">
+                  <button className={`btn btn-success`} type="submit">
                     <i className="bx bxs-pen text-lg"></i> Add ToDo
                   </button>
                 )}
@@ -468,14 +465,14 @@ const ManageToDo = () => {
                         {titleFieldError}
                       </small>
                     )}
-                    <small className={`pt-2 ${titleFieldCount < 10 || titleFieldCount > 30 ? "flex flex-col text-red-500" : ""}`}>
+                    {/* <small className={`pt-2 ${titleFieldCount < 10 || titleFieldCount > 30 ? "flex flex-col text-red-500" : ""}`}>
                       {`Word Count: ${titleFieldCount}/30`}
 
-                    </small>
-                    <small className={`${titleFieldCount < 10 || titleFieldCount > 30 ? "flex flex-col text-red-500" : ""}`}>
+                    </small> */}
+                    {/* <small className={`${titleFieldCount < 10 || titleFieldCount > 30 ? "flex flex-col text-red-500" : ""}`}>
 
                       {titleFieldCount < 10 ? "You can't write less than 10 words" : titleFieldCount > 30 && "You can't write more than 30 words"}
-                    </small>
+                    </small> */}
                   </div>
 
                   <div className="name border rounded p-3 relative mt-10">
@@ -502,14 +499,14 @@ const ManageToDo = () => {
                         {desFieldError}
                       </small>
                     )}
-                    <small className={`pt-2 ${desFieldCount < 50 || desFieldCount > 200 ? "flex flex-col text-red-500" : ""}`}>
+                    {/* <small className={`pt-2 ${desFieldCount < 50 || desFieldCount > 200 ? "flex flex-col text-red-500" : ""}`}>
                       {`Word Count: ${desFieldCount}/200`}
 
-                    </small>
-                    <small className={`${desFieldCount < 50 || desFieldCount > 200 ? "flex flex-col text-red-500" : ""}`}>
+                    </small> */}
+                    {/* <small className={`${desFieldCount < 50 || desFieldCount > 200 ? "flex flex-col text-red-500" : ""}`}>
 
                       {desFieldCount < 50 ? "You can't write less than 50 words" : desFieldCount > 200 && "You can't write more than 200 words"}
-                    </small>
+                    </small> */}
                   </div>
 
                   <div className="modal-action">
@@ -522,7 +519,7 @@ const ManageToDo = () => {
                         <PulseLoader size={8} color="#fff" />
                       </button>
                     ) : (
-                      <button className={`btn btn-success ${titleFieldCount < 10 || titleFieldCount > 30 || desFieldCount < 50 || desFieldCount > 200 ? "btn-disabled btn-error" : ""}`} type="submit">
+                      <button className={`btn btn-success`} type="submit">
                         <i className="bx bx-pen text-lg"></i> Update ToDo
                       </button>
                     )}

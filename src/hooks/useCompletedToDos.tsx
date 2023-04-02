@@ -21,7 +21,7 @@ const useCompletedToDos = () => {
         setCompletedToDos(result);
         setLoading(false);
       });
-  }, []);
+  }, [completedToDos]);
   return { completedToDos, loading };
 };
 
