@@ -63,7 +63,7 @@ export default function YourTodoS() {
                                         </div>
                                         <div className='form-control max-w-xs md:pb-7 lg:pb-4 md:w-1/4 flex w-full justify-center'>
                                                   <label className="label">
-                                                            <span className="label-text">Filter by category</span>
+                                                            <span className="label-text">Filter by status</span>
                                                   </label>
                                                   <select className="select select-bordered w-full max-w-xs"
                                                             onChange={handleFilterToDoS}

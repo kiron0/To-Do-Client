@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import useScrollToTop from "../../../hooks/useScrollToTop";
+import moment from "moment";
 
 type TodoListProps = {
   todo: any;
@@ -44,9 +45,19 @@ const ToDoSRow = ({ todo }: TodoListProps) => {
             {todo?.addedBy?.email}
           </div>
         </div>
+        {
+          todo?.dueDate && (
+            <div className="card-actions justify-end mt-2">
+              Due Date -{" "}
+              <div className="badge badge-outline badge-error">
+                {moment(todo?.dueDate).format("Do MMMM YYYY")}
+              </div>
+            </div>
+          )
+        }
         <div className="card-actions justify-end mt-2">
           Created at -{" "}
-          <div className="badge badge-outline badge-neutral">
+          <div className="badge badge-outline badge-info">
             {todo?.createdAt}
           </div>
         </div>
