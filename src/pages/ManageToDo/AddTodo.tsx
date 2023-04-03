@@ -1,12 +1,15 @@
 import React from 'react'
+import Datepicker from "react-tailwindcss-datepicker";
 import { PulseLoader } from 'react-spinners'
 
 type Props = {
           handleToCreateToDoS: (e: React.FormEvent<HTMLFormElement>) => void
+          dateValue: any
+          handleValueChange: (date: any) => void
           isLoading: boolean
 }
 
-export default function AddTodo({ handleToCreateToDoS, isLoading }: Props) {
+export default function AddTodo({ handleToCreateToDoS, isLoading, handleValueChange, dateValue }: Props) {
           return (
                     <form
                               onSubmit={handleToCreateToDoS}
@@ -51,6 +54,35 @@ export default function AddTodo({ handleToCreateToDoS, isLoading }: Props) {
                                                                                 className={`form-control outline-none pl-4 w-full bg-transparent`}
                                                                                 placeholder="Description"
                                                                                 style={{ resize: "none", height: "10rem" }}
+                                                                      />
+                                                            </div>
+                                                  </div>
+
+                                                  <div className="name border rounded p-3 relative mt-10">
+                                                            <div className="name-title absolute -top-4 bg-base-100 border rounded p-1">
+                                                                      <h3 className="text-xs font-poppins">Due Date</h3>
+                                                            </div>
+                                                            <div className={`input-group flex items-center my-2 border p-3 rounded-md mt-2`}>
+                                                                      <div className="icon">
+                                                                                <i className="bx bx-calendar"></i>
+                                                                      </div>
+                                                                      <Datepicker
+                                                                                classNames={{
+                                                                                          input() {
+                                                                                                    return `outline-none w-full focus:outline-none pl-4 bg-base-100`
+                                                                                          },
+                                                                                          container() {
+                                                                                                    return `bg-base-100`
+                                                                                          }
+                                                                                }}
+                                                                                primaryColor={"emerald"}
+                                                                                displayFormat='DD-MM-YYYY'
+                                                                                placeholder={"Pick Due Date"}
+                                                                                value={dateValue}
+                                                                                minDate={new Date()}
+                                                                                useRange={false}
+                                                                                asSingle={true}
+                                                                                onChange={handleValueChange}
                                                                       />
                                                             </div>
                                                   </div>

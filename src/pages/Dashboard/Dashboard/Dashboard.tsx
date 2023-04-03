@@ -204,6 +204,16 @@ const Dashboard = () => {
               <i className="bx bx-pen text-xl"></i> Manage Your ToDoS
             </NavLink>
           </li>
+          {/* <li className="py-1">
+            <NavLink
+              className={({ isActive }) =>
+                isActive ? "text-white bg-primary" : ""
+              }
+              to="/dashboard/completedToDos"
+            >
+              <i className="bx bx-pen text-xl"></i> Manage Completed ToDoS
+            </NavLink>
+          </li> */}
           {admin && (
             <>
               <li className="py-1">

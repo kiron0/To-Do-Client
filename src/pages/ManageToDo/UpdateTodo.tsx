@@ -1,17 +1,22 @@
 import React from 'react'
+import Datepicker from "react-tailwindcss-datepicker";
 import { PulseLoader } from "react-spinners";
+import moment from 'moment';
 
 type Props = {
           handleUpdateToDoS: (e: React.FormEvent<HTMLFormElement>) => void
           handleTitleField: (e: React.ChangeEvent<HTMLInputElement>) => void
           handleDesField: (e: React.ChangeEvent<HTMLTextAreaElement>) => void
+          handleValueChange: (date: any) => void
+          dateValue: any
           titleField: string
           descriptionField: string
           isLoading: boolean
           modalToDo: any
 }
 
-export default function UpdateTodo({ handleUpdateToDoS, handleTitleField, handleDesField, titleField, descriptionField, isLoading, modalToDo }: Props) {
+export default function UpdateTodo({ handleUpdateToDoS, handleTitleField, handleDesField, titleField, descriptionField, isLoading, modalToDo, dateValue, handleValueChange }: Props) {
+
           return (
                     <div>
                               <input type="checkbox" id="updateModal" className="modal-toggle" />
@@ -58,6 +63,36 @@ export default function UpdateTodo({ handleUpdateToDoS, handleTitleField, handle
                                                                                           placeholder="Description"
                                                                                           style={{ resize: "none", height: "8rem" }}
                                                                                           onChange={handleDesField}
+                                                                                />
+                                                                      </div>
+                                                            </div>
+
+                                                            <div className="name border rounded p-3 relative mt-10">
+                                                                      <div className="name-title absolute -top-4 bg-base-100 border rounded p-1">
+                                                                                <h3 className="text-xs font-poppins">Update Due Date</h3>
+                                                                      </div>
+                                                                      {modalToDo?.dueDate && <small>Previous Due Date: <span className='text-primary font-semibold'>{moment(modalToDo?.dueDate).format("Do MMMM YYYY")}</span></small>}
+                                                                      <div className={`input-group flex items-center my-2 border p-3 rounded-md mt-2`}>
+                                                                                <div className="icon">
+                                                                                          <i className="bx bx-calendar"></i>
+                                                                                </div>
+                                                                                <Datepicker
+                                                                                          classNames={{
+                                                                                                    input() {
+                                                                                                              return `outline-none w-full focus:outline-none pl-4 bg-base-100`
+                                                                                                    },
+                                                                                                    container() {
+                                                                                                              return `bg-base-100`
+                                                                                                    }
+                                                                                          }}
+                                                                                          primaryColor={"emerald"}
+                                                                                          displayFormat='DD-MM-YYYY'
+                                                                                          placeholder={"Pick Due Date"}
+                                                                                          value={dateValue || modalToDo?.dueDate}
+                                                                                          minDate={new Date(modalToDo?.dueDate)}
+                                                                                          useRange={false}
+                                                                                          asSingle={true}
+                                                                                          onChange={handleValueChange}
                                                                                 />
                                                                       </div>
                                                             </div>

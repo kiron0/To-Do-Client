@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { toast } from "react-hot-toast";
-import { Link } from "react-router-dom";
 import { useQuery } from "react-query";
 import useTitle from "../../hooks/useTitle";
 import Loader from "../../components/Loader/Loader";
@@ -10,7 +9,6 @@ import Swal from "sweetalert2";
 import TodoList from "./ToDoList";
 import { BASE_API } from "../../config";
 import useScrollToTop from "../../hooks/useScrollToTop";
-import useCompletedToDos from "../../hooks/useCompletedToDos";
 import Loading from "../../components/Loading/Loading";
 import { InitializeContext } from "../../App";
 import UpdateTodo from "./UpdateTodo";
@@ -37,6 +35,11 @@ const ManageToDo = () => {
       },
     }).then((res) => res.json())
   );
+
+  const [dateValue, setDateValue] = useState({
+    startDate: null,
+    endDate: null
+  });
 
   const HandleSearchToDos = async (e: any) => {
     e.preventDefault();
@@ -89,6 +92,10 @@ const ManageToDo = () => {
   const [titleField, setTitleField] = useState<string>("");
   const [descriptionField, setDescriptionField] = useState<string>("");
 
+  const handleValueChange = (newValue: any) => {
+    setDateValue(newValue);
+  }
+
   const handleToCreateToDoS = (e: any) => {
     e.preventDefault();
 
@@ -119,6 +126,7 @@ const ManageToDo = () => {
       email: user?.email,
       title: e.target.title.value,
       description: e.target.description.value,
+      dueDate: dateValue.startDate,
       createdAt:
         new Date().toDateString() + " " + new Date().toLocaleTimeString(),
       addedBy: {
@@ -126,6 +134,7 @@ const ManageToDo = () => {
         uid: auth?.currentUser?.uid,
         email: auth?.currentUser?.email,
       },
+      completed: false,
     };
     fetch(`${BASE_API}/createToDo?uid=${auth?.currentUser?.uid}`, {
       method: "POST",
@@ -158,17 +167,6 @@ const ManageToDo = () => {
   const handleUpdateToDoS = async (e: any) => {
     e.preventDefault();
 
-    // if (titleField.length === 0 || descriptionField.length === 0) {
-    //   toast.error("Please input your updated title or description!", {
-    //     style: {
-    //       background: "#333",
-    //       padding: "15px",
-    //       color: "#fff",
-    //     },
-    //   });
-    //   return;
-    // }
-
     await fetch(`${BASE_API}/toDoS/updateToDoS?todoId=${modalToDo._id}&&uid=${auth?.currentUser?.uid}`, {
       method: "PATCH",
       headers: {
@@ -178,6 +176,7 @@ const ManageToDo = () => {
       body: JSON.stringify({
         title: titleField || modalToDo?.title,
         description: descriptionField || modalToDo?.description,
+        dueDate: dateValue.startDate || modalToDo?.dueDate,
       }),
     })
       .then((res) => res.json())
@@ -196,8 +195,6 @@ const ManageToDo = () => {
         }
       });
   };
-
-  const { completedToDos } = useCompletedToDos();
 
   if (isLoading) {
     return <Loader />;
@@ -256,7 +253,7 @@ const ManageToDo = () => {
           </div>
         )}
 
-        <AddTodo handleToCreateToDoS={handleToCreateToDoS} isLoading={isLoading} />
+        <AddTodo handleToCreateToDoS={handleToCreateToDoS} dateValue={dateValue} handleValueChange={handleValueChange} isLoading={isLoading} />
       </div>
 
       <div className="container w-full mx-auto -mt-4 md:-mt-8">
@@ -336,21 +333,10 @@ const ManageToDo = () => {
           )}
         </div>
         {modalToDo && (
-          <UpdateTodo handleUpdateToDoS={handleUpdateToDoS} handleTitleField={handleTitleField} handleDesField={handleDesField} titleField={titleField} descriptionField={descriptionField} isLoading={isLoading} modalToDo={modalToDo} />
+          <UpdateTodo handleUpdateToDoS={handleUpdateToDoS} handleValueChange={handleValueChange} handleTitleField={handleTitleField} handleDesField={handleDesField} titleField={titleField} descriptionField={descriptionField} isLoading={isLoading} modalToDo={modalToDo} dateValue={dateValue} />
         )}
         {modalToDo && (
           <DetailsTodo modalToDo={modalToDo} />
-        )}
-      </div>
-
-      <div className="card-actions justify-center py-12 bg-base-100">
-        {completedToDos?.length > 0 && (
-          <Link to="/completed">
-            <button className="btn btn-md btn-primary text-white uppercase">
-              <i className="bx bxs-check-circle mr-1 text-lg"></i> See all
-              completed ToDos
-            </button>
-          </Link>
         )}
       </div>
     </section>

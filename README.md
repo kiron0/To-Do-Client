@@ -6,16 +6,22 @@
 
 ---
 
+### Backend Code Repo: [Click Me](https://github.com/kiron0/To-Do-Server)
+
+---
+
+---
+
 ## The following things in this project:
 
 - Home
-- Login
-- TODO (Specific User)
+- Authentication
+- TODO (Individual User)
 - Other's data.
 
 ---
 
-### You can see me here.. [Click Me](https://k-task-todo.web.app)
+### You can see me here.. [Click Me](https://todo.kiron.dev)
 
 ## Installation
 

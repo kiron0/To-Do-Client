@@ -17,6 +17,7 @@ type TodoListProps = {
   setModalToDo: any,
   addedBy: string,
   createdAt: string,
+  dueDate: string,
 }
 
 const TodoList = (todo: TodoListProps) => {
@@ -29,6 +30,7 @@ const TodoList = (todo: TodoListProps) => {
     completed,
     setModalToDo,
     addedBy,
+    dueDate,
     createdAt, } = todo;
 
   const { theme } = useContext(InitializeContext);
@@ -145,6 +147,7 @@ const TodoList = (todo: TodoListProps) => {
               addedBy,
               createdAt,
               completed,
+              dueDate,
             } as any)
           }
         >
@@ -170,7 +173,7 @@ const TodoList = (todo: TodoListProps) => {
           typeof="button"
           htmlFor="updateModal"
           className={`btn btn-xs btn-success text-white modal-button ${completed && "btn-disabled"}`}
-          onClick={() => setModalToDo({ _id, title, description }) as any}
+          onClick={() => setModalToDo({ _id, title, description, dueDate }) as any}
         >
           <i className="bx bxs-pen"></i>
         </label>

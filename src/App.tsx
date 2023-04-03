@@ -8,7 +8,6 @@ import RequireAuth from "./auth/RequireAuth/RequireAuth";
 import Profile from "./pages/Profile/Profile";
 import Login from "./pages/Authentication/Login/Login";
 import ManageToDo from "./pages/ManageToDo/ManageToDo";
-import CompletedToDo from "./pages/CompletedToDo/CompletedToDo";
 import Dashboard from "./pages/Dashboard/Dashboard/Dashboard";
 import Welcome from "./pages/Dashboard/Welcome/Welcome";
 import ManageToDoS from "./pages/Dashboard/ManageToDoS/ManageToDoS";
@@ -44,13 +43,6 @@ const router = createBrowserRouter(
           <Navbar />
           <ManageToDo />
         </RequireAuth>
-    },
-    {
-      path: "/completed",
-      element: <RequireAuth>
-        <Navbar />
-        <CompletedToDo />
-      </RequireAuth>
     },
     {
       path: "/dashboard",

@@ -1,3 +1,4 @@
+import moment from 'moment'
 import React from 'react'
 
 type Props = {
@@ -58,6 +59,16 @@ export default function DetailsTodo({ modalToDo }: Props) {
                                                                       {modalToDo?.addedBy?.name}
                                                             </div>
                                                   </div>
+                                                  {
+                                                            modalToDo?.dueDate && (
+                                                                      <div className="card-actions justify-end mt-3">
+                                                                                Due Date -{" "}
+                                                                                <div className="badge badge-outline badge-error">
+                                                                                          {moment(modalToDo?.dueDate).format("Do MMMM YYYY")}
+                                                                                </div>
+                                                                      </div>
+                                                            )
+                                                  }
                                                   <div className="card-actions justify-end mt-3">
                                                             Created at -{" "}
                                                             <div className="badge badge-outline badge-info">

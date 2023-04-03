@@ -4,17 +4,17 @@ import { BASE_API } from '../../../config';
 import Swal from 'sweetalert2';
 import auth from '../../../auth/Firebase/firebase.init';
 import { InitializeContext } from '../../../App';
+import moment from 'moment';
 
 type TodoListProps = {
           todo: any;
-          refetch: () => void;
+          fetchToDos: () => void;
 };
 
-export default function ToDoSTable({ todo, refetch }: TodoListProps) {
+export default function ToDoSTable({ todo, fetchToDos }: TodoListProps) {
           useScrollToTop();
           const { theme } = useContext(InitializeContext);
           const [showMore, setShowMore] = useState<boolean>(false);
-
 
           const handleDelete = (id: any) => {
                     Swal.fire({
@@ -43,7 +43,7 @@ export default function ToDoSTable({ todo, refetch }: TodoListProps) {
                                                                                 background: theme === "night" ? "#333" : "#fff",
                                                                                 color: theme === "night" ? "#fff" : "#333",
                                                                       });
-                                                                      refetch();
+                                                                      fetchToDos();
                                                             }
                                                   });
                               }
@@ -91,9 +91,19 @@ export default function ToDoSTable({ todo, refetch }: TodoListProps) {
                                                             {todo?.addedBy?.email}
                                                   </div>
                                         </div>
+                                        {
+                                                  todo?.dueDate && (
+                                                            <div className="card-actions justify-end mt-2">
+                                                                      Due Date -{" "}
+                                                                      <div className="badge badge-outline badge-error">
+                                                                                {moment(todo?.dueDate).format("Do MMMM YYYY")}
+                                                                      </div>
+                                                            </div>
+                                                  )
+                                        }
                                         <div className="card-actions justify-end mt-2">
                                                   Created at -{" "}
-                                                  <div className="badge badge-outline badge-neutral">
+                                                  <div className="badge badge-outline badge-info">
                                                             {todo?.createdAt}
                                                   </div>
                                         </div>
