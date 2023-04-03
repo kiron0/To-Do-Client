@@ -15,9 +15,9 @@
 
 ---
 
-### You can see me here.. [Click Me](https://todo.kiron.dev)
+### You can see me here: [Click Me](https://todo.kiron.dev)
 
-### Backend Code Repo: [Click Me](https://github.com/kiron0/To-Do-Server)
+### Backend Code Repo: [Click Here](https://github.com/kiron0/To-Do-Server)
 
 ## Installation
 
