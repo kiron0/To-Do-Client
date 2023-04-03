@@ -15,7 +15,7 @@ export default function ThemeChanger() {
     <div>
       <label
         htmlFor="themeChanger"
-        className="btn btn-sm btn-primary rounded-full h-8 w-8 absolute right-1 top-2/3"
+        className="btn btn-sm btn-primary rounded-full h-8 w-8 absolute right-1 top-1/3"
       >
         <i className={`bx bx-cog text-lg text-white ${styles.themeBtn}`}></i>
       </label>
