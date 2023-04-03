@@ -28,7 +28,7 @@ const CompletedToDo = () => {
           <h3 className="text-xl md:text-2xl font-semibold">Completed ToDoS</h3>
         </span>
         <span>
-          You can see all the completed tasks which you're completed already.
+          You can see all the completed toDos which you're completed already.
         </span>
       </div>
       <div>
@@ -36,8 +36,8 @@ const CompletedToDo = () => {
           <Loader />
         ) : completedToDos?.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mx-auto px-4">
-            {completedToDos?.map((task: any, index: number) => (
-              <ToDoRow key={index} task={task} loading={loading} />
+            {completedToDos?.map((todo: any, index: number) => (
+              <ToDoRow key={index} todo={todo} loading={loading} />
             ))}
           </div>
         ) : (
@@ -58,7 +58,7 @@ const CompletedToDo = () => {
                       d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
                     />
                   </svg>
-                  <span>No completed task in your list</span>
+                  <span>No completed todo in your list</span>
                 </div>
               </div>
             </div>

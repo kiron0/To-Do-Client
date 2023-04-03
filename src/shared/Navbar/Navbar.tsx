@@ -54,7 +54,9 @@ const Navbar = () => {
   const NavbarMenus = (
     <>
       <li className="py-1 lg:py-0">
-        <NavLink className="text-white uppercase bg-primary" to="/dev">
+        <NavLink className={({ isActive }) =>
+          isActive ? "text-white uppercase bg-primary" : "uppercase"
+        } to="/dev">
           Developer
         </NavLink>
       </li>
@@ -62,9 +64,9 @@ const Navbar = () => {
   );
 
   return (
-    <div className="sticky top-0 w-full z-50 bg-base-100">
+    <div className="sticky top-0 w-full z-50 glass">
       <div
-        className="drawer-content flex flex-col backdrop-blur-[18px] bg-base-100 shadow-md"
+        className="drawer-content flex flex-col shadow-md"
         style={
           pathname.includes("dashboard")
             ? { display: "none" }
@@ -79,7 +81,7 @@ const Navbar = () => {
               </label>
               <ul
                 tabIndex={0}
-                className="menu menu-compact dropdown-content mt-4 p-2 shadow-xl bg-base-200 rounded-box w-[23.5rem] flex flex-wrap justify-center items-center"
+                className="menu menu-compact dropdown-content mt-4 p-2 shadow-xl bg-base-100 rounded-box w-[23.5rem] flex flex-wrap justify-center items-center"
               >
                 {
                   user && (

@@ -105,7 +105,7 @@ const Dashboard = () => {
             </label>
             <ul
               tabIndex={0}
-              className="mt-4 p-2 shadow-xl menu menu-compact dropdown-content bg-base-100 rounded-box w-[16rem]"
+              className="mt-5 p-2 -mr-4 shadow-xl menu menu-compact dropdown-content bg-base-100 rounded-box w-72"
             >
               <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto my-4 border ring ring-primary ring-offset-base-100 ring-offset-2">
                 {auth?.currentUser?.photoURL ? (
@@ -155,9 +155,9 @@ const Dashboard = () => {
                   <i className="bx bxs-user font-semibold"></i> Profile
                 </Link>
               </li>
-              <li className="py-1 font-semibold md:hidden">
+              <li className="py-1 font-semibold">
                 <Link to="/toDos">
-                  <i className="bx bx-pen font-semibold"></i> Create ToDoS
+                  <i className="bx bx-pen font-semibold"></i> Add ToDo
                 </Link>
               </li>
               <li className="py-1">
@@ -174,20 +174,15 @@ const Dashboard = () => {
       <div className="drawer-side shadow-xl">
         <label htmlFor="dashboard-sidebar" className="drawer-overlay"></label>
         <ul className="menu p-4 overflow-y-auto w-80 bg-base-100 text-base-content">
-          <div className="flex flex-col items-center gap-3 text-2xl p-2 border-b pb-5">
+          <div className="flex flex-col items-center gap-3 p-2 border-b pb-5">
             <Link
               to="/"
-              className="logo font-semibold text-center flex items-center flex-col gap-2"
+              className="logo font-semibold text-center flex items-center flex-col gap-2 text-2xl"
             >
               <img src={todo} alt="" className="w-16" /> {appName}
             </Link>
-            <div
-              onClick={handleLogOut}
-              className="badge badge-outline border-primary hover:bg-primary hover:text-white duration-500 cursor-pointer flex justify-center items-center gap-1 p-4"
-            >
-              <i className="bx bx-log-out"></i>
-              Sign Out
-            </div>
+
+            <small>A ToDo List Web App</small>
           </div>
           <li className="py-2 mt-4">
             <NavLink

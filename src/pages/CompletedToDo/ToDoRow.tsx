@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import Loader from "../../components/Loader/Loader";
 
 type Props = {
-  task: any;
+  todo: any;
   loading: boolean;
 };
 
-const ToDoRow = ({ task, loading }: Props) => {
+const ToDoRow = ({ todo, loading }: Props) => {
   const [showMore, setShowMore] = useState<boolean>(false);
 
   if (loading) {
@@ -16,12 +16,12 @@ const ToDoRow = ({ task, loading }: Props) => {
   return (
     <div className="card w-100 bg-base-100 shadow-xl">
       <div className="card-body">
-        <h2 className="card-title">{task?.title}</h2>
+        <h2 className="card-title">{todo?.title}</h2>
         <p>
-          {task?.description?.length > 100 && !showMore
-            ? task?.description?.slice(0, 100) + "..."
-            : task?.description}{" "}
-          {task?.description?.length > 100 && (
+          {todo?.description?.length > 100 && !showMore
+            ? todo?.description?.slice(0, 100) + "..."
+            : todo?.description}{" "}
+          {todo?.description?.length > 100 && (
             <span
               onClick={() => setShowMore(!showMore)}
               className="text-primary cursor-pointer"
@@ -37,15 +37,15 @@ const ToDoRow = ({ task, loading }: Props) => {
           Created By -{" "}
           <div
             className="badge badge-outline badge-primary tooltip tooltip-left tooltip-primary"
-            data-tip={task?.addedBy?.email}
+            data-tip={todo?.addedBy?.email}
           >
-            {task?.addedBy?.name}
+            {todo?.addedBy?.name}
           </div>
         </div>
         <div className="card-actions justify-end mt-1">
           Created at -{" "}
           <div className="badge badge-outline badge-success">
-            {task?.createdAt}
+            {todo?.createdAt}
           </div>
         </div>
       </div>

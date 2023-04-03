@@ -1,6 +1,9 @@
-import { createContext, useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { Toaster } from "react-hot-toast";
+import axios from "axios";
+import { useQuery } from "react-query";
+import { BASE_API } from "./config";
 import RequireAuth from "./auth/RequireAuth/RequireAuth";
 import Profile from "./pages/Profile/Profile";
 import Login from "./pages/Authentication/Login/Login";
@@ -15,9 +18,6 @@ import NotFound from "./shared/NotFound/NotFound";
 import AboutMe from "./pages/AboutMe/AboutMe";
 import ThemeChanger from "./shared/ThemeChanger/ThemeChanger";
 import LoadingScreen from "./shared/LoadingScreen/LoadingScreen";
-import axios from "axios";
-import { useQuery } from "react-query";
-import { BASE_API } from "./config";
 import Setting from "./pages/Dashboard/Setting/Setting";
 import Root from "./Layouts/Root";
 import Navbar from "./shared/Navbar/Navbar";
@@ -35,11 +35,7 @@ const router = createBrowserRouter(
     },
     {
       path: "/dev",
-      element:
-        <>
-          <Navbar />
-          <AboutMe />
-        </>
+      element: <AboutMe />
     },
     {
       path: "/toDoS",
@@ -106,18 +102,18 @@ const router = createBrowserRouter(
 export const InitializeContext = createContext(null as any);
 
 function App() {
-  const [theme, setTheme] = useState("light");
-  const [loading, setLoading] = useState(false);
+  const [theme, setTheme] = useState<string>("emerald");
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-    }, 4000);
+    }, 2000);
   }, []);
 
   useEffect(() => {
-    setTheme(window.localStorage.getItem("todoSTheme") || "light");
+    setTheme(window.localStorage.getItem("todoSTheme") || "emerald");
   }, []);
 
   const { data, refetch, isLoading } = useQuery("appName", async () => {
@@ -125,22 +121,22 @@ function App() {
     return res?.data;
   });
 
-  const appName = data?.appName;
+  const appName = data?.result?.appName;
 
   return (
-    <>
+    <div data-theme={theme ? theme : "light"} className="bg-base-100">
       <InitializeContext.Provider value={{ theme, setTheme, appName, refetch, isLoading }}>
         {loading ? (
           <LoadingScreen />
         ) : (
-          <div data-theme={theme ? theme : "light"} className="bg-base-100">
+          <>
             <RouterProvider router={router} />
             <Toaster />
-          </div>
+          </>
         )}
         {loading ? null : <ThemeChanger />}
       </InitializeContext.Provider>
-    </>
+    </div>
   );
 }
 

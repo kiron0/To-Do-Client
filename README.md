@@ -27,6 +27,22 @@ git clone https://github.com/kiron0/To-Do-Client.git
 cd To-Do-Client
 ```
 
+#### Create .env.local file at root
+
+#### REACT_APP_apiKey=
+
+#### REACT_APP_authDomain=
+
+#### REACT_APP_projectId=
+
+#### REACT_APP_storageBucket=
+
+#### REACT_APP_messagingSenderId=
+
+#### REACT_APP_appId=
+
+#### REACT_APP_BASE_API=
+
 ```bash
 yarn
 ```

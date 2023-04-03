@@ -14,7 +14,6 @@ const ManageToDoS = () => {
   const {
     data: toDosData,
     isLoading,
-    refetch,
   } = useQuery("toDos", () =>
     fetch(`${BASE_API}/toDoS`, {
       headers: {
@@ -23,7 +22,9 @@ const ManageToDoS = () => {
     }).then((res) => res.json())
   );
 
-  if (isLoading || !toDosData || !toDosData.length) {
+  const allTodoS = toDosData?.result;
+
+  if (isLoading || !allTodoS || !allTodoS.length) {
     return <Loader />;
   }
 
@@ -36,11 +37,11 @@ const ManageToDoS = () => {
       <div>
         {isLoading ? (
           <Loader />
-        ) : toDosData?.length > 0 ? (
+        ) : allTodoS?.length > 0 ? (
           <Fade top distance="20px">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mx-auto lg:px-4 lg:mt-10">
-              {toDosData?.map((todo: any) => (
-                <ToDoSRow key={todo._id} todo={todo} refetch={refetch} />
+              {allTodoS?.map((todo: any) => (
+                <ToDoSRow key={todo._id} todo={todo} />
               ))}
             </div>
           </Fade>
@@ -62,7 +63,7 @@ const ManageToDoS = () => {
                       d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
                     />
                   </svg>
-                  <span>No completed task in your list</span>
+                  <span>No completed todo in your list</span>
                 </div>
               </div>
             </div>

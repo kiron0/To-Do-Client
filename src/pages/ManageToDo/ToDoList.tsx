@@ -19,16 +19,17 @@ type TodoListProps = {
   createdAt: string,
 }
 
-const TodoList = (task: TodoListProps) => {
+const TodoList = (todo: TodoListProps) => {
 
   const { title,
     description,
     _id,
+    serialize,
     refetch,
     completed,
     setModalToDo,
     addedBy,
-    createdAt, } = task;
+    createdAt, } = todo;
 
   const { theme } = useContext(InitializeContext);
   /* Handle ToDo Delete */
@@ -92,7 +93,7 @@ const TodoList = (task: TodoListProps) => {
           .then((result) => {
             if (result.success) {
               toast.success(`${title} ${result.message}`);
-              task.refetch();
+              todo.refetch();
             }
           });
       }
@@ -102,14 +103,14 @@ const TodoList = (task: TodoListProps) => {
   return (
     <tr>
       <th>
-        <i className="bx bxs-notepad text-lg"></i>
+        {serialize + 1}
       </th>
       <th>
         <span className="tooltip" data-tip="Click to completed">
           <input
             type="checkbox"
             onClick={() => handleCompleteInfo(_id as any)}
-            className="checkbox checkbox-xs checkbox-success"
+            className="checkbox checkbox-xs checkbox-primary"
             disabled={completed && true}
             checked={completed}
           ></input>

@@ -3,15 +3,18 @@ import useScrollToTop from "../../hooks/useScrollToTop";
 import useTitle from "../../hooks/useTitle";
 import profile from "../../assets/me2.JPG";
 import styles from "./AboutMe.module.css";
+import { useNavigate } from "react-router-dom";
 
 const Fade = require("react-reveal/Fade");
 
 export default function AboutMe() {
   useTitle("Developer");
   useScrollToTop();
+  const navigate = useNavigate();
   return (
     <>
       <Fade top duration={1000} distance="40px">
+        <button onClick={() => navigate("/")} className="flex justify-center items-center gap-1 cursor-pointer btn btn-sm mx-auto glass rounded-xl text-black text-md absolute left-2 top-2 z-50"><i className="bx bx-arrow-back text-lg"></i>Back</button>
         <header className={`${styles.profile} ${styles.container}`}>
           <div className={`${styles.profile__container} ${styles.grid}`}>
             <div className={styles.profile__data}>
@@ -58,9 +61,9 @@ export default function AboutMe() {
 
             <div className={`${styles.profile__info} ${styles.grid}`}>
               <div className={styles.profile__info_group}>
-                <h3 className={styles.profile__info_number}>11+</h3>
+                <h3 className={styles.profile__info_number}>1.4+</h3>
                 <p className={styles.profile__info_description}>
-                  Months of <br /> work
+                  Years of <br /> work
                 </p>
               </div>
               <div className={styles.profile__info_group}>
@@ -79,7 +82,7 @@ export default function AboutMe() {
 
             <div className={styles.profile__buttons}>
               <a
-                href="https://drive.google.com/file/d/1tUlSk9psjwxksSpBVb6-KUDbSgIiN4Wl/view?usp=sharing"
+                href="https://drive.google.com/file/d/17g3kKlWFF9Msi4JjMZEMLkHGYNR0eeb3/view?usp=share_link"
                 className={`${styles.button} bg-primary hover:bg-primary-dark`}
                 target="_blank"
                 rel="noreferrer"
@@ -114,7 +117,7 @@ export default function AboutMe() {
 
               <div className={styles.profile__buttons_small}>
                 <a
-                  href="https://api.whatsapp.com/send?phone=01855535091&text=Hello, more information!"
+                  href="https://api.whatsapp.com/send?phone=+8801855535091&text=Hey, What's upp buddy!"
                   className={`${styles.button} ${styles.button__small} ${styles.button__gray}`}
                   target="_blank"
                   rel="noreferrer"
@@ -201,7 +204,7 @@ export default function AboutMe() {
                 <div className={styles.skills__data}>
                   <i className="bx bx-check-circle text-primary"></i>
                   <div>
-                    <h3 className={styles.skills__name}>PHP</h3>
+                    <h3 className={styles.skills__name}>MongoDB</h3>
                     <span className={styles.skills__level}>Intermediate</span>
                   </div>
                 </div>
@@ -210,7 +213,7 @@ export default function AboutMe() {
                   <i className="bx bx-check-circle text-primary"></i>
                   <div>
                     <h3 className={styles.skills__name}>MySQL</h3>
-                    <span className={styles.skills__level}>Advanced</span>
+                    <span className={styles.skills__level}>Basic</span>
                   </div>
                 </div>
 
