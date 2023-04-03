@@ -6,12 +6,6 @@
 
 ---
 
-### Backend Code Repo: [Click Me](https://github.com/kiron0/To-Do-Server)
-
----
-
----
-
 ## The following things in this project:
 
 - Home
@@ -22,6 +16,8 @@
 ---
 
 ### You can see me here.. [Click Me](https://todo.kiron.dev)
+
+### Backend Code Repo: [Click Me](https://github.com/kiron0/To-Do-Server)
 
 ## Installation
 
