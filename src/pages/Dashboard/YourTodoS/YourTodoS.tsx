@@ -41,7 +41,7 @@ export default function YourTodoS() {
 
 
           const fetchToDos = async () => {
-                    const res = await fetch(`${BASE_API}/myToDoS/filtered?email=${auth?.currentUser?.email}&&filter=all`, {
+                    const res = await fetch(`${BASE_API}/myToDoS?email=${auth?.currentUser?.email}`, {
                               headers: {
                                         authorization: `Bearer ${localStorage.getItem("accessToken")}`,
                               },
@@ -104,7 +104,7 @@ export default function YourTodoS() {
                                                                                                               d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
                                                                                                     />
                                                                                           </svg>
-                                                                                          <span>No {filterToDoS === "all" ? "" : filterToDoS === "completed" ? filterToDoS : filterToDoS === "pending" ? filterToDoS : filterToDoS} todo in your list</span>
+                                                                                          <span className="select-none text-center">No {filterToDoS === "all" ? "" : filterToDoS === "completed" ? filterToDoS : filterToDoS === "pending" ? filterToDoS : filterToDoS} todo in your list</span>
                                                                                 </div>
                                                                       </div>
                                                             </div>

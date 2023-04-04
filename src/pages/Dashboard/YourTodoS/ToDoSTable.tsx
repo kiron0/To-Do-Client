@@ -74,16 +74,18 @@ export default function ToDoSTable({ todo, fetchToDos }: TodoListProps) {
                                                   )}
                                         </p>
                                         {todo?.completed ? (
-                                                  <div className="card-actions justify-center py-5">
+                                                  <div className="card-actions justify-end pt-5">
+                                                            Status -{" "}
                                                             <div className="badge badge-outline badge-success">Completed</div>
                                                   </div>
                                         ) : (
-                                                  <div className="card-actions justify-center py-5">
+                                                  <div className="card-actions justify-end pt-5">
+                                                            Status -{" "}
                                                             <div className="badge badge-outline badge-error">Pending</div>
                                                   </div>
                                         )}
                                         <div className="card-actions justify-end">
-                                                  Created By -{" "}
+                                                  Added By -{" "}
                                                   <div className="badge badge-outline badge-success">
                                                             {todo?.addedBy?.name}
                                                   </div>
@@ -102,7 +104,7 @@ export default function ToDoSTable({ todo, fetchToDos }: TodoListProps) {
                                                   )
                                         }
                                         <div className="card-actions justify-end mt-2">
-                                                  Created at -{" "}
+                                                  Added at -{" "}
                                                   <div className="badge badge-outline badge-info">
                                                             {todo?.createdAt}
                                                   </div>

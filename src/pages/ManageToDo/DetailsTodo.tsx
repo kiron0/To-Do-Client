@@ -18,7 +18,7 @@ export default function DetailsTodo({ modalToDo }: Props) {
                                                             <div className="name-title absolute -top-4 bg-base-100 border rounded p-1">
                                                                       <h3 className="text-xs font-poppins">Your title</h3>
                                                             </div>
-                                                            <div className="input-group flex items-center my-2 border p-3 rounded-md mt-2">
+                                                            <div className="input-group flex items-center my-2 border p-3 rounded-md mt-2 select-none cursor-not-allowed">
                                                                       <div className="icon">
                                                                                 <i className="bx bxs-pen"></i>
                                                                       </div>
@@ -32,7 +32,7 @@ export default function DetailsTodo({ modalToDo }: Props) {
                                                             <div className="name-title absolute -top-4 bg-base-100 border rounded p-1">
                                                                       <h3 className="text-xs font-poppins">Your description</h3>
                                                             </div>
-                                                            <div className="input-group flex items-center my-2 border p-3 rounded-md mt-2">
+                                                            <div className="input-group flex items-center my-2 border p-3 rounded-md mt-2 select-none cursor-not-allowed">
                                                                       <div className="icon">
                                                                                 <i className="bx bx-detail"></i>
                                                                       </div>
@@ -43,6 +43,7 @@ export default function DetailsTodo({ modalToDo }: Props) {
                                                   </div>
 
                                                   <div className="card-actions justify-end my-4">
+                                                            Status -{" "}
                                                             <div
                                                                       className={`badge badge-outline ${modalToDo?.completed ? "badge-success" : "badge-error"
                                                                                 }`}
@@ -51,7 +52,7 @@ export default function DetailsTodo({ modalToDo }: Props) {
                                                             </div>
                                                   </div>
                                                   <div className="card-actions justify-end">
-                                                            Created By -{" "}
+                                                            Added By -{" "}
                                                             <div
                                                                       className="badge badge-outline badge-primary tooltip tooltip-left tooltip-primary select-none"
                                                                       data-tip={modalToDo?.addedBy?.email}
@@ -70,13 +71,13 @@ export default function DetailsTodo({ modalToDo }: Props) {
                                                             )
                                                   }
                                                   <div className="card-actions justify-end mt-3">
-                                                            Created at -{" "}
+                                                            Added at -{" "}
                                                             <div className="badge badge-outline badge-info">
                                                                       {modalToDo?.createdAt}
                                                             </div>
                                                   </div>
                                                   <div className="modal-action">
-                                                            <label htmlFor="detailsModal" className="btn btn-warning">
+                                                            <label htmlFor="detailsModal" className="btn btn-warning text-white">
                                                                       <i className="bx bx-x text-xl"></i> Close
                                                             </label>
                                                   </div>
