@@ -1,29 +1,43 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { BASE_API } from "../../../config";
 import useScrollToTop from "../../../hooks/useScrollToTop";
 import useTitle from "../../../hooks/useTitle";
 import Loader from "../../../components/Loader/Loader";
 import UserRow from "./UserRow";
+import Pagination from "./Pagination";
 
 const Fade = require("react-reveal/Fade");
 
 const ManageUsers = () => {
   useScrollToTop();
   useTitle("Manage All Users");
+  const [pageLoading, setPageLoading] = useState(false);
+  const [page, setPage] = useState(1);
+  const [size] = useState(10);
+
   const {
-    data: users,
+    data,
     isLoading,
     refetch,
   } = useQuery("users", () =>
-    fetch(`${BASE_API}/users/all`, {
+    fetch(`${BASE_API}/users/all?page=${page}&limit=${size}`, {
       headers: {
         "content-type": "application/json",
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
     }).then((res) => res.json())
   );
-  if (isLoading || !users || !users.length) {
+
+  useEffect(() => {
+    setPageLoading(true);
+    refetch();
+    setPageLoading(false);
+  }, [page, refetch]);
+
+  const totalPages = data?.pages;
+
+  if (isLoading || !data?.users || !data?.users.length || pageLoading) {
     return <Loader />;
   }
   return (
@@ -33,7 +47,7 @@ const ManageUsers = () => {
         <span>You can manage all the users whom are already registered</span>
       </div>
       <Fade top distance="20px">
-        <div className="overflow-x-auto shadow-xl rounded-xl">
+        <div className="overflow-x-auto shadow-xl rounded-xl mb-10">
           <table className="table w-full">
             <thead className="bg-base-300">
               <tr>
@@ -49,18 +63,19 @@ const ManageUsers = () => {
               </tr>
             </thead>
             <tbody>
-              {users?.map((user: any, index: number) => (
+              {data?.users?.map((user: any, index: number) => (
                 <UserRow
                   index={index}
                   key={user._id}
                   user={user}
                   refetch={refetch}
-                ></UserRow>
+                />
               ))}
             </tbody>
           </table>
         </div>
       </Fade>
+      <Pagination page={page} setPage={setPage} totalPages={totalPages} />
     </div>
   );
 };

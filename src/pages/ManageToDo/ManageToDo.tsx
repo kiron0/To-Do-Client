@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { toast } from "react-hot-toast";
 import { useQuery } from "react-query";
@@ -14,6 +14,7 @@ import { InitializeContext } from "../../App";
 import UpdateTodo from "./UpdateTodo";
 import AddTodo from "./AddTodo";
 import DetailsTodo from "./DetailsTodo";
+import Pagination from "./Pagination";
 
 const Fade = require("react-reveal/Fade");
 
@@ -23,18 +24,29 @@ const ManageToDo = () => {
   const { theme } = useContext(InitializeContext);
   const [modalToDo, setModalToDo] = useState({} as any);
   const [user] = useAuthState(auth);
+  const [pageLoading, setPageLoading] = useState(false);
+  const [page, setPage] = useState(1);
+  const [size] = useState(10);
 
   const {
     data: toDosData = [] as any,
     isLoading,
     refetch,
   } = useQuery("toDos", () =>
-    fetch(`${BASE_API}/myToDoS?email=${auth?.currentUser?.email}`, {
+    fetch(`${BASE_API}/myToDoS?email=${auth?.currentUser?.email}&page=${page}&limit=${size}`, {
       headers: {
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
     }).then((res) => res.json())
   );
+
+  useEffect(() => {
+    setPageLoading(true);
+    refetch();
+    setPageLoading(false);
+  }, [page, refetch]);
+
+  const totalPages = toDosData?.pages;
 
   const [dateValue, setDateValue] = useState({
     startDate: null,
@@ -196,7 +208,7 @@ const ManageToDo = () => {
       });
   };
 
-  if (isLoading) {
+  if (isLoading || pageLoading) {
     return <Loader />;
   }
 
@@ -207,7 +219,7 @@ const ManageToDo = () => {
           <h3 className="text-3xl font-semibold">ToDo List</h3>
           <span>Here you will get all your ToDo list.</span>
         </div>
-        {toDosData?.length > 0 && (
+        {toDosData?.toDos?.length > 0 && (
           <div className="header bg-base-100 rounded-md shadow-md container mx-auto w-[22rem] md:w-full py-4 md:py-0">
             <div className="flex-wrap gap-4 navbar">
               <div className="sm:flex-1 flex-col sm:flex-row w-full">
@@ -260,7 +272,7 @@ const ManageToDo = () => {
         <div className="overflow-x-auto shadow-md rounded-md">
           {isLoading ? (
             <Loading />
-          ) : toDosData?.length > 0 ? (
+          ) : toDosData?.toDos?.length > 0 ? (
             <>
               <Fade top distance="20px">
                 <table className="table-normal w-full bg-base-100">
@@ -278,9 +290,7 @@ const ManageToDo = () => {
                   </thead>
                   <tbody>
                     {toDosData
-                      ?.slice(0)
-                      .reverse()
-                      .map((todo: any, ind: number) => (
+                      ?.toDos?.map((todo: any, ind: number) => (
                         <TodoList
                           key={todo._id}
                           {...todo}
@@ -320,7 +330,7 @@ const ManageToDo = () => {
                 </td>
               </tr>
               <div className="flex justify-center items-center mx-auto pb-7">
-                {toDosData?.length <= 0 && (
+                {toDosData?.toDos?.length <= 0 && (
                   <label
                     htmlFor="toDosModal"
                     className="btn btn-md btn-primary text-white uppercase"
@@ -339,6 +349,7 @@ const ManageToDo = () => {
           <DetailsTodo modalToDo={modalToDo} />
         )}
       </div>
+      <Pagination page={page} setPage={setPage} totalPages={totalPages} />
     </section>
   );
 };

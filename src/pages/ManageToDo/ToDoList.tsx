@@ -31,7 +31,7 @@ const TodoList = (todo: TodoListProps) => {
     setModalToDo,
     addedBy,
     dueDate,
-    createdAt, } = todo;
+    createdAt } = todo;
 
   const { theme } = useContext(InitializeContext);
   /* Handle ToDo Delete */
