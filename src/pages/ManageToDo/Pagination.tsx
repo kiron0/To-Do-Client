@@ -11,7 +11,7 @@ export default function Pagination({ page, setPage, totalPages }: PaginationProp
           return (
                     <>
                               {totalPages > 0 ? (
-                                        <div className="text-center">
+                                        <div className="text-center bg-base-100">
                                                   <div className="btn-group py-5">
                                                             <button
                                                                       onClick={() => setPage(page - 1)}
